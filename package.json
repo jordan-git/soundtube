@@ -1,0 +1,26 @@
+{
+  "name": "music-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "main": "node ./index.js",
+    "dev": "nodemon --ignore src/data/ ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordan-git/music-website.git"
+  },
+  "author": "Jordan, Ross & Ciaran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordan-git/music-website/issues"
+  },
+  "homepage": "https://github.com/jordan-git/music-website#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "pug": "^2.0.4",
+    "sass": "^1.25.0"
+  }
+}
