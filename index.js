@@ -10,8 +10,11 @@ const fs = require("fs");
 
 app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "pug");
-app.locals.pretty = true; // Format generated HTML neatly
 
+// Formats the generated HTML neatly
+app.locals.pretty = true; 
+
+// Allows us to access '/src/static' using only '/static'
 app.use('/static', express.static(path.join(__dirname, 'src/static')));
 
 app.use(bodyParser.json());
