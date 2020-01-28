@@ -19,6 +19,7 @@
     "homepage": "https://github.com/jordan-git/music-website#readme",
     "dependencies": {
         "express": "^4.17.1",
+        "express-session": "^1.17.0",
         "nodemon": "^2.0.2",
         "pug": "^2.0.4",
         "sass": "^1.25.0"
