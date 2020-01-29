@@ -11,11 +11,13 @@ db.connect(err => {
     if (err) throw err;
 
     let sql1 = 'CREATE DATABASE IF NOT EXISTS soundtube';
+
     db.query(sql1, (err, result) => {
         if (err) throw err;
     });
 
     let sql2 = 'USE soundtube';
+
     db.query(sql2, (err, result) => {
         if (err) throw err;
     });
@@ -23,6 +25,7 @@ db.connect(err => {
     let sql3 = `CREATE TABLE IF NOT EXISTS users (id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
         username VARCHAR(24) NOT NULL, 
         password VARCHAR(32) NOT NULL)`;
+
     db.query(sql3, (err, result) => {
         if (err) throw err;
     });
