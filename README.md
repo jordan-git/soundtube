@@ -17,7 +17,7 @@ git clone https://github.com/jordan-git/soundtube.git
 ## Making changes
 
 ```
-git add [file_name(s)]` OR `git add .
+git add [file_name(s)] OR git add .
 git commit -m "[message describing changes]"
 git push origin master
 ```
