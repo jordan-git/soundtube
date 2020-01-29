@@ -1,6 +1,4 @@
 const userRouter = (app, fs) => {
-    const dbPath = './src/data/database.db';
-
     // Read
     app.get('/user', (req, res) => {});
 

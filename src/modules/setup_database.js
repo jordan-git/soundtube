@@ -25,4 +25,9 @@ db.connect(err => {
     db.query(sql3, (err, result) => {
         if (err) throw err;
     });
+
+    let sql4 = "INSERT INTO users VALUES (NULL, 'admin', 'admin')";
+    db.query(sql4, (err, result) => {
+        if (err) throw err;
+    });
 });
