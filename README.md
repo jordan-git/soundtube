@@ -6,7 +6,7 @@
 
 The dev .bat will automatically close and open the server if you edit any files while it is running. With the normal .bat you must close it and run it again manually.
 
-# How to download project and make changes
+# How to download the project and make changes
 
 ## Downloading
 

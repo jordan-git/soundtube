@@ -4,7 +4,6 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'password'
-    // database: 'soundtube'
 });
 
 db.connect(err => {
@@ -41,3 +40,5 @@ db.connect(err => {
         if (err) throw err;
     });
 });
+
+module.exports = db;
