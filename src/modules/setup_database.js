@@ -13,12 +13,14 @@ db.connect(err => {
 
     db.query(sql1, (err, result) => {
         if (err) throw err;
+        db.end();
     });
 
     let sql2 = 'USE soundtube';
 
     db.query(sql2, (err, result) => {
         if (err) throw err;
+        db.end();
     });
 
     let sql3 = `CREATE TABLE IF NOT EXISTS users (id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
@@ -27,6 +29,7 @@ db.connect(err => {
 
     db.query(sql3, (err, result) => {
         if (err) throw err;
+        db.end();
     });
 
     // Add admin account to database if it doesn't already exist
@@ -38,6 +41,7 @@ db.connect(err => {
 
     db.query(sql4, (err, result) => {
         if (err) throw err;
+        db.end();
     });
 });
 

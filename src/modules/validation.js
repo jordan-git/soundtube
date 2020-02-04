@@ -1,3 +1,4 @@
+//TODO: After begin
 const minUsernameLen = 4;
 const maxUsernameLen = 24;
 const minPasswordLen = 6;
