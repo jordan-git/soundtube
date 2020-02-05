@@ -40,7 +40,7 @@ const appRouter = (app, fs, db) => {
 
         let sql = "SELECT * FROM users WHERE username = ?";
 
-        db.query(sql, [username, password], (err, result) => {
+        db.query(sql, username, (err, result) => {
             if (err) throw err;
 
             if (result.length > 0) {
