@@ -1,7 +1,17 @@
 body {
-    form.validation-form {
-        label.error {
+    main.container {
+        span#validation-response {
+            display: block;
+            padding: 2% 0;
+            text-align: center;
             color: red;
+            font-size: 1.4em;
+        }
+
+        form.validation-form {
+            label.error {
+                color: red;
+            }
         }
     }
 }

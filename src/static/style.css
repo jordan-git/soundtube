@@ -1,4 +1,11 @@
-body form.validation-form label.error {
+body main.container span#validation-response {
+  display: block;
+  padding: 2% 0;
+  text-align: center;
+  color: red;
+  font-size: 1.4em;
+}
+body main.container form.validation-form label.error {
   color: red;
 }
 
