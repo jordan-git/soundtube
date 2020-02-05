@@ -22,7 +22,7 @@ const appRouter = (app, fs, db) => {
             if (result.length == 0) {
                 res.render("login", {
                     title: "Log In",
-                    response: "Invalid username / password combination."
+                    response: "Invalid username/password combination."
                 });
             } else {
                 // Log in the user
@@ -46,7 +46,7 @@ const appRouter = (app, fs, db) => {
             if (result.length > 0) {
                 res.render("register", {
                     title: "Register",
-                    response: "Username is taken."
+                    response: "Username is already in use."
                 });
             } else {
                 // Add user to database
