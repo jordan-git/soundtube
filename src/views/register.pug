@@ -2,16 +2,17 @@ extends validation-layout
 
 block validation-heading
     h1#title Register
+    if response
+        div
+            span#validation-response= response
 
 block validation-content
-    form(class="register-form validation-form" method="post" action="/register")
+    form(id="register-form" class="validation-form" method="post" action="/register")
         div.form-group
             label(for="username") Username
-            span#username-validation
             input(type="text" class="form-control" name="username" id="username" placeholder="Username")
         div.form-group
             label(for="password") Password
-            span#password-validation
             input(type="password" class="form-control" name="password" id="password " placeholder="Password")
         div.form-group
             label(for="password-retype") Confirm Password

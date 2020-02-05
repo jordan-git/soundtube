@@ -1,8 +1,4 @@
-body form.verification-form label {
-  margin-bottom: 0.2rem;
-}
-body form.verification-form span {
-  display: block;
+body form.validation-form label.error {
   color: red;
 }
 

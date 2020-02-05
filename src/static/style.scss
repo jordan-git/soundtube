@@ -1,11 +1,6 @@
 body {
-    form.verification-form {
-        label {
-            margin-bottom: 0.2rem;
-        }
-
-        span {
-            display: block;
+    form.validation-form {
+        label.error {
             color: red;
         }
     }

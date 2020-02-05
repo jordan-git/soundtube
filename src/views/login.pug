@@ -2,15 +2,16 @@ extends validation-layout
 
 block validation-heading
     h1#title Log In
+    if response
+        div
+            span#validation-response= response
 
 block validation-content
-    form(class="login-form validation-form" method="post" action="/login")
+    form(id="login-form" class="validation-form" method="post" action="/login")
         div.form-group
             label(for="username") Username
-            span#username-validation
             input(type="text" class="form-control" name="username" id="username" placeholder="Username")
         div.form-group
             label(for="password") Password
-            span#password-validation
             input(type="password" class="form-control" name="password" id="password" placeholder="Password")
         button(class="submit" type="submit" class="btn btn-primary") Submit
