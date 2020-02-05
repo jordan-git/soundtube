@@ -10,6 +10,8 @@ const appRouter = (app, fs) => {
         res.render('login', { title: 'Log In' });
     });
 
+    app.post('/login', (req, res) => {});
+
     app.get('/register', (req, res) => {
         res.render('register', { title: 'Register' });
     });

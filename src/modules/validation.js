@@ -3,79 +3,103 @@ const minUsernameLen = 4;
 const maxUsernameLen = 24;
 const minPasswordLen = 6;
 const maxPasswordLen = 32;
-const usernameWarning = `Invalid username. Must be between ${minUsernameLen} and ${minPasswordLen} characters.`;
-const passwordWarning = `Invalid password. Must be between ${minPasswordLen} and ${minPasswordLen} characters.`;
+const usernameWarning = `Invalid username. Must be between ${minUsernameLen} and ${maxUsernameLen} characters.`;
+const passwordWarning = `Invalid password. Must be between ${minPasswordLen} and ${maxPasswordLen} characters.`;
+const passwordNotMatching = 'Passwords do not match. Please try again.';
 
-function validateRegistration() {
-    let username = document.getElementById('username');
-    let password = document.getElementById('password');
-    let password_retype = document.getElementById('password-retype');
-    let element = document.getElementsByTagName('form');
-
-    if (password.innerHTML != password_retype) {
-        let message = 'Passwords do not match. Please try again.';
-        let newElement = '<span id="validation-warning">' + message + '</span>';
-        element.insertAdjacentHTML('beforebegin', newElement);
-        return false;
-    }
-
-    if (!isValidUsername(username) && !isValidPassword(password)) {
-        let message = usernameWarning + '<br>' + passwordWarning;
-        let newElement = '<span id="validation-warning">' + message + '</span>';
-        element.insertAdjacentHTML('beforebegin', newElement);
-        return false;
-    } else if (!isValidUsername(username) || !isValidPassword(password)) {
-        if (!isValidUsername(username)) {
-            let message = usernameWarning;
+$(document).ready(function() {
+    $('#login-form').validate({
+        debug: true,
+        rules: {
+            username: {
+                required: true,
+                minlength: minUsernameLen,
+                maxlength: maxUsernameLen
+            },
+            password: {
+                required: true,
+                minlength: minPasswordLen,
+                maxlength: maxPasswordLen
+            }
+        },
+        messages: {
+            username: {
+                required: 'Please enter your username',
+                minlength: usernameWarning,
+                maxlength: usernameWarning
+            },
+            password: {
+                required: 'Please enter your password',
+                minlength: passwordWarning,
+                maxlength: passwordWarning
+            }
         }
+    });
+});
 
-        if (!isValidPassword(password)) {
-            let message = passwordWarning;
-        }
+// function validateRegistration() {
+//     let username = document.getElementById('username');
+//     let password = document.getElementById('password');
+//     let password_retype = document.getElementById('password-retype');
+//     let element = document.getElementById('title');
 
-        let newElement = '<span id="validation-warning">' + message + '</span>';
-        element.insertAdjacentHTML('beforebegin', newElement);
-        return false;
-    } else {
-        return true;
-    }
-}
+//     if (password.innerHTML != password_retype) {
+//         let message = 'Passwords do not match. Please try again.';
+//         let newElement = '<span id="validation-warning">' + message + '</span>';
+//         element.insertAdjacentHTML('beforebegin', newElement);
+//         return false;
+//     }
 
-function validateLogin() {
-    let username = document.getElementById('username');
-    let password = document.getElementById('password');
-    let element = document.getElementsByTagName('form');
+//     if (!isValidUsername(username) && !isValidPassword(password)) {
+//         let message = usernameWarning + '<br>' + passwordWarning;
+//         let newElement = '<span id="validation-warning">' + message + '</span>';
+//         element.insertAdjacentHTML('beforebegin', newElement);
+//         return false;
+//     } else if (!isValidUsername(username) || !isValidPassword(password)) {
+//         if (!isValidUsername(username)) {
+//             let message = usernameWarning;
+//         }
 
-    if (!isValidUsername(username) && !isValidPassword(password)) {
-        let message = usernameWarning + '<br>' + passwordWarning;
-        let newElement = '<span id="validation-warning">' + message + '</span>';
-        element.insertAdjacentHTML('beforebegin', newElement);
-        return false;
-    } else if (!isValidUsername(username) || !isValidPassword(password)) {
-        if (!isValidUsername(username)) {
-            let message = usernameWarning;
-        }
+//         if (!isValidPassword(password)) {
+//             let message = passwordWarning;
+//         }
 
-        if (!isValidPassword(password)) {
-            let message = passwordWarning;
-        }
+//         let newElement = '<span id="validation-warning">' + message + '</span>';
+//         element.insertAdjacentHTML('beforebegin', newElement);
+//         return false;
+//     } else {
+//         return true;
+//     }
+// }
 
-        let newElement = '<span id="validation-warning">' + message + '</span>';
-        element.insertAdjacentHTML('beforebegin', newElement);
-        return false;
-    } else {
-        return true;
-    }
-}
+// function validateLogin() {
+//     let username = document.getElementById('username');
+//     let password = document.getElementById('password');
 
-function isValidUsername(username) {
-    if (username < minUsernameLen || username > maxUsernameLen) {
-        return false;
-    }
-}
+//     let usernameSpan = document.getElementById('username-validation');
+//     let passwordSpan = document.getElementById('password-validation');
+//     usernameSpan.innerText = '';
+//     passwordSpan.innerText = '';
 
-function isValidPassword(password) {
-    if (password < minPasswordLen || password > maxPasswordLen) {
-        return false;
-    }
-}
+//     if (!isValidUsername(username)) {
+//         usernameSpan.innerText = usernameWarning;
+//     }
+
+//     if (!isValidPassword(password)) {
+//         passwordSpan.innerText = passwordWarning;
+//     }
+// }
+
+// function isValidUsername(username) {
+//     if (username < minUsernameLen || username > maxUsernameLen) {
+//         return false;
+//     }
+//     return true;
+// }
+
+// function isValidPassword(password) {
+//     if (password < minPasswordLen || password > maxPasswordLen) {
+//         return false;
+//     }
+//     return true;
+// }

@@ -1,5 +1,12 @@
 body {
-    h1.title {
-        text-align: center;
+    form.verification-form {
+        label {
+            margin-bottom: 0.2rem;
+        }
+
+        span {
+            display: block;
+            color: red;
+        }
     }
 }

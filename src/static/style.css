@@ -1,5 +1,9 @@
-body h1.title {
-  text-align: center;
+body form.verification-form label {
+  margin-bottom: 0.2rem;
+}
+body form.verification-form span {
+  display: block;
+  color: red;
 }
 
 /*# sourceMappingURL=style.css.map */
