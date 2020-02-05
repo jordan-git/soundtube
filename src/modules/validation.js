@@ -9,8 +9,11 @@ const passwordMinWarning = `Password must be at least ${minPasswordLen} characte
 const passwordMaxWarning = `Password must be no more than ${maxPasswordLen} characters.`;
 const passwordNotMatchingWarning = "Passwords do not match.";
 
+// When page has fully loaded
 $(document).ready(function() {
+    // When user tries to submit the login form
     $("#login-form").validate({
+        // Rules to apply
         rules: {
             username: {
                 required: true,
@@ -23,6 +26,8 @@ $(document).ready(function() {
                 maxlength: maxPasswordLen
             }
         },
+
+        // Message to display if rule is broken
         messages: {
             username: {
                 minlength: usernameMinWarning,
@@ -36,6 +41,7 @@ $(document).ready(function() {
     });
 
     $("#register-form").validate({
+        // Rules to apply
         rules: {
             username: {
                 required: true,
@@ -55,6 +61,7 @@ $(document).ready(function() {
             }
         },
 
+        // Message to display if rule is broken
         messages: {
             username: {
                 minlength: usernameMinWarning,

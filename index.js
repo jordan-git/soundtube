@@ -1,16 +1,22 @@
+// Port to host the server on
 const port = "8000";
 
+// Main imports
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 
+// Creating express app
 const app = express();
 
+// Database connection
 const db = require("./src/modules/setup_database");
 
+// For reading/writing files
 const path = require("path");
 const fs = require("fs");
 
+// Configuring the template engine
 app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "pug");
 
@@ -26,6 +32,7 @@ app.use("/modules", express.static(path.join(__dirname, "src/modules")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Configuring express-session
 app.use(
     session({
         secret: "mysecretkeygoeshere",
@@ -34,8 +41,10 @@ app.use(
     })
 );
 
+// Gathering routes and giving them access to the app, file system and database
 const routes = require("./src/routes/routes")(app, fs, db);
 
+// Listen for connection requests to our application
 app.listen(port, () => {
     console.log(`Listening to requests on http://localhost:${port}`);
 });

@@ -1,6 +1,3 @@
-// Import user routes from 'user.js'
-const userRouter = require("./user");
-
 const appRouter = (app, fs, db) => {
     app.get("/", (req, res) => {
         res.render("home", { title: "Home" });
@@ -11,14 +8,16 @@ const appRouter = (app, fs, db) => {
     });
 
     app.post("/login", (req, res) => {
+        // Storing submitted information
         let username = req.body.username;
         let password = req.body.password;
 
+        // Checking if the username/password combination exists
         let sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-
         db.query(sql, [username, password], (err, result) => {
             if (err) throw err;
 
+            // If the user doesn't exist
             if (result.length == 0) {
                 res.render("login", {
                     title: "Log In",
@@ -35,14 +34,16 @@ const appRouter = (app, fs, db) => {
     });
 
     app.post("/register", (req, res) => {
+        // Storing submitted information
         let username = req.body.username;
         let password = req.body.password;
 
+        // Checking if the username exists
         let sql = "SELECT * FROM users WHERE username = ?";
-
         db.query(sql, username, (err, result) => {
             if (err) throw err;
 
+            // If the user exists
             if (result.length > 0) {
                 res.render("register", {
                     title: "Register",
@@ -53,9 +54,6 @@ const appRouter = (app, fs, db) => {
             }
         });
     });
-
-    // Include user routes in parent router
-    userRouter(app, fs);
 };
 
 module.exports = appRouter;
