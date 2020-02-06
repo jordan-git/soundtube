@@ -14,7 +14,7 @@ block validation-content
             label(for="email") Email
             input(type="email" class="form-control" name="email" id="email" placeholder="johndoe@email.com")
         div.form-group
-            label Date of Birth (DD/MM/YYYY)
+            label Date of Birth
             div.form-row
                 div.col-md-4
                     select(class="custom-select" name="day")
@@ -24,8 +24,9 @@ block validation-content
                 div.col-md-4
                     select(class="custom-select" name="month")
                         - var num = 1;
-                            while num <= 12
-                                option(value=num)= num++
+                        - var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                            for month in months
+                                option(value=num++)= month
                 div.col-md-4
                     select(class="custom-select" name="year")
                         - var num = 2020;
