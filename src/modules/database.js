@@ -24,25 +24,38 @@ db.connect(err => {
     });
 
     // Create user table
-    sql = `CREATE TABLE IF NOT EXISTS users (id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    sql = `CREATE TABLE IF NOT EXISTS users (user_id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
         username VARCHAR(24) NOT NULL, 
-        password VARCHAR(128) NOT NULL,
+        password VARCHAR(128) NOT NULL)`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+    });
+
+    // Create profile table
+    sql = `CREATE TABLE IF NOT EXISTS profiles (profile_id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
         email VARCHAR(64) NOT NULL,
-        dob DATE NOT NULL)`;
+        dob DATE NOT NULL,
+        stage_name VARCHAR(32),
+        location VARCHAR(48), 
+        interests VARCHAR(48),
+        favourite_genres VARCHAR(64),
+        user_id INT,
+        FOREIGN KEY(user_id)
+            REFERENCES users(user_id))`;
     db.query(sql, (err, result) => {
         if (err) throw err;
     });
 
     // Add admin account to the user table if it doesn't already exist
-    let password_hash = pw.generate("password");
-    sql = `INSERT INTO users (id, username, password, email, dob)
-    SELECT * FROM (SELECT NULL, 'admin', '${password_hash}', 'admin@admin.com', '2020-01-01') AS tmp
-    WHERE NOT EXISTS (
-        SELECT username FROM users WHERE username = 'admin'
-    ) LIMIT 1`;
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-    });
+    // let password_hash = pw.generate("password");
+    // sql = `INSERT INTO users (user_id, username, password, email, dob)
+    // SELECT * FROM (SELECT NULL, 'admin', '${password_hash}', 'admin@admin.com', '2020-01-01') AS tmp
+    // WHERE NOT EXISTS (
+    //     SELECT username FROM users WHERE username = 'admin'
+    // ) LIMIT 1`;
+    // db.query(sql, (err, result) => {
+    //     if (err) throw err;
+    // });
 });
 
 module.exports = db;

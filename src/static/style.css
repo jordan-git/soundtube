@@ -10,12 +10,15 @@ body main.container div#form-container {
 body main.container div#form-container h1#title {
   text-align: center;
 }
-body main.container div#form-container form.validation-form label.error {
+body main.container form.validation-form label.error {
   color: red;
 }
-body main.container div#form-container form.validation-form button.submit {
+body main.container form.validation-form button.submit {
   display: block;
   margin: 0 auto;
+}
+body main.container form.validation-form input#profile-pic {
+  padding-left: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */

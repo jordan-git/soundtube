@@ -1,0 +1,26 @@
+extends validation-layout
+
+block validation-heading
+    h1#title Edit Your Profile
+    hr
+
+block validation-content
+    div#profile-info
+        form(id="register-form" class="validation-form" method="post" action="/edit_profile")
+            div.form-group
+                label(for="stage-name") Stage Name
+                input(type="text" class="form-control" name="stage_name" id="stage-name" placeholder="Eminem" value=stage_name)
+            div.form-group
+                label(for="profile-pic") Profile Picture
+                input(type="file" class="form-control-file" name="profile-pic" id="profile-pic")
+            div.form-group
+                label(for="interests") Interests
+                input(type="text" class="form-control" name="interests" id="interests" placeholder="Running, football, .." value=interests)
+                //- small(class="form-text text-muted") Your username must be 4-24 characters long.
+            div.form-group
+                label(for="interests") Favourite Genre(s)
+                input(type="text" class="form-control" name="favourite_genres" id="favourite-genres" placeholder="Rap, Jazz, .." value=favourite_genres)
+            div.form-group
+                label(for="email") Email
+                input(type="email" class="form-control" name="email" id="email" placeholder="johndoe@email.com" value=email)
+            button(class="submit" type="submit" class="btn btn-primary") Submit

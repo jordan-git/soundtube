@@ -14,16 +14,20 @@ body {
             h1#title {
                 text-align: center;
             }
+        }
 
-            form.validation-form {
-                label.error {
-                    color: red;
-                }
+        form.validation-form {
+            label.error {
+                color: red;
+            }
 
-                button.submit {
-                    display: block;
-                    margin: 0 auto;
-                }
+            button.submit {
+                display: block;
+                margin: 0 auto;
+            }
+
+            input#profile-pic {
+                padding-left: 20px;
             }
         }
         //
