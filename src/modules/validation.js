@@ -3,11 +3,11 @@ const maxUsernameLen = 24;
 const minPasswordLen = 6;
 const maxPasswordLen = 32;
 
-const usernameMinWarning = `Username must be at least ${minUsernameLen} characters.`;
-const usernameMaxWarning = `Username must be no more than ${maxUsernameLen} characters.`;
-const passwordMinWarning = `Password must be at least ${minPasswordLen} characters.`;
-const passwordMaxWarning = `Password must be no more than ${maxPasswordLen} characters.`;
-const passwordNotMatchingWarning = "Passwords do not match.";
+const usernameMinWarning = `Username must be at least ${minUsernameLen} characters`;
+const usernameMaxWarning = `Username must be no more than ${maxUsernameLen} characters`;
+const passwordMinWarning = `Password must be at least ${minPasswordLen} characters`;
+const passwordMaxWarning = `Password must be no more than ${maxPasswordLen} characters`;
+const passwordNotMatchingWarning = "Passwords do not match";
 
 // When page has fully loaded
 $(document).ready(function() {
@@ -48,6 +48,15 @@ $(document).ready(function() {
                 minlength: minUsernameLen,
                 maxlength: maxUsernameLen
             },
+            email: {
+                required: true,
+                email: true
+            },
+            year: {
+                required: true,
+                minlength: 4,
+                maxlength: 4
+            },
             password: {
                 required: true,
                 minlength: minPasswordLen,
@@ -67,6 +76,7 @@ $(document).ready(function() {
                 minlength: usernameMinWarning,
                 maxlength: usernameMaxWarning
             },
+            email: "Please enter a valid email address",
             password: {
                 minlength: passwordMinWarning,
                 maxlength: passwordMaxWarning

@@ -37,7 +37,7 @@ const appRouter = (app, fs, db) => {
             if (result.length == 0) {
                 res.render("login", {
                     title: "Log In",
-                    response: "Invalid username/password combination."
+                    response: "Invalid username/password combination"
                 });
             } else {
                 // If password matches hash
@@ -48,7 +48,7 @@ const appRouter = (app, fs, db) => {
                 } else {
                     res.render("login", {
                         title: "Log In",
-                        response: "Invalid username/password combination."
+                        response: "Invalid username/password combination"
                     });
                 }
             }
@@ -63,6 +63,8 @@ const appRouter = (app, fs, db) => {
         // Storing submitted information
         let username = req.body.username;
         let password = req.body.password;
+        let email = req.body.email;
+        let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
 
         // Checking if the username exists
         let sql = "SELECT * FROM users WHERE username = ?";
@@ -73,15 +75,20 @@ const appRouter = (app, fs, db) => {
             if (result.length > 0) {
                 res.render("register", {
                     title: "Register",
-                    response: "Username is already in use."
+                    response: "Username is already in use"
                 });
             } else {
                 // Turn password into hash and store in database
                 password = pw.generate(password);
-                sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-                db.query(sql, [username, password], (err, result) => {
-                    if (err) throw err;
-                });
+                sql =
+                    "INSERT INTO users (username, password, email, dob) VALUES (?, ?, ?, ?)";
+                db.query(
+                    sql,
+                    [username, password, email, dob],
+                    (err, result) => {
+                        if (err) throw err;
+                    }
+                );
 
                 req.session.logged_in = true;
                 req.session.username = username;

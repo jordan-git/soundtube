@@ -2,15 +2,73 @@ extends validation-layout
 
 block validation-heading
     h1#title Register
+    hr
 
 block validation-content
     form(id="register-form" class="validation-form" method="post" action="/register")
         div.form-group
             label(for="username") Username
             input(type="text" class="form-control" name="username" id="username" placeholder="Username")
+            small(id="usernameHelpBlock" class="form-text text-muted") Your username must be 4-24 characters long.
+        div.form-group
+            label(for="email") Email
+            input(type="email" class="form-control" name="email" id="email" placeholder="johndoe@email.com")
+        div.form-group
+            label Date of Birth
+            div.form-row
+                div.col-md-4
+                    select(class="custom-select" name="day")
+                        option(value="1") 1
+                        option(value="2") 2
+                        option(value="3") 3
+                        option(value="4") 4
+                        option(value="5") 5
+                        option(value="6") 6
+                        option(value="7") 7
+                        option(value="8") 8
+                        option(value="9") 9
+                        option(value="10") 10
+                        option(value="11") 11
+                        option(value="12") 12
+                        option(value="13") 13
+                        option(value="14") 14
+                        option(value="15") 15
+                        option(value="16") 16
+                        option(value="17") 17
+                        option(value="18") 18
+                        option(value="19") 19
+                        option(value="20") 20
+                        option(value="21") 21
+                        option(value="22") 22
+                        option(value="23") 23
+                        option(value="24") 24
+                        option(value="25") 25
+                        option(value="26") 26
+                        option(value="27") 27
+                        option(value="28") 28
+                        option(value="29") 29
+                        option(value="30") 30
+                        option(value="31") 31
+                div.col-md-4
+                    select(class="custom-select" name="month")
+                        option(value="1") 1
+                        option(value="2") 2
+                        option(value="3") 3
+                        option(value="4") 4
+                        option(value="5") 5
+                        option(value="6") 6
+                        option(value="7") 7
+                        option(value="8") 8
+                        option(value="9") 9
+                        option(value="10") 10
+                        option(value="11") 11
+                        option(value="12") 12
+                div.col-md-4
+                    input(type="number" min="1920" max="2020" class="form-control" name="year" id="year" placeholder="YYYY")
         div.form-group
             label(for="password") Password
             input(type="password" class="form-control" name="password" id="password" placeholder="Password")
+            small(id="passwordHelpBlock" class="form-text text-muted") Your password must be 6-32 characters long.
         div.form-group
             label(for="password-retype") Confirm Password
             input(type="password" class="form-control" name="password-retype" id="password-retype" placeholder="Password")

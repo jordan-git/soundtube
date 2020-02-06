@@ -1,11 +1,12 @@
 extends main-layout
 
 block layout-content
-    if response
-        div(class="alert alert-danger")
-            span#validation-response= response
-    block validation-heading
-    block validation-content
+    div(id="form-container")
+        if response
+            div(class="alert alert-danger")
+                span#validation-response= response
+        block validation-heading
+        block validation-content
 
 block scripts
     script(src="../static/jquery.validate.min.js")

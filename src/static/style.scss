@@ -7,9 +7,23 @@ body {
             font-size: 1.4em;
         }
 
-        form.validation-form {
-            label.error {
-                color: red;
+        div#form-container {
+            width: 50%;
+            margin: 0 auto;
+
+            h1#title {
+                text-align: center;
+            }
+
+            form.validation-form {
+                label.error {
+                    color: red;
+                }
+
+                button.submit {
+                    display: block;
+                    margin: 0 auto;
+                }
             }
         }
         //

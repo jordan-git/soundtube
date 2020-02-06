@@ -26,15 +26,17 @@ db.connect(err => {
     // Create user table
     sql = `CREATE TABLE IF NOT EXISTS users (id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
         username VARCHAR(24) NOT NULL, 
-        password VARCHAR(128) NOT NULL)`;
+        password VARCHAR(128) NOT NULL,
+        email VARCHAR(64) NOT NULL,
+        dob DATE NOT NULL)`;
     db.query(sql, (err, result) => {
         if (err) throw err;
     });
 
     // Add admin account to the user table if it doesn't already exist
     let password_hash = pw.generate("password");
-    sql = `INSERT INTO users (id, username, password)
-    SELECT * FROM (SELECT NULL, 'admin', '${password_hash}') AS tmp
+    sql = `INSERT INTO users (id, username, password, email, dob)
+    SELECT * FROM (SELECT NULL, 'admin', '${password_hash}', 'admin@admin.com', '2020-01-01') AS tmp
     WHERE NOT EXISTS (
         SELECT username FROM users WHERE username = 'admin'
     ) LIMIT 1`;
