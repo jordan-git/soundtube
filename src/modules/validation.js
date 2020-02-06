@@ -52,11 +52,6 @@ $(document).ready(function() {
                 required: true,
                 email: true
             },
-            year: {
-                required: true,
-                minlength: 4,
-                maxlength: 4
-            },
             password: {
                 required: true,
                 minlength: minPasswordLen,
