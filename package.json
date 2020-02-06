@@ -22,6 +22,7 @@
         "express-session": "^1.17.0",
         "mysql": "^2.18.1",
         "nodemon": "^2.0.2",
+        "password-hash": "^1.2.2",
         "pug": "^2.0.4",
         "sass": "^1.25.0"
     }

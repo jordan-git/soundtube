@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 // Database connection
-const db = require("./src/modules/setup_database");
+const db = require("./src/modules/database");
 
 // For reading/writing files
 const path = require("path");

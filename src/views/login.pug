@@ -2,9 +2,6 @@ extends validation-layout
 
 block validation-heading
     h1#title Log In
-    if response
-        div
-            span#validation-response= response
 
 block validation-content
     form(id="login-form" class="validation-form" method="post" action="/login")

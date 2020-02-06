@@ -1,8 +1,6 @@
 body main.container span#validation-response {
   display: block;
-  padding: 50 0;
   text-align: center;
-  color: red;
   font-size: 1.4em;
 }
 body main.container form.validation-form label.error {

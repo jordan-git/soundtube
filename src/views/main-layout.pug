@@ -16,6 +16,14 @@ html(lang="en")
 				ul(class="navbar-nav mr-auto mt-2 mt-lg-0")
 					li.nav-item
 						a(class="nav-link" href="/") Home
+				form.form-inline
+					input(class="form-control mr-sm-2" type="search" placeholder="Search")
+					button(class="btn btn-outline-success my-2 my-sm-0" type="submit") Search
+				if logged_in
+					a(class="btn btn-outline-danger ml-2" href="/login") Log Out
+				else
+					a(class="btn btn-outline-primary ml-2" href="/login") Log In
+					a(class="btn btn-outline-primary ml-2" href="/register") Register
 						
 		main(class="container p-5")
 			block layout-content

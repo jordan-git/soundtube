@@ -1,10 +1,9 @@
 body {
     main.container {
+        // Validation CSS
         span#validation-response {
             display: block;
-            padding: 50 0;
             text-align: center;
-            color: red;
             font-size: 1.4em;
         }
 
@@ -13,5 +12,6 @@ body {
                 color: red;
             }
         }
+        //
     }
 }
