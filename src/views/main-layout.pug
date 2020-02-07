@@ -28,6 +28,11 @@ html(lang="en")
 					a(class="btn btn-outline-primary ml-2" href="/register") Register
 						
 		main(class="container p-5")
+			if response
+				div(class="alert alert-danger alert-dismissable fade show" role="alert")
+					span= response
+					button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+						span(aria-hidden="true") &times;
 			block layout-content
 		script(src="../static/jquery-3.4.1.min.js")
 		script(src="../static/bootstrap.min.js")

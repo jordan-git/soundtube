@@ -1,12 +1,12 @@
 body {
     main.container {
-        // Validation CSS
-        span#validation-response {
-            display: block;
-            text-align: center;
-            font-size: 1.4em;
+        // Alerts
+        div.alert {
+            span {
+                font-size: 1.3em;
+            }
         }
-
+        // Validation CSS
         div#form-container {
             width: 50%;
             margin: 0 auto;

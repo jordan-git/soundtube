@@ -1,24 +1,30 @@
-const mysql = require("mysql");
-const pw = require("password-hash");
+const mysql = require('mysql');
+const pw = require('password-hash');
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "password"
+    host: 'localhost',
+    user: 'root',
+    password: 'password'
 });
 
 // Connect to the database
 db.connect(err => {
     if (err) throw err;
 
+    // Drop database if it exists (for testing only while new rows are added)
+    let sql = 'DROP DATABASE IF EXISTS soundtube';
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+    });
+
     // Create database if it doesn't exist
-    let sql = "CREATE DATABASE IF NOT EXISTS soundtube";
+    sql = 'CREATE DATABASE IF NOT EXISTS soundtube';
     db.query(sql, (err, result) => {
         if (err) throw err;
     });
 
     // Use all subsequent queries on the database
-    sql = "USE soundtube";
+    sql = 'USE soundtube';
     db.query(sql, (err, result) => {
         if (err) throw err;
     });

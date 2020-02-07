@@ -2,9 +2,6 @@ extends main-layout
 
 block layout-content
     div(id="form-container")
-        if response
-            div(class="alert alert-danger")
-                span#validation-response= response
         block validation-heading
         block validation-content
 

@@ -1,7 +1,5 @@
-body main.container span#validation-response {
-  display: block;
-  text-align: center;
-  font-size: 1.4em;
+body main.container div.alert span {
+  font-size: 1.3em;
 }
 body main.container div#form-container {
   width: 50%;
