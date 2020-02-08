@@ -17,21 +17,33 @@ block validation-content
                 label Date of Birth
                 div.form-row
                     div.col-md-4
-                        select(class="custom-select" name="day" value=day)
+                        select(class="custom-select" name="day")
                             - var num = 1;
                             while num <= 31
-                                option(value=num)= num++
+                                if num == day
+                                    option(selected value=num)= num++
+                                else
+                                    option(value=num)= num++
                     div.col-md-4
-                        select(class="custom-select" name="month" value=month)
+                        select(class="custom-select" name="month")
                             - var num = 1;
                             - var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                                for month in months
-                                    option(value=num++)= month
+                                for m in months
+                                    if num == month
+                                        option(selected value=num++)= m
+                                    else
+                                        option(value=num++)= m
                     div.col-md-4
-                        select(class="custom-select" name="year" value=year)
+                        select(class="custom-select" name="year")
                             - var num = 2020;
                                 while num >= 1920
-                                    option(value=num)= num--
+                                    if num == year
+                                        option(selected value=num)= num--
+                                    else
+                                        option(value=num)= num--
+            div.form-group
+                label(for="location") Location
+                input(type="text" class="form-control" name="location" id="location" placeholder="Ireland, France, .." value=location)
             div.form-group
                 label(for="profile-pic") Profile Picture
                 input(type="file" class="form-control-file" name="profile-pic" id="profile-pic")
@@ -41,7 +53,4 @@ block validation-content
             div.form-group
                 label(for="interests") Favourite Genre(s)
                 input(type="text" class="form-control" name="favourite_genres" id="favourite-genres" placeholder="Rap, Jazz, .." value=favourite_genres)
-            div.form-group
-                label(for="email") Email
-                input(type="email" class="form-control" name="email" id="email" placeholder="johndoe@email.com" value=email)
             button(class="submit" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#successModal") Submit
