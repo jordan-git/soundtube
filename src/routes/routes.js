@@ -11,6 +11,25 @@ const isLoggedIn = req => {
     }
 };
 
+// Saves a user's profile info when passed the request and database
+const saveUser = (req, db) => {
+    let stage_name = req.body.stage_name;
+    let location = req.body.location;
+    let interests = req.body.interests;
+    let favourite_genres = req.body.favourite_genres;
+    let email = req.body.email;
+    let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
+
+    subquery = `SELECT user_id FROM users WHERE username = '${req.session.username}'`;
+    sql = `UPDATE profiles 
+    SET email = '${email}', dob = '${dob}', stage_name = '${stage_name}', location = '${location}', interests = '${interests}', favourite_genres = '${favourite_genres}'
+    WHERE user_id = (${subquery})`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+    });
+};
+
 const appRouter = (app, fs, db) => {
     app.get("/", (req, res) => {
         res.render("home", {
@@ -38,8 +57,8 @@ const appRouter = (app, fs, db) => {
         let password = req.body.password;
 
         // Checking if the username/password combination exists
-        let sql = "SELECT * FROM users WHERE username = ?";
-        db.query(sql, username, (err, result) => {
+        let sql = `SELECT * FROM users WHERE username = '${username}'`;
+        db.query(sql, (err, result) => {
             if (err) throw err;
 
             // If the user doesn't exist
@@ -95,8 +114,8 @@ const appRouter = (app, fs, db) => {
         let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
 
         // Checking if the username exists
-        let sql = "SELECT * FROM users WHERE username = ?";
-        db.query(sql, username, (err, result) => {
+        let sql = `SELECT * FROM users WHERE username = '${username}'`;
+        db.query(sql, (err, result) => {
             if (err) throw err;
 
             // If the username exists
@@ -108,23 +127,19 @@ const appRouter = (app, fs, db) => {
             } else {
                 // Turn password into hash and store in database
                 password = pw.generate(password);
-                sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-                db.query(sql, [username, password], (err, result) => {
+                sql = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
+                db.query(sql, (err, result) => {
                     if (err) throw err;
                 });
 
-                sql = "SELECT * FROM users WHERE username = ?";
-                db.query(sql, username, (err, result) => {
+                sql = `SELECT * FROM users WHERE username = ${username}`;
+                db.query(sql, (err, result) => {
                     if (err) throw err;
-                    sql =
-                        "INSERT INTO profiles (user_id, email, dob) VALUES (?, ?, ?)";
-                    db.query(
-                        sql,
-                        [result[0].user_id, email, dob],
-                        (err, result) => {
-                            if (err) throw err;
-                        }
-                    );
+                    let user_id = result[0].user_id;
+                    sql = `INSERT INTO profiles (user_id, email, dob) VALUES ('${user_id}', '${email}', '${dob}')`;
+                    db.query(sql, (err, result) => {
+                        if (err) throw err;
+                    });
                 });
 
                 req.session.logged_in = true;
@@ -142,23 +157,21 @@ const appRouter = (app, fs, db) => {
             return;
         }
 
-        let sql = "SELECT * FROM users WHERE username = ?";
+        let sql = `SELECT * FROM users WHERE username = '${req.session.username}'`;
 
-        db.query(sql, req.session.username, (err, result) => {
+        db.query(sql, (err, result) => {
             if (err) throw err;
             let user_id = result[0].user_id;
             let username = result[0].username;
 
-            sql = "SELECT * FROM profiles WHERE user_id = ?";
-            db.query(sql, user_id, (err, result) => {
+            sql = `SELECT * FROM profiles WHERE user_id = '${user_id}'`;
+            db.query(sql, (err, result) => {
                 let stage_name = result[0].stage_name;
                 let email = result[0].email;
-                // TODO: DOB !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 let dob = result[0].dob;
                 let year = dob.getFullYear();
                 let month = dob.getMonth();
                 let day = dob.getDate();
-                console.log(year, month, day);
                 let location = result[0].location;
                 let interests = result[0].interests;
                 let favourite_genres = result[0].favourite_genres;
@@ -185,37 +198,7 @@ const appRouter = (app, fs, db) => {
             res.redirect("/");
             return;
         }
-
-        let stage_name = req.body.stage_name;
-        let location = req.body.location;
-        let interests = req.body.interests;
-        let favourite_genres = req.body.favourite_genres;
-        let email = req.body.email;
-        let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
-
-        let sql = "SELECT * FROM users WHERE username = ?";
-        db.query(sql, req.session.username, (err, result) => {
-            if (err) throw err;
-            let user_id = result[0].user_id;
-
-            sql =
-                "UPDATE profiles SET stage_name = ?, email = ?, dob = ?, location = ?, interests = ?, favourite_genres = ? WHERE user_id = ?";
-            db.query(
-                sql,
-                [
-                    stage_name,
-                    email,
-                    dob,
-                    location,
-                    interests,
-                    favourite_genres,
-                    user_id
-                ],
-                (err, result) => {
-                    if (err) throw err;
-                }
-            );
-        });
+        saveUser(req, db);
         res.redirect("/edit-profile");
     });
 };
