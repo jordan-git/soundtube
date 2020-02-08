@@ -11,11 +11,11 @@ const db = mysql.createConnection({
 db.connect(err => {
     if (err) throw err;
 
-    // Drop database if it exists (for testing only while new rows are added)
-    let sql = 'DROP DATABASE IF EXISTS soundtube';
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-    });
+    // // Drop database if it exists (for testing only while new rows are added)
+    // let sql = 'DROP DATABASE IF EXISTS soundtube';
+    // db.query(sql, (err, result) => {
+    //     if (err) throw err;
+    // });
 
     // Create database if it doesn't exist
     sql = 'CREATE DATABASE IF NOT EXISTS soundtube';

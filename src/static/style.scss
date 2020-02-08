@@ -1,4 +1,13 @@
 body {
+    header {
+        nav {
+            form.form-inline {
+                padding-right: 8px;
+                border-right: 1px solid grey;
+            }
+        }
+    }
+
     main.container {
         // Alerts
         div.alert {

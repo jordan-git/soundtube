@@ -1,3 +1,7 @@
+body header nav form.form-inline {
+  padding-right: 8px;
+  border-right: 1px solid grey;
+}
 body main.container div.alert span {
   font-size: 1.3em;
 }

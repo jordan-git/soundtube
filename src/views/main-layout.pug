@@ -17,15 +17,15 @@ html(lang="en")
 					li.nav-item
 						a(class="nav-link" href="/") Home
 					li.nav-item
-						a(class="nav-link" href="/edit_profile") Edit Profile
+						a(class="nav-link" href="/edit-profile") Edit Profile
 				form.form-inline
 					input(class="form-control mr-sm-2" type="search" placeholder="Search")
-					button(class="btn btn-outline-success my-2 my-sm-0" type="submit") Search
+					button(class="btn btn-outline-info my-2 my-sm-0" type="submit") Search
 				if logged_in
-					a(class="btn btn-outline-danger ml-2" href="/login") Log Out
+					a(class="btn btn-outline-danger ml-2" href="/log-out") Log Out
 				else
-					a(class="btn btn-outline-primary ml-2" href="/login") Log In
-					a(class="btn btn-outline-primary ml-2" href="/register") Register
+					a(class="btn btn-outline-info ml-2" href="/login") Log In
+					a(class="btn btn-outline-info ml-2" href="/register") Register
 						
 		main(class="container p-5")
 			if response

@@ -4,10 +4,10 @@ const pw = require('password-hash');
 // Return true if logged in else false
 const isLoggedIn = req => {
     // req.session.logged_in != null ? true : false;
-    if (req.session.logged_in == null) {
-        return false;
-    } else {
+    if (req.session.logged_in != null) {
         return true;
+    } else {
+        return false;
     }
 };
 
@@ -21,10 +21,8 @@ const appRouter = (app, fs, db) => {
     });
 
     app.get('/login', (req, res) => {
-        // If logged in, log out
+        // If logged in, do nothing
         if (isLoggedIn(req)) {
-            req.session.destroy();
-            res.redirect('/');
             return;
         }
 
@@ -64,6 +62,14 @@ const appRouter = (app, fs, db) => {
                 }
             }
         });
+    });
+
+    app.get('/log-out', (req, res) => {
+        // If logged in, log out
+        if (isLoggedIn(req)) {
+            req.session.destroy();
+            res.redirect('/');
+        }
     });
 
     app.get('/register', (req, res) => {
@@ -129,7 +135,7 @@ const appRouter = (app, fs, db) => {
         });
     });
 
-    app.get('/edit_profile', (req, res) => {
+    app.get('/edit-profile', (req, res) => {
         // If not logged in, request login
         if (!isLoggedIn(req)) {
             res.redirect('/login');
@@ -147,7 +153,8 @@ const appRouter = (app, fs, db) => {
             db.query(sql, user_id, (err, result) => {
                 let stage_name = result[0].stage_name;
                 let email = result[0].email;
-                // TODO: DOB
+                // TODO: DOB !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                let dob = results[0].dob;
                 let location = result[0].location;
                 let interests = result[0].interests;
                 let favourite_genres = result[0].favourite_genres;
@@ -157,6 +164,9 @@ const appRouter = (app, fs, db) => {
                     logged_in: req.session.logged_in,
                     username: username,
                     email: email,
+                    day: day,
+                    month: month,
+                    year: year,
                     stage_name: stage_name,
                     location: location,
                     interests: interests,
@@ -166,7 +176,7 @@ const appRouter = (app, fs, db) => {
         });
     });
 
-    app.post('/edit_profile', (req, res) => {
+    app.post('/edit-profile', (req, res) => {
         if (!isLoggedIn(req)) {
             res.redirect('/');
             return;
@@ -177,6 +187,7 @@ const appRouter = (app, fs, db) => {
         let interests = req.body.interests;
         let favourite_genres = req.body.favourite_genres;
         let email = req.body.email;
+        let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
 
         let sql = 'SELECT * FROM users WHERE username = ?';
         db.query(sql, req.session.username, (err, result) => {
@@ -184,12 +195,13 @@ const appRouter = (app, fs, db) => {
             let user_id = result[0].user_id;
 
             sql =
-                'UPDATE profiles SET stage_name = ?, email = ?, location = ?, interests = ?, favourite_genres = ? WHERE user_id = ?';
+                'UPDATE profiles SET stage_name = ?, email = ?, dob = ?, location = ?, interests = ?, favourite_genres = ? WHERE user_id = ?';
             db.query(
                 sql,
                 [
                     stage_name,
                     email,
+                    dob,
                     location,
                     interests,
                     favourite_genres,
@@ -200,7 +212,7 @@ const appRouter = (app, fs, db) => {
                 }
             );
         });
-        res.redirect('/edit_profile');
+        res.redirect('/edit-profile');
     });
 };
 
