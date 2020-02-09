@@ -1,36 +1,74 @@
 const pw = require("password-hash");
 
-// Helper functions
-// Return true if logged in else false
-const isLoggedIn = req => {
-    // req.session.logged_in != null ? true : false;
-    if (req.session.logged_in != null) {
-        return true;
-    } else {
-        return false;
-    }
-};
-
-// Saves a user's profile info when passed the request and database
-const saveUser = (req, db) => {
-    let stage_name = req.body.stage_name;
-    let location = req.body.location;
-    let interests = req.body.interests;
-    let favourite_genres = req.body.favourite_genres;
-    let email = req.body.email;
-    let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
-
-    subquery = `SELECT user_id FROM users WHERE username = '${req.session.username}'`;
-    sql = `UPDATE profiles 
-    SET email = '${email}', dob = '${dob}', stage_name = '${stage_name}', location = '${location}', interests = '${interests}', favourite_genres = '${favourite_genres}'
-    WHERE user_id = (${subquery})`;
-
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-    });
-};
-
 const appRouter = (app, fs, db) => {
+    // Helper modules
+    const dbHelper = require("../modules/db_helper")(db);
+
+    console.log(dbHelper);
+
+    // Helper functions
+    // Return true if logged in else false
+    const isLoggedIn = req => {
+        // req.session.logged_in != null ? true : false;
+        if (req.session.logged_in != null) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    // Log in the user
+    const logIn = (req, username, user_id) => {
+        req.session.logged_in = true;
+        req.session.username = username;
+        req.session.user_id = user_id;
+    };
+
+    // Log out the user
+    const logOut = req => {
+        req.session.destroy();
+    };
+
+    // // Saves a user's profile info when passed the request and database
+    // const updateUser = req => {
+    //     let stage_name = req.body.stage_name;
+    //     let location = req.body.location;
+    //     let interests = req.body.interests;
+    //     let favourite_genres = req.body.favourite_genres;
+    //     let email = req.body.email;
+    //     let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
+
+    //     sql = `UPDATE profiles
+    //     SET email = '${email}', dob = '${dob}', stage_name = '${stage_name}', location = '${location}', interests = '${interests}', favourite_genres = '${favourite_genres}'
+    //     WHERE user_id = ${req.session.user_id}`;
+
+    //     db.query(sql, (err, result) => {
+    //         if (err) throw err;
+    //     });
+    // };
+
+    // // Adds a user to the database taking in two lists with the field and value
+    // const addUser = (fields, values) => {
+    //     // Surround each value in quotes
+    //     for (let i = 0; i < values.length; i++) {
+    //         // If field is password, hash it
+    //         if (fields[i] == "password") {
+    //             values[i] = pw.generate(values[i]);
+    //         }
+
+    //         values[i] = "'" + values[i] + "'";
+    //     }
+
+    //     // Format each value for SQL
+    //     fields = fields.join(", ");
+    //     values = values.join(", ");
+
+    //     let sql = `INSERT INTO users (${fields}) VALUES (${values})`;
+    //     db.query(sql, (err, result) => {
+    //         if (err) throw err;
+    //     });
+    // };
+
     app.get("/", (req, res) => {
         res.render("home", {
             title: "Home",
@@ -70,8 +108,7 @@ const appRouter = (app, fs, db) => {
             } else {
                 // If password matches hash
                 if (pw.verify(password, result[0].password)) {
-                    req.session.logged_in = true;
-                    req.session.username = result[0].username;
+                    logIn(req, result[0].username, result[0].user_id);
                     res.redirect("/");
                 } else {
                     res.render("login", {
@@ -86,7 +123,7 @@ const appRouter = (app, fs, db) => {
     app.get("/log-out", (req, res) => {
         // If logged in, log out
         if (isLoggedIn(req)) {
-            req.session.destroy();
+            logOut(req);
             res.redirect("/");
         }
     });
@@ -126,11 +163,10 @@ const appRouter = (app, fs, db) => {
                 });
             } else {
                 // Turn password into hash and store in database
-                password = pw.generate(password);
-                sql = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
-                db.query(sql, (err, result) => {
-                    if (err) throw err;
-                });
+                dbHelper.addUser(
+                    ["username", "password"],
+                    [username, password]
+                );
 
                 sql = `SELECT * FROM users WHERE username = ${username}`;
                 db.query(sql, (err, result) => {
@@ -139,11 +175,11 @@ const appRouter = (app, fs, db) => {
                     sql = `INSERT INTO profiles (user_id, email, dob) VALUES ('${user_id}', '${email}', '${dob}')`;
                     db.query(sql, (err, result) => {
                         if (err) throw err;
+
+                        logIn(req, username, user_id);
                     });
                 });
 
-                req.session.logged_in = true;
-                req.session.username = username;
                 // TODO: Registration success message
                 res.redirect("/");
             }
@@ -194,12 +230,20 @@ const appRouter = (app, fs, db) => {
     });
 
     app.post("/edit-profile", (req, res) => {
+        // If not logged in, request login
         if (!isLoggedIn(req)) {
             res.redirect("/");
             return;
         }
-        saveUser(req, db);
+
+        //TODO FIX UPDATE
+        dbHelper.updateUser(req);
         res.redirect("/edit-profile");
+    });
+
+    app.get("/test", (req, res) => {
+        // dbHelper.addUser(["username", "password"], ["123", "123"]);
+        dbHelper.deleteUser("jordan");
     });
 };
 
