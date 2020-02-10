@@ -1,16 +1,45 @@
 const pw = require("password-hash");
 
-const quoteList = (fields, values) => {
-    // Surround each value in quotes
-    for (let i = 0; i < values.length; i++) {
+// Process dictionary containing SQL fields and values
+const processData = dict => {
+    let fields = [];
+    let values = [];
+
+    for (let [key, value] of Object.entries(dict)) {
+        fields.push(key);
+
         // If field is password, hash it first
-        if (fields[i] == "password") {
-            values[i] = pw.generate(values[i]);
+        if (key == "password") {
+            value = pw.generate(value);
         }
 
-        values[i] = "'" + values[i] + "'";
+        values.push(`'${value}'`);
     }
-    return values;
+
+    let formattedFields = fields.join(", ");
+    let formattedValues = values.join(", ");
+
+    // Return two strings of formatted fields and values
+    return [formattedFields, formattedValues];
+};
+
+// Process dictionary containing SQL fields and values for SET query only (field = value)
+const processDataForSetQuery = dict => {
+    let entries = [];
+
+    for (const [key, value] of Object.entries(dict)) {
+        // If field is password, hash it first
+        if (key == "password") {
+            value = pw.generate(value);
+        }
+
+        entries.push(`${key} = '${value}'`);
+    }
+
+    let formattedEntries = entries.join(", ");
+
+    // Return a string of formatted entries (field = value)
+    return formattedEntries;
 };
 
 class DbHelper {
@@ -19,15 +48,9 @@ class DbHelper {
     }
 
     // Adds a user to the database taking in two lists with the field and value
-    addUser(fields, values) {
-        // Surround each value in quotes
-        values = quoteList(fields, values);
-
-        // Format each value for SQL
-        fields = fields.join(", ");
-        values = values.join(", ");
-
-        let sql = `INSERT INTO users (${fields}) VALUES (${values})`;
+    createUser(data) {
+        data = processData(data);
+        let sql = `INSERT INTO users (${data[0]}) VALUES (${data[1]})`;
         this.db.query(sql, (err, result) => {
             if (err) throw err;
         });
@@ -56,22 +79,27 @@ class DbHelper {
     }
 
     // Saves a user's profile info when passed the request
-    updateUser(req, fields, values) {
-        // Surround each value in quotes
-        values = quoteList(fields, values);
-
-        // Format each value for SQL
-        let entries = [];
-        for (let i = 0; i < fields.length; i++) {
-            entries.push(`${fields[i]} = ${values[i]}`);
-        }
-        entries = entries.join(", ");
-
+    updateUser(req, data) {
+        data = processDataForSetQuery(data);
         let sql = `UPDATE profiles
-        SET ${entries}
+        SET ${data}
         WHERE user_id = ${req.session.user_id}`;
         this.db.query(sql, (err, result) => {
             if (err) throw err;
+        });
+    }
+
+    createProfile(username, email, dob) {
+        let sql = `SELECT * FROM users WHERE username = '${username}'`;
+        this.db.query(sql, (err, result) => {
+            if (err) throw err;
+
+            let user_id = result[0].user_id;
+            sql = `INSERT INTO profiles (user_id, email, dob, stage_name, location, interests, favourite_genres) 
+            VALUES ('${user_id}', '${email}', '${dob}', '', '', '', '')`;
+            this.db.query(sql, (err, result) => {
+                if (err) throw err;
+            });
         });
     }
 }

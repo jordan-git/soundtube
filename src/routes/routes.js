@@ -22,7 +22,11 @@ const appRouter = (app, fs, db) => {
     const logIn = (req, username, user_id) => {
         req.session.logged_in = true;
         req.session.username = username;
-        req.session.user_id = user_id;
+
+        let sql = `SELECT * FROM users WHERE username = '${username}'`;
+        db.query(sql, (err, result) => {
+            req.session.user_id = result[0].user_id;
+        });
     };
 
     // Log out the user
@@ -69,7 +73,7 @@ const appRouter = (app, fs, db) => {
             } else {
                 // If password matches hash
                 if (pw.verify(password, result[0].password)) {
-                    logIn(req, result[0].username, result[0].user_id);
+                    logIn(req, result[0].username);
                     res.redirect("/");
                 } else {
                     res.render("login", {
@@ -123,23 +127,13 @@ const appRouter = (app, fs, db) => {
                     response: "Username is already in use"
                 });
             } else {
-                // Turn password into hash and store in database
-                dbHelper.addUser(
-                    ["username", "password"],
-                    [username, password]
-                );
-
-                sql = `SELECT * FROM users WHERE username = '${username}'`;
-                db.query(sql, (err, result) => {
-                    if (err) throw err;
-                    let user_id = result[0].user_id;
-                    sql = `INSERT INTO profiles (user_id, email, dob, stage_name, location, interests, favourite_genres) VALUES ('${user_id}', '${email}', '${dob}', '', '', '', '')`;
-                    db.query(sql, (err, result) => {
-                        if (err) throw err;
-
-                        logIn(req, username, user_id);
-                    });
+                // Create user and profile in database and log in
+                dbHelper.createUser({
+                    username: username,
+                    password: password
                 });
+                dbHelper.createProfile(username, email, dob);
+                logIn(req, username);
 
                 // TODO: Registration success message
                 res.redirect("/");
@@ -173,6 +167,7 @@ const appRouter = (app, fs, db) => {
                 let interests = result[0].interests;
                 let favourite_genres = result[0].favourite_genres;
 
+                // TODO: Test dictionary in pug
                 res.render("edit-profile", {
                     title: "Edit Profile",
                     logged_in: req.session.logged_in,
@@ -197,28 +192,22 @@ const appRouter = (app, fs, db) => {
             return;
         }
 
-        let fields = [
-            "email",
-            "dob",
-            "stage_name",
-            "location",
-            "interests",
-            "favourite_genres"
-        ];
-        let values = [
-            req.body.email,
-            `${req.body.year}-${req.body.month}-${req.body.day}`,
-            req.body.stage_name,
-            req.body.location,
-            req.body.interests,
-            req.body.favourite_genres
-        ];
-        dbHelper.updateUser(req, fields, values);
+        // Store submitted data in dictionary format
+        let data = {
+            email: req.body.email,
+            dob: `${req.body.year}-${req.body.month}-${req.body.day}`,
+            stage_name: req.body.stage_name,
+            location: req.body.location,
+            interests: req.body.interests,
+            favourite_genres: req.body.favourite_genres
+        };
+
+        dbHelper.updateUser(req, data);
         res.redirect("/edit-profile");
     });
 
     app.get("/test", (req, res) => {
-        dbHelper.addUser(["username", "password"], ["123", "123"]);
+        dbHelper.createUser(["username", "password"], ["123", "123"]);
         // dbHelper.deleteUser("jordan");
     });
 };
