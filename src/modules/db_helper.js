@@ -47,7 +47,7 @@ class DbHelper {
         this.db = db;
     }
 
-    // Adds a user to the database taking in two lists with the field and value
+    // Adds a user to the database taking in two strings with the field and value
     createUser(data) {
         data = processData(data);
         let sql = `INSERT INTO users (${data[0]}) VALUES (${data[1]})`;

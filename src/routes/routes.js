@@ -19,7 +19,7 @@ const appRouter = (app, fs, db) => {
     };
 
     // Log in the user
-    const logIn = (req, username, user_id) => {
+    const logIn = (req, username) => {
         req.session.logged_in = true;
         req.session.username = username;
 
@@ -206,10 +206,7 @@ const appRouter = (app, fs, db) => {
         res.redirect("/edit-profile");
     });
 
-    app.get("/test", (req, res) => {
-        dbHelper.createUser(["username", "password"], ["123", "123"]);
-        // dbHelper.deleteUser("jordan");
-    });
+    // app.get("/test", (req, res) => {});
 };
 
 module.exports = appRouter;
