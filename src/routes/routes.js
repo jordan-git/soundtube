@@ -1,10 +1,11 @@
 const pw = require("password-hash");
 
-const appRouter = (app, fs, db) => {
-    // Helper modules
-    const dbHelper = require("../modules/db_helper")(db);
+// Database helper class
+const DbHelper = require("../modules/db_helper");
 
-    console.log(dbHelper);
+const appRouter = (app, fs, db) => {
+    // Declare helper classes
+    const dbHelper = new DbHelper(db);
 
     // Helper functions
     // Return true if logged in else false
@@ -28,46 +29,6 @@ const appRouter = (app, fs, db) => {
     const logOut = req => {
         req.session.destroy();
     };
-
-    // // Saves a user's profile info when passed the request and database
-    // const updateUser = req => {
-    //     let stage_name = req.body.stage_name;
-    //     let location = req.body.location;
-    //     let interests = req.body.interests;
-    //     let favourite_genres = req.body.favourite_genres;
-    //     let email = req.body.email;
-    //     let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
-
-    //     sql = `UPDATE profiles
-    //     SET email = '${email}', dob = '${dob}', stage_name = '${stage_name}', location = '${location}', interests = '${interests}', favourite_genres = '${favourite_genres}'
-    //     WHERE user_id = ${req.session.user_id}`;
-
-    //     db.query(sql, (err, result) => {
-    //         if (err) throw err;
-    //     });
-    // };
-
-    // // Adds a user to the database taking in two lists with the field and value
-    // const addUser = (fields, values) => {
-    //     // Surround each value in quotes
-    //     for (let i = 0; i < values.length; i++) {
-    //         // If field is password, hash it
-    //         if (fields[i] == "password") {
-    //             values[i] = pw.generate(values[i]);
-    //         }
-
-    //         values[i] = "'" + values[i] + "'";
-    //     }
-
-    //     // Format each value for SQL
-    //     fields = fields.join(", ");
-    //     values = values.join(", ");
-
-    //     let sql = `INSERT INTO users (${fields}) VALUES (${values})`;
-    //     db.query(sql, (err, result) => {
-    //         if (err) throw err;
-    //     });
-    // };
 
     app.get("/", (req, res) => {
         res.render("home", {
@@ -168,11 +129,11 @@ const appRouter = (app, fs, db) => {
                     [username, password]
                 );
 
-                sql = `SELECT * FROM users WHERE username = ${username}`;
+                sql = `SELECT * FROM users WHERE username = '${username}'`;
                 db.query(sql, (err, result) => {
                     if (err) throw err;
                     let user_id = result[0].user_id;
-                    sql = `INSERT INTO profiles (user_id, email, dob) VALUES ('${user_id}', '${email}', '${dob}')`;
+                    sql = `INSERT INTO profiles (user_id, email, dob, stage_name, location, interests, favourite_genres) VALUES ('${user_id}', '${email}', '${dob}', '', '', '', '')`;
                     db.query(sql, (err, result) => {
                         if (err) throw err;
 
@@ -236,14 +197,29 @@ const appRouter = (app, fs, db) => {
             return;
         }
 
-        //TODO FIX UPDATE
-        dbHelper.updateUser(req);
+        let fields = [
+            "email",
+            "dob",
+            "stage_name",
+            "location",
+            "interests",
+            "favourite_genres"
+        ];
+        let values = [
+            req.body.email,
+            `${req.body.year}-${req.body.month}-${req.body.day}`,
+            req.body.stage_name,
+            req.body.location,
+            req.body.interests,
+            req.body.favourite_genres
+        ];
+        dbHelper.updateUser(req, fields, values);
         res.redirect("/edit-profile");
     });
 
     app.get("/test", (req, res) => {
-        // dbHelper.addUser(["username", "password"], ["123", "123"]);
-        dbHelper.deleteUser("jordan");
+        dbHelper.addUser(["username", "password"], ["123", "123"]);
+        // dbHelper.deleteUser("jordan");
     });
 };
 

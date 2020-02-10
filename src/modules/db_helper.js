@@ -1,19 +1,25 @@
-const dbHelper = db => {
-    const quoteList = (fields, values) => {
-        // Surround each value in quotes
-        for (let i = 0; i < values.length; i++) {
-            // If field is password, hash it
-            if (fields[i] == "password") {
-                values[i] = pw.generate(values[i]);
-            }
+const pw = require("password-hash");
 
-            values[i] = "'" + values[i] + "'";
+const quoteList = (fields, values) => {
+    // Surround each value in quotes
+    for (let i = 0; i < values.length; i++) {
+        // If field is password, hash it first
+        if (fields[i] == "password") {
+            values[i] = pw.generate(values[i]);
         }
-        return values;
-    };
+
+        values[i] = "'" + values[i] + "'";
+    }
+    return values;
+};
+
+class DbHelper {
+    constructor(db) {
+        this.db = db;
+    }
 
     // Adds a user to the database taking in two lists with the field and value
-    const addUser = (fields, values) => {
+    addUser(fields, values) {
         // Surround each value in quotes
         values = quoteList(fields, values);
 
@@ -22,35 +28,35 @@ const dbHelper = db => {
         values = values.join(", ");
 
         let sql = `INSERT INTO users (${fields}) VALUES (${values})`;
-        db.query(sql, (err, result) => {
+        this.db.query(sql, (err, result) => {
             if (err) throw err;
         });
-    };
+    }
 
     // Delete a user from the database
-    const deleteUser = username => {
+    deleteUser(username) {
         // Get user's user_id
         let sql = `SELECT user_id FROM users WHERE username = '${username}'`;
-        db.query(sql, (err, result) => {
+        this.db.query(sql, (err, result) => {
             if (err) throw err;
             let user_id = result[0].user_id;
 
             // Delete profile information
-            sql = `DELETE FROM profiles WHERE user_id = '${user_id}'}`;
-            db.query(sql, (err, result) => {
+            sql = `DELETE FROM profiles WHERE user_id = '${user_id}'`;
+            this.db.query(sql, (err, result) => {
                 if (err) throw err;
             });
         });
 
         // Delete user information
-        sql = `DELETE FROM users WHERE username = '${username}'}`;
-        db.query(sql, (err, result) => {
+        sql = `DELETE FROM users WHERE username = '${username}'`;
+        this.db.query(sql, (err, result) => {
             if (err) throw err;
         });
-    };
+    }
 
-    // Saves a user's profile info when passed the request and database
-    const updateUser = (req, fields, values) => {
+    // Saves a user's profile info when passed the request
+    updateUser(req, fields, values) {
         // Surround each value in quotes
         values = quoteList(fields, values);
 
@@ -62,9 +68,12 @@ const dbHelper = db => {
         entries = entries.join(", ");
 
         let sql = `UPDATE profiles
-        SET (${fields}) 
+        SET ${entries}
         WHERE user_id = ${req.session.user_id}`;
-    };
-};
+        this.db.query(sql, (err, result) => {
+            if (err) throw err;
+        });
+    }
+}
 
-module.exports = dbHelper;
+module.exports = DbHelper;
