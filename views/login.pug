@@ -1,11 +1,11 @@
-extends validation-layout
+extends layouts/validation
 
-block validation-heading
+block heading
     h1#title Log In
     hr
 
-block validation-content
-    form(id="login-form" class="validation-form" method="post" action="/login")
+block content
+    form(id="login-form" class="validation-form" method="post" action="/u/login")
         div.form-group
             label(for="username") Username
             input(type="text" class="form-control" name="username" id="username" placeholder="Username")

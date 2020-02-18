@@ -5,8 +5,8 @@ html(lang="en")
 		meta(charset="utf-8")
 		meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
 
-		link(rel="stylesheet" href="../static/bootstrap.min.css")
-		link(rel="stylesheet" href="../static/style.css")
+		link(rel="stylesheet" href="/css/bootstrap.min.css")
+		link(rel="stylesheet" href="/css/style.css")
 
 		title #{title} | SoundTube
 	body
@@ -17,23 +17,27 @@ html(lang="en")
 					li.nav-item
 						a(class="nav-link" href="/") Home
 					li.nav-item
-						a(class="nav-link" href="/edit-profile") Edit Profile
+						a(class="nav-link" href="/u/edit-profile") Edit Profile
 				form.form-inline
 					input(class="form-control mr-sm-2" type="search" placeholder="Search")
 					button(class="btn btn-outline-info my-2 my-sm-0" type="submit") Search
-				if logged_in
-					a(class="btn btn-outline-danger ml-2" href="/log-out") Log Out
+				if locals.session.loggedIn
+					a(class="btn btn-outline-danger ml-2" href="/u/logout") Log Out
 				else
-					a(class="btn btn-outline-info ml-2" href="/login") Log In
-					a(class="btn btn-outline-info ml-2" href="/register") Register
+					a(class="btn btn-outline-info ml-2" href="/u/login") Log In
+					a(class="btn btn-outline-info ml-2" href="/u/register") Register
 						
 		main(class="container p-5")
-			if response
-				div(class="alert alert-danger alert-dismissable fade show" role="alert")
-					span= response
+			if locals.successMsg.length
+				div(class="alert alert-success alert-dismissable fade show" role="alert")
+					span= locals.successMsg
 					button(type="button" class="close" data-dismiss="alert" aria-label="Close")
 						span(aria-hidden="true") &times;
-			block layout-content
-		script(src="../static/jquery-3.4.1.min.js")
-		script(src="../static/bootstrap.min.js")
+			if locals.errorMsg.length
+				div(class="alert alert-danger alert-dismissable fade show" role="alert")
+					span= locals.errorMsg
+					button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+						span(aria-hidden="true") &times;
+			block body
+		script(src="/js/jquery-3.4.1.min.js")
 		block scripts
