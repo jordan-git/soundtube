@@ -1,10 +1,10 @@
-extends validation-layout
+extends layouts/validation
 
-block validation-heading
+block heading
     h1#title Edit Your Profile
     hr
 
-block validation-content
+block content
     div#profile-info
         form(id="register-form" class="validation-form" method="post" action="/edit-profile")
             div.form-group

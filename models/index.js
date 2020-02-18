@@ -1,15 +1,15 @@
-const mysql = require('mysql');
-const mysql2 = require('mysql2');
-const fs = require('fs');
-const path = require('path');
-const { Sequelize } = require('sequelize');
+const mysql = require("mysql");
+const mysql2 = require("mysql2");
+const fs = require("fs");
+const path = require("path");
+const { Sequelize } = require("sequelize");
 const database = {};
 
 // Create the database connection
 const conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password'
+    host: "localhost",
+    user: "root",
+    password: "password"
 });
 
 // // Drop database every restart (for testing only)
@@ -18,13 +18,13 @@ const conn = mysql.createConnection({
 // });
 
 // Create empty database
-conn.query('CREATE DATABASE IF NOT EXISTS soundtube;', (err, result) => {
+conn.query("CREATE DATABASE IF NOT EXISTS soundtube;", (err, result) => {
     if (err) throw err;
 });
 
 // Connect to database with ORM
-const sequelize = new Sequelize('soundtube', 'root', 'password', {
-    dialect: 'mysql',
+const sequelize = new Sequelize("soundtube", "root", "password", {
+    dialect: "mysql",
     logging: false
 });
 
@@ -33,13 +33,13 @@ const basename = path.basename(__filename);
 fs.readdirSync(__dirname)
     .filter(file => {
         return (
-            file.indexOf('.') !== 0 &&
+            file.indexOf(".") !== 0 &&
             file !== basename &&
-            file.slice(-3) === '.js'
+            file.slice(-3) === ".js"
         );
     })
     .forEach(file => {
-        let model = sequelize['import'](path.join(__dirname, file));
+        let model = sequelize["import"](path.join(__dirname, file));
         database[model.name] = model;
     });
 
