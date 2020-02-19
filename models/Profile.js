@@ -22,12 +22,15 @@ module.exports = sequelize => {
                 }
             }
         },
-        { timestamps: false, tableName: "profiles" }
+        { timestamps: false, tableName: "profiles", underscored: true }
     );
 
     Profile.associate = models => {
-        models.Profile.hasMany(models.Messages);
-        models.Profile.hasMany(models.ProfileComments);
+        models.Profile.hasMany(models.Media, { foreignKey: "profile_id" });
+        models.Profile.hasMany(models.Messages, { foreignKey: "profile_id" });
+        models.Profile.hasMany(models.ProfileComments, {
+            foreignKey: "profile_id"
+        });
     };
 
     return Profile;

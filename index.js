@@ -13,8 +13,8 @@ const path = require("path");
 // const database = require("./database/db");
 const database = require("./models");
 
-// // Syncs tables (for testing only)
-// database.sequelize.sync({ force: true });
+// // Syncs tables (for testing only - { force: true })
+database.sequelize.sync();
 
 // Create an object representing the application
 const app = express();

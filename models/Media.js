@@ -25,13 +25,13 @@ module.exports = sequelize => {
                 }
             }
         },
-        { timestamps: false, tableName: "media" }
+        { timestamps: false, tableName: "media", underscored: true }
     );
 
     Media.associate = models => {
-        models.Media.hasMany(models.MediaComments);
-        models.Media.hasMany(models.MediaGenres);
-        models.Media.hasMany(models.MediaRatings);
+        models.Media.hasMany(models.MediaComments, { foreignKey: "media_id" });
+        models.Media.hasMany(models.MediaGenres, { foreignKey: "media_id" });
+        models.Media.hasMany(models.MediaRatings, { foreignKey: "media_id" });
     };
 
     return Media;

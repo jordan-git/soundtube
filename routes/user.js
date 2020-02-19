@@ -74,7 +74,12 @@ router.post("/register", auth.ensureLoggedOut, (req, res) => {
                 }
             }).then(([user, created]) => {
                 if (created) {
-                    // If the user was created successfully
+                    // If the user was created successfully create a default profile and log them in
+                    db.Profile.findOrCreate({
+                        where: { username: username },
+                        defaults: {}
+                    });
+
                     req.session.loggedIn = true;
                     req.session.username = user.dataValues.username;
                     req.session.userId = user.dataValues.id;
@@ -94,7 +99,22 @@ router.post("/register", auth.ensureLoggedOut, (req, res) => {
 });
 
 router.get("/edit-profile", auth.ensureLoggedIn, (req, res) => {
-    res.render("edit-profile", { title: "Edit Profile" });
+    db.Profile.findOne({
+        where: {
+            id: req.session.userId
+        }
+    }).then(user => {
+        if (!user) {
+            // If result was not found
+            req.flash("error_msg", `Error: Please log in again`);
+            res.redirect(req.baseUrl + "/login");
+            return;
+        } else {
+            let info = {};
+            return;
+        }
+    });
+    // res.render("edit-profile", { title: "Edit Profile" });
 });
 
 module.exports = router;

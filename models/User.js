@@ -22,6 +22,7 @@ module.exports = sequelize => {
         {
             timestamps: false,
             tableName: "users",
+            underscored: true,
             hooks: {
                 beforeCreate: user => {
                     user.password = bcrypt.hashSync(user.password, 10);
@@ -31,7 +32,7 @@ module.exports = sequelize => {
     );
 
     User.associate = models => {
-        models.User.hasOne(models.Profile);
+        models.User.hasOne(models.Profile, { foreignKey: "user_id" });
     };
 
     return User;
