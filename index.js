@@ -63,6 +63,12 @@ app.use((req, res, next) => {
 app.use('/', require('./routes'));
 app.use('/u', require('./routes/user'));
 
+// Catch unused routes for 404 (Must be at the end)
+app.use('*', (req, res, next) => {
+    res.status(404);
+    res.render('not-found', { title: 'Page Not Found' });
+});
+
 // Listen for connection requests to our application
 app.listen(port, () => {
     console.log(`Listening to requests on http://localhost:${port}`);

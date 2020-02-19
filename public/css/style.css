@@ -5,6 +5,16 @@ body header nav form.form-inline {
 body main.container div.alert span {
   font-size: 1.3em;
 }
+body main.container div.not-found {
+  margin: 0 auto;
+}
+body main.container div.not-found span {
+  float: left;
+}
+body main.container div.not-found a {
+  clear: both;
+  float: left;
+}
 body main.container div#form-container {
   width: 50%;
   margin: 0 auto;

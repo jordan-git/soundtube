@@ -15,6 +15,18 @@ body {
                 font-size: 1.3em;
             }
         }
+        div.not-found {
+            margin: 0 auto;
+
+            span {
+                float: left;
+            }
+
+            a {
+                clear: both;
+                float: left;
+            }
+        }
         // Validation CSS
         div#form-container {
             width: 50%;

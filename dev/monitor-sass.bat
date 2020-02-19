@@ -1,1 +1,1 @@
-sass --watch ../src/public/css/style.scss ../src/public/css/style.css
+sass --watch ../public/css/style.scss ../public/css/style.css
