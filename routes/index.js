@@ -1,15 +1,11 @@
-const express = require('express');
+const express = require("express");
 
+// Create a router to store all the routes
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.render('home', { title: 'Home' });
-});
-
-// Catch unused routes for 404 (Must be at the end)
-router.get('*', (req, res) => {
-    res.status(404);
-    res.render('not-found', { title: 'Page Not Found' });
+// Show the home page
+router.get("/", (req, res) => {
+    res.render("home", { title: "Home" });
 });
 
 module.exports = router;

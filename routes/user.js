@@ -1,34 +1,39 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const multer = require('multer');
-const path = require('path');
-const auth = require('../middleware/auth');
-const db = require('../models');
+const express = require("express");
+const bcrypt = require("bcrypt");
+const multer = require("multer");
+const path = require("path");
+const auth = require("../middleware/auth");
+const db = require("../models");
 
 let storage = multer.diskStorage({
-    destination: './public/images',
+    destination: "./public/images",
     filename: (req, file, cb) => {
         const fileType = path.extname(file.originalname);
         cb(null, `${req.session.userId}${fileType}`);
     }
 });
 const upload = multer({
-    dest: '../public/images',
+    dest: "../public/images",
     storage: storage
 });
 
+// Create a router to store all the routes
 const router = express.Router();
 
-router.get('/login', (req, res) => {
-    res.render('login', { title: 'Log in' });
+// Show the login page
+router.get("/login", (req, res) => {
+    res.render("login", { title: "Log in" });
 });
 
-router.get('/logout', (req, res) => {
+// Log out the user and redirect them to the home page
+router.get("/logout", (req, res) => {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect("/");
 });
 
-router.post('/login', (req, res) => {
+// Process submitted information from the login page
+router.post("/login", (req, res) => {
+    // Grab submitted information
     let { username, password } = req.body;
     db.User.findOne({
         where: {
@@ -36,37 +41,44 @@ router.post('/login', (req, res) => {
         }
     }).then(user => {
         if (!user) {
-            // If result was not found
-            req.flash('error_msg', `Invalid username/password combination`);
-            res.redirect(req.baseUrl + '/login');
+            // If nobody with the username was found
+            req.flash("error_msg", `Invalid username/password combination`);
+            res.redirect(req.baseUrl + "/login");
             return;
         } else {
-            // if result was found and password hashes match
+            // If result was found and password hashes match
             if (bcrypt.compareSync(password, user.dataValues.password)) {
+                // Store session information
                 req.session.loggedIn = true;
                 req.session.username = user.dataValues.username;
                 req.session.userId = user.dataValues.id;
-                let redirectTo = req.session.redirectTo || '/';
+
+                // Return user to where they came from if login was trigged by middleware (auth.js)
+                let redirectTo = req.session.redirectTo || "/";
                 delete req.session.redirectTo;
                 res.redirect(redirectTo);
                 return;
             } else {
-                req.flash('error_msg', `Invalid username/password combination`);
-                res.redirect(req.baseUrl + '/login');
+                // If result was found but password doesn't match
+                req.flash("error_msg", `Invalid username/password combination`);
+                res.redirect(req.baseUrl + "/login");
                 return;
             }
         }
     });
 });
 
-router.get('/register', auth.ensureLoggedOut, (req, res) => {
-    res.render('register', { title: 'Register' });
+// Show the register page
+router.get("/register", auth.ensureLoggedOut, (req, res) => {
+    res.render("register", { title: "Register" });
 });
 
-router.post('/register', auth.ensureLoggedOut, (req, res) => {
+// Process submitted information from the register page
+router.post("/register", auth.ensureLoggedOut, (req, res) => {
+    // Grab submitted information and convert date to MySQL-compatible format
     let { username, password, email, d_day, d_month, d_year } = req.body;
     let date_of_birth = `${d_year}-${d_month}-${d_day}`;
-    let created_at = new Date().toISOString().split('T')[0];
+    let created_at = new Date().toISOString().split("T")[0];
 
     db.User.findOne({
         where: {
@@ -75,8 +87,8 @@ router.post('/register', auth.ensureLoggedOut, (req, res) => {
     }).then(user => {
         if (user != null) {
             // If result was found
-            req.flash('error_msg', `Email (${email}) is taken`);
-            res.redirect(req.baseUrl + '/register');
+            req.flash("error_msg", `Email (${email}) is taken`);
+            res.redirect(req.baseUrl + "/register");
             return;
         } else {
             db.User.findOrCreate({
@@ -89,7 +101,7 @@ router.post('/register', auth.ensureLoggedOut, (req, res) => {
                 }
             }).then(([user, created]) => {
                 if (created) {
-                    // If the user was created successfully create a default profile and log them in
+                    // Create a default profile linked to the created user in the profiles table
                     db.Profile.findOrCreate({
                         where: { user_id: user.dataValues.id },
                         defaults: {
@@ -97,16 +109,17 @@ router.post('/register', auth.ensureLoggedOut, (req, res) => {
                         }
                     });
 
+                    // Store session information
                     req.session.loggedIn = true;
                     req.session.username = user.dataValues.username;
                     req.session.userId = user.dataValues.id;
-                    res.redirect('/');
+                    res.redirect("/");
                     return;
                 } else {
                     // If not created AKA already exists
-                    req.flash('error_msg', `Username (${username}) is taken`);
-                    res.render('register', {
-                        title: 'Register'
+                    req.flash("error_msg", `Username (${username}) is taken`);
+                    res.render("register", {
+                        title: "Register"
                     });
                     return;
                 }
@@ -115,7 +128,7 @@ router.post('/register', auth.ensureLoggedOut, (req, res) => {
     });
 });
 
-router.get('/edit-profile', auth.ensureLoggedIn, (req, res) => {
+router.get("/edit-profile", auth.ensureLoggedIn, (req, res) => {
     db.Profile.findOne({
         where: {
             id: req.session.userId
@@ -123,8 +136,8 @@ router.get('/edit-profile', auth.ensureLoggedIn, (req, res) => {
     }).then(profile => {
         if (!profile) {
             // If result was not found
-            req.flash('error_msg', `Error: Please log in again`);
-            res.redirect(req.baseUrl + '/login');
+            req.flash("error_msg", `Error: Please log in again`);
+            res.redirect(req.baseUrl + "/login");
             return;
         } else {
             let {
@@ -138,7 +151,8 @@ router.get('/edit-profile', auth.ensureLoggedIn, (req, res) => {
                     id: req.session.userId
                 }
             }).then(user => {
-                dob = user.dataValues.date_of_birth.split('-');
+                // Convert date to MySQL-compatible format and store information in a dictionary
+                dob = user.dataValues.date_of_birth.split("-");
                 let year = dob[0],
                     month = dob[1],
                     day = dob[2];
@@ -153,8 +167,10 @@ router.get('/edit-profile', auth.ensureLoggedIn, (req, res) => {
                     month,
                     day
                 };
-                data.title = 'Edit Profile';
-                res.render('edit-profile', data);
+                data.title = "Edit Profile";
+
+                // Passes the dictionary to the web page
+                res.render("edit-profile", data);
                 return;
             });
         }
@@ -162,9 +178,9 @@ router.get('/edit-profile', auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post(
-    '/edit-profile',
+    "/edit-profile",
     auth.ensureLoggedIn,
-    upload.single('profile-pic'),
+    upload.single("profile-pic"),
     (req, res) => {
         let {
             stage_name,

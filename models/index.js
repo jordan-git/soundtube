@@ -17,18 +17,20 @@ const conn = mysql.createConnection({
 //     if (err) throw err;
 // });
 
-// Create empty database
+// Create an empty database if it doesn't exist
 conn.query("CREATE DATABASE IF NOT EXISTS soundtube;", (err, result) => {
     if (err) throw err;
 });
 
-// Connect to database with ORM
+/* Connect to database with our ORM (Object-relational mapping)
+Using a ORM allows us to connect to and control our database using Javascript */
 const sequelize = new Sequelize("soundtube", "root", "password", {
     dialect: "mysql",
     logging: false
 });
 
-// Read all model files in current directory and add one of each object to the dictionary
+/*  Reads every single model file in this directory excluding this one and creates an object
+    of the table described in the file, then adds each object to the dictionary 'database' */
 const basename = path.basename(__filename);
 fs.readdirSync(__dirname)
     .filter(file => {
@@ -43,22 +45,15 @@ fs.readdirSync(__dirname)
         database[model.name] = model;
     });
 
-// const userModel = require("./User")(sequelize);
-// const profileModel = require("./Profile")(sequelize);
-// const mediaModel = require("./Media")(sequelize);
-// const mediaGenresModel = require("./MediaGenres")(sequelize);
-// const mediaRatingsModel = require("./MediaRatings")(sequelize);
-// const profileCommentsModel = require("./ProfileComments")(sequelize);
-// const mediaCommentsModel = require("./MediaComments")(sequelize);
-// const messagesModel = require("./Messages")(sequelize);
-
-// Call associate method for each table object to add relationships
+/* Call associate method for each table object to add relationships (foreign keys)
+This must be called once all tables have been created or else errors will occur */
 Object.keys(database).forEach(modelName => {
     if (database[modelName].associate) {
         database[modelName].associate(database);
     }
 });
 
+// Attach our connection to the ORM to our database dictionary with the object for each table
 database.sequelize = sequelize;
 
 module.exports = database;
