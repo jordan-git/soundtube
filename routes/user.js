@@ -151,7 +151,7 @@ router.get("/edit-profile", auth.ensureLoggedIn, (req, res) => {
                     id: req.session.userId
                 }
             }).then(user => {
-                // Convert date to MySQL-compatible format and store information in a dictionary
+                // Convert date to form-friendly format and store the information in a dictionary
                 dob = user.dataValues.date_of_birth.split("-");
                 let year = dob[0],
                     month = dob[1],
