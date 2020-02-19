@@ -1,34 +1,34 @@
 module.exports = sequelize => {
-    const { DataTypes } = require("sequelize");
+    const { DataTypes } = require('sequelize');
 
     const MediaComments = sequelize.define(
-        "MediaComments",
+        'MediaComments',
         {
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true
             },
-            created_at: { type: DataTypes.DATE, allowNull: false },
+            created_at: { type: DataTypes.DATEONLY, allowNull: false },
             comment: { type: DataTypes.STRING(128), allowNull: false },
             sender_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "profiles",
-                    key: "id"
+                    model: 'profiles',
+                    key: 'id'
                 }
             },
             media_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "media",
-                    key: "id"
+                    model: 'media',
+                    key: 'id'
                 }
             }
         },
-        { timestamps: false, tableName: "media_comments" }
+        { timestamps: false, tableName: 'media_comments' }
     );
 
     return MediaComments;

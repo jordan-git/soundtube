@@ -6,7 +6,7 @@ block heading
 
 block content
     div#profile-info
-        form(id="register-form" class="validation-form" method="post" action="/edit-profile")
+        form(id="register-form" class="validation-form" method="post" action="/u/edit-profile" enctype="multipart/form-data")
             div.form-group
                 label(for="stage-name") Stage Name
                 input(type="text" class="form-control" name="stage_name" id="stage-name" placeholder="Eminem" value=stage_name)
@@ -46,11 +46,11 @@ block content
                 input(type="text" class="form-control" name="location" id="location" placeholder="Ireland, France, .." value=location)
             div.form-group
                 label(for="profile-pic") Profile Picture
-                input(type="file" class="form-control-file" name="profile-pic" id="profile-pic")
+                input(type="file" class="form-control-file" accept="image/png, image/jpeg" name="profile-pic" id="profile-pic")
             div.form-group
                 label(for="interests") Interests
                 input(type="text" class="form-control" name="interests" id="interests" placeholder="Running, football, .." value=interests)
             div.form-group
                 label(for="interests") Favourite Genre(s)
                 input(type="text" class="form-control" name="favourite_genres" id="favourite-genres" placeholder="Rap, Jazz, .." value=favourite_genres)
-            button(class="submit" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#successModal") Submit
+            button(class="submit" type="submit" class="btn btn-primary") Submit

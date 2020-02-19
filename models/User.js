@@ -1,9 +1,9 @@
 module.exports = sequelize => {
-    const { DataTypes } = require("sequelize");
-    const bcrypt = require("bcrypt");
+    const { DataTypes } = require('sequelize');
+    const bcrypt = require('bcrypt');
 
     const User = sequelize.define(
-        "User",
+        'User',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -15,13 +15,13 @@ module.exports = sequelize => {
                 type: DataTypes.STRING(128),
                 allowNull: false
             },
-            created_at: { type: DataTypes.DATE, allowNull: false },
+            created_at: { type: DataTypes.DATEONLY, allowNull: false },
             email: { type: DataTypes.STRING(64), allowNull: false },
-            date_of_birth: { type: DataTypes.DATE, allowNull: false }
+            date_of_birth: { type: DataTypes.DATEONLY, allowNull: false }
         },
         {
             timestamps: false,
-            tableName: "users",
+            tableName: 'users',
             underscored: true,
             hooks: {
                 beforeCreate: user => {
@@ -32,7 +32,7 @@ module.exports = sequelize => {
     );
 
     User.associate = models => {
-        models.User.hasOne(models.Profile, { foreignKey: "user_id" });
+        models.User.hasOne(models.Profile, { foreignKey: 'user_id' });
     };
 
     return User;
