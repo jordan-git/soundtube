@@ -10,6 +10,7 @@ module.exports = sequelize => {
                 primaryKey: true
             },
             stage_name: { type: DataTypes.STRING(32) },
+            profile_pic: { type: DataTypes.STRING(48) },
             location: { type: DataTypes.STRING(48) },
             interests: { type: DataTypes.STRING(64) },
             favourite_genres: { type: DataTypes.STRING(64) },

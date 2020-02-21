@@ -46,6 +46,9 @@ block content
                 input(type="text" class="form-control" name="location" id="location" placeholder="Ireland, France, .." value=location)
             div.form-group
                 label(for="profile-pic") Profile Picture
+                if profile_pic
+                    br
+                    span.profile-pic Current: #{profile_pic}
                 input(type="file" class="form-control-file" accept="image/png, image/jpeg" name="profile-pic" id="profile-pic")
             div.form-group
                 label(for="interests") Interests

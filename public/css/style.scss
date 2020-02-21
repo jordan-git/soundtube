@@ -15,7 +15,7 @@ body {
                 font-size: 1.3em;
             }
         }
-        div.not-found {
+        div.error {
             margin: 0 auto;
 
             span {
@@ -40,6 +40,15 @@ body {
         form.validation-form {
             label.error {
                 color: red;
+            }
+
+            label[for="profile-pic"] {
+                margin-bottom: 0;
+            }
+
+            span.profile-pic {
+                display: inline-block;
+                margin-bottom: 0.5rem;
             }
 
             button.submit {

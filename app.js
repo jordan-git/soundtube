@@ -68,7 +68,7 @@ app.use("/u", require("./routes/user"));
 // Catch unused routes for 404 (Must be at the end)
 app.use("*", (req, res, next) => {
     res.status(404);
-    res.render("not-found", { title: "Page Not Found" });
+    res.render("error", { title: "Error: Page Not Found" });
 });
 
 // Listen for connection requests to our application

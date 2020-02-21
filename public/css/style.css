@@ -5,13 +5,13 @@ body header nav form.form-inline {
 body main.container div.alert span {
   font-size: 1.3em;
 }
-body main.container div.not-found {
+body main.container div.error {
   margin: 0 auto;
 }
-body main.container div.not-found span {
+body main.container div.error span {
   float: left;
 }
-body main.container div.not-found a {
+body main.container div.error a {
   clear: both;
   float: left;
 }
@@ -24,6 +24,13 @@ body main.container div#form-container h1#title {
 }
 body main.container form.validation-form label.error {
   color: red;
+}
+body main.container form.validation-form label[for=profile-pic] {
+  margin-bottom: 0;
+}
+body main.container form.validation-form span.profile-pic {
+  display: inline-block;
+  margin-bottom: 0.5rem;
 }
 body main.container form.validation-form button.submit {
   display: block;

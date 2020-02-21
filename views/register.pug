@@ -17,18 +17,18 @@ block content
             label Date of Birth
             div.form-row
                 div.col-md-4
-                    select(class="custom-select" name="d_day")
+                    select(class="custom-select" name="day")
                         - var num = 1;
                         while num <= 31
                             option(value=num)= num++
                 div.col-md-4
-                    select(class="custom-select" name="d_month")
+                    select(class="custom-select" name="month")
                         - var num = 1;
                         - var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                             for month in months
                                 option(value=num++)= month
                 div.col-md-4
-                    select(class="custom-select" name="d_year")
+                    select(class="custom-select" name="year")
                         - var num = 2020;
                             while num >= 1920
                                 option(value=num)= num--
