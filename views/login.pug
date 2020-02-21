@@ -7,9 +7,11 @@ block heading
 block content
     form(id="login-form" class="validation-form" method="post" action="/u/login")
         div.form-group
-            label(for="username") Username
+            label(for="username" class="label-name") Username
+                // span(class="content-name") Username
             input(type="text" class="form-control" name="username" id="username" placeholder="Username")
         div.form-group
-            label(for="password") Password
+            label(for="password" class="label-name") Password
+                // span(class="content-name") Password
             input(type="password" class="form-control" name="password" id="password" placeholder="Password")
         button(class="submit" type="submit" class="btn btn-success") Submit
