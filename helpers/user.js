@@ -153,17 +153,20 @@ async function handleEditProfilePost(req, res, db) {
         month,
         year
     } = req.body;
-    const profile_pic = req.file.filename;
     const date_of_birth = new Date(year, month, day);
-    const data = {
+
+    let data = {
         stage_name,
         email,
         location,
         interests,
         favourite_genres,
-        profile_pic,
         date_of_birth
     };
+
+    if (req.file) {
+        data.profile_pic = req.file.filename;
+    }
     db.Profile.update(data, {
         where: {
             user_id: req.session.userId
