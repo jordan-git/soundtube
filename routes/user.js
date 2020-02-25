@@ -61,10 +61,8 @@ router.post(
     }
 );
 
+// Show the profile corresponding to the ID in the URL
 router.get('/:id', (req, res) => {
-    // if (req.params.id == req.session.userId) {
-    //     // Possibly display profile with button like edit profile etc
-    // }
     userHelper.handleProfile(req, res, db);
 });
 

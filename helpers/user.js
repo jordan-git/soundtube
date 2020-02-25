@@ -162,6 +162,10 @@ async function handleEditProfilePost(req, res, db) {
 }
 
 async function handleProfile(req, res, db) {
+    // if (req.params.id == req.session.userId) {
+    //     // Possibly display profile with button like edit profile for own profile
+    // }
+
     // Query profile information and username of profile owner
     const profile = await db.Profile.findOne({
         where: {
@@ -170,7 +174,7 @@ async function handleProfile(req, res, db) {
     });
 
     // If profile doesn't exist show 404 error
-    if (profile == null) {
+    if (!profile) {
         res.redirect('/error');
         return;
     }

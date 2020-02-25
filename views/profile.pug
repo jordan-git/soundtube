@@ -1,1 +1,14 @@
-extends layouts/validation
+extends layouts/main
+
+block body
+    section#profile
+        div#header
+            div#picture
+                if profile_pic
+                    img(src=profile_pic)
+                else
+                    img(src="/images/default.jpg" width="180")
+            div#title
+                h1= title
+    section
+    aside
