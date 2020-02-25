@@ -1,5 +1,5 @@
-const bcrypt = require("bcrypt");
-const moment = require("moment");
+const bcrypt = require('bcrypt');
+const moment = require('moment');
 
 async function handleLoginPost(req, res, db) {
     // Store submitted information
@@ -14,8 +14,8 @@ async function handleLoginPost(req, res, db) {
 
     // If nobody with the username was found
     if (!user) {
-        req.flash("error_msg", `Invalid username/password combination`);
-        res.redirect(req.baseUrl + "/login");
+        req.flash('error_msg', `Invalid username/password combination`);
+        res.redirect(req.baseUrl + '/login');
         return;
     }
 
@@ -27,14 +27,14 @@ async function handleLoginPost(req, res, db) {
         req.session.userId = user.dataValues.id;
 
         // Return user to where they came from if login was trigged by middleware (auth.js)
-        let redirectTo = req.session.redirectTo || "/";
+        let redirectTo = req.session.redirectTo || '/';
         delete req.session.redirectTo;
         res.redirect(redirectTo);
         return;
     } else {
         // If result was found but password doesn't match
-        req.flash("error_msg", `Invalid username/password combination`);
-        res.redirect(req.baseUrl + "/login");
+        req.flash('error_msg', `Invalid username/password combination`);
+        res.redirect(req.baseUrl + '/login');
         return;
     }
 }
@@ -44,9 +44,9 @@ async function handleRegisterPost(req, res, db) {
     const { username, password, email, day, month, year } = req.body;
     const date_of_birth = new moment(
         `${year}-${month}-${day}`,
-        "YYYY-M-D"
-    ).format("YYYY-MM-DD");
-    const created_at = new moment().format("YYYY-MM-DD");
+        'YYYY-M-D'
+    ).format('YYYY-MM-DD');
+    const created_at = new moment().format('YYYY-MM-DD');
 
     // Query database for matching information
     const userTaken = await db.User.findOne({
@@ -64,18 +64,18 @@ async function handleRegisterPost(req, res, db) {
     // Display message if username/email in use
     if (userTaken && emailTaken) {
         req.flash(
-            "error_msg",
+            'error_msg',
             `Username (${username}) and email (${email}) are in use`
         );
-        res.redirect(req.baseUrl + "/register");
+        res.redirect(req.baseUrl + '/register');
         return;
     } else if (userTaken != null) {
-        req.flash("error_msg", `Username (${username}) is in use`);
-        res.redirect(req.baseUrl + "/register");
+        req.flash('error_msg', `Username (${username}) is in use`);
+        res.redirect(req.baseUrl + '/register');
         return;
     } else if (emailTaken != null) {
-        req.flash("error_msg", `Email (${email}) is in use`);
-        res.redirect(req.baseUrl + "/register");
+        req.flash('error_msg', `Email (${email}) is in use`);
+        res.redirect(req.baseUrl + '/register');
         return;
     }
 
@@ -95,7 +95,7 @@ async function handleRegisterPost(req, res, db) {
     req.session.loggedIn = true;
     req.session.username = user.dataValues.username;
     req.session.userId = user.dataValues.id;
-    res.redirect("/");
+    res.redirect('/');
 }
 
 async function handleEditProfileGet(req, res, db) {
@@ -115,35 +115,26 @@ async function handleEditProfileGet(req, res, db) {
 
     // Store collected information in variables
     const email = user.dataValues.email;
-    const [year, month, day] = user.dataValues.date_of_birth.split("-");
-    let {
+    const [year, month, day] = user.dataValues.date_of_birth.split('-');
+    let data = ({
         stage_name,
         profile_pic,
         location,
         interests,
         favourite_genres
-    } = profile.dataValues;
+    } = profile.dataValues);
+    data.email = email;
+    data.year = year;
+    data.month = month;
+    data.day = day;
+    data.title = 'Edit Profile';
 
-    // Package information
-    let data = {
-        stage_name,
-        profile_pic,
-        email,
-        location,
-        interests,
-        favourite_genres,
-        year,
-        month,
-        day
-    };
-    data.title = "Edit Profile";
-
-    // Passes the dictionary to the web page
-    res.render("edit-profile", data);
+    // Passes the object to the web page
+    res.render('edit-profile', data);
 }
 
 async function handleEditProfilePost(req, res, db) {
-    const {
+    const data = ({
         stage_name,
         email,
         location,
@@ -152,36 +143,64 @@ async function handleEditProfilePost(req, res, db) {
         day,
         month,
         year
-    } = req.body;
+    } = req.body);
     const date_of_birth = new Date(year, month, day);
-
-    let data = {
-        stage_name,
-        email,
-        location,
-        interests,
-        favourite_genres,
-        date_of_birth
-    };
+    data.date_of_birth = date_of_birth;
 
     if (req.file) {
         data.profile_pic = req.file.filename;
     }
+
     db.Profile.update(data, {
         where: {
             user_id: req.session.userId
         }
     });
 
-    data.title = "Edit Profile";
-    res.render("edit-profile", data);
+    data.title = 'Edit Profile';
+    res.render('edit-profile', data);
+}
+
+async function handleProfile(req, res, db) {
+    // Query profile information and username of profile owner
+    const profile = await db.Profile.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+
+    // If profile doesn't exist show 404 error
+    if (profile == null) {
+        res.redirect('/error');
+        return;
+    }
+
+    const user = await db.User.findOne({
+        where: {
+            id: profile.dataValues.user_id
+        }
+    });
+
+    // Package information
+    const data = ({
+        stage_name,
+        profile_pic,
+        location,
+        interests,
+        favourite_genres
+    } = profile.dataValues);
+    data.title = `${user.dataValues.username}'s Profile`;
+
+    // Passes the object to the web page
+    res.render('profile', data);
 }
 
 module.exports = {
     handleLogin: handleLoginPost,
     handleRegister: handleRegisterPost,
     handleEditProfile: (req, res, db) => {
-        if (req.method == "GET") handleEditProfileGet(req, res, db);
-        else if (req.method == "POST") handleEditProfilePost(req, res, db);
-    }
+        if (req.method == 'GET') handleEditProfileGet(req, res, db);
+        else if (req.method == 'POST') handleEditProfilePost(req, res, db);
+    },
+    handleProfile: handleProfile
 };
