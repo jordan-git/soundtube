@@ -9,6 +9,10 @@ block body
                 else
                     img(src="/images/default.jpg" width="180")
             div#title
-                h1= title
+                if stage_name
+                    h1= username
+                        span= " (" + stage_name + ")"
+                else
+                    h1= username
     section
     aside

@@ -194,6 +194,7 @@ async function handleProfile(req, res, db) {
         favourite_genres
     } = profile.dataValues);
     data.title = `${user.dataValues.username}'s Profile`;
+    data.username = user.dataValues.username;
 
     // Passes the object to the web page
     res.render('profile', data);

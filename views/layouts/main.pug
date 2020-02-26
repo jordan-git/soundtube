@@ -11,7 +11,7 @@ html(lang="en")
 		title #{title} | SoundTube
 	body
 		header
-			nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
+			nav(class="navbar navbar-expand-lg navbar-dark bg-primary")
 				a(class="navbar-brand" href="/") SoundTube
 				ul(class="navbar-nav mr-auto mt-2 mt-lg-0")
 					li.nav-item
@@ -20,12 +20,12 @@ html(lang="en")
 						a(class="nav-link" href="/u/edit-profile") Edit Profile
 				form.form-inline
 					input(class="form-control mr-sm-2" type="search" placeholder="Search")
-					button(class="btn btn-outline-info my-2 my-sm-0" type="submit") Search
+					button(class="btn btn-info my-2 my-sm-0" type="submit") Search
 				if locals.session.loggedIn
-					a(class="btn btn-outline-danger ml-2" href="/u/logout") Log Out
+					a(class="btn btn-danger ml-2" href="/u/logout") Log Out
 				else
-					a(class="btn btn-outline-info ml-2" href="/u/login") Log In
-					a(class="btn btn-outline-info ml-2" href="/u/register") Register
+					a(class="btn btn-success ml-2" href="/u/login") Log In
+					a(class="btn btn-success ml-2" href="/u/register") Register
 						
 		main(class="p-5")
 			if locals.successMsg.length
@@ -40,4 +40,5 @@ html(lang="en")
 						span(aria-hidden="true") &times;
 			block body
 		script(src="/js/jquery-3.4.1.min.js")
+		script(src="/js/bootstrap.min.js")
 		block scripts
