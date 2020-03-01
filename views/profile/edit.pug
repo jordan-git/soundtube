@@ -1,4 +1,4 @@
-extends layouts/validation
+extends ../layouts/validation
 
 block heading
     h1#title Edit Profile Information
@@ -6,7 +6,7 @@ block heading
 
 block content
     div#profile-info
-        form(id="register-form" class="validation-form" method="post" action="/u/edit-profile" enctype="multipart/form-data")
+        form(id="register-form" class="validation-form" method="post" action="/p/edit" enctype="multipart/form-data")
             div.form-group
                 label(for="stage-name") Stage Name
                 input(type="text" class="form-control" name="stage_name" id="stage-name" placeholder="Eminem" value=stage_name)

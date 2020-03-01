@@ -1,6 +1,6 @@
 // SCSS to modify the ads goes here
 aside.ad-container {
-    padding: 20px;
+    padding: 5px;
 
     &#right-side {
     }
@@ -9,13 +9,15 @@ aside.ad-container {
     }
 
     div.ad {
-        padding: 15px 0;
+        margin-bottom: 5px;
 
         img {
-            margin: 0 5%;
             min-height: 400px;
-            width: 90%;
             border: 4px solid grey;
         }
+    }
+
+    div.ad:last-child {
+        margin-bottom: 0;
     }
 }

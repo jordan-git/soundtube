@@ -1,36 +1,15 @@
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
 
 const auth = require('../middleware/auth');
 const db = require('../models');
 const userHelper = require('../helpers/user');
-
-let storage = multer.diskStorage({
-    destination: './public/images/avatars',
-    filename: (req, file, cb) => {
-        cb(
-            null,
-            // Formats file name to "id-username.ext"
-            `${
-                req.session.userId
-            }-${req.session.username.toLowerCase()}${path.extname(
-                file.originalname
-            )}`
-        );
-    }
-});
-const upload = multer({
-    dest: '../public/images/avatars',
-    storage: storage
-});
 
 // Create a router to store all the routes
 const router = express.Router();
 
 // Show the login page
 router.get('/login', (req, res) => {
-    res.render('login', { title: 'Log in' });
+    res.render('user/login', { title: 'Log in' });
 });
 
 // Log out the user and redirect them to the home page
@@ -46,32 +25,12 @@ router.post('/login', (req, res) => {
 
 // Show the register page
 router.get('/register', auth.ensureLoggedOut, (req, res) => {
-    res.render('register', { title: 'Register' });
+    res.render('user/register', { title: 'Register' });
 });
 
 // Process submitted information from the register page
 router.post('/register', auth.ensureLoggedOut, (req, res) => {
     userHelper.handleRegister(req, res, db);
-});
-
-// Show the edit profile page
-router.get('/edit-profile', auth.ensureLoggedIn, (req, res) => {
-    userHelper.handleEditProfile(req, res, db);
-});
-
-// Process submitted information for the edit profile page
-router.post(
-    '/edit-profile',
-    auth.ensureLoggedIn,
-    upload.single('avatar'),
-    (req, res) => {
-        userHelper.handleEditProfile(req, res, db);
-    }
-);
-
-// Show the profile corresponding to the ID in the URL
-router.get('/:id', (req, res) => {
-    userHelper.handleProfile(req, res, db);
 });
 
 module.exports = router;

@@ -27,16 +27,25 @@ html(lang="en")
 							a(class="nav-link") Example One
 					li(class="nav-item")
 							a(class="nav-link") Example Two
-					li(class="nav-item")
-							a(class="nav-link") Example Three
+					li(class=(active === "c" ? "nav-item dropdown active" : "nav-item dropdown"))
+						a(class="nav-link dropdown-toggle" data-toggle="dropdown" href="/about") Contact Us
+						div.dropdown-menu
+							a(class="dropdown-item" href="/contact") Send Message
+							a(class="dropdown-item" href="/ad") Purchase Ad
+							a(class="dropdown-item" href="/about") About Us
 				ul(class="navbar-nav justify-content-end mr-4")
 					if locals.session.loggedIn
-						li(class="nav-item dropdown")
+						li(class=(active === "u" ? "nav-item dropdown active" : "nav-item dropdown"))
+							a(class="nav-link dropdown-toggle" data-toggle="dropdown") User
+							div.dropdown-menu
+								a(class="dropdown-item" href="/u/edit") Edit User
+								a(class="dropdown-item" href="/u/premium") Purchase Premium
+						li(class=(active === "p" ? "nav-item dropdown active" : "nav-item dropdown"))
 							a(class="nav-link dropdown-toggle" data-toggle="dropdown") Profile
 							div.dropdown-menu
-								a(class="dropdown-item" href="/u/" + locals.session.userId) My Profile
-								a(class="dropdown-item" href="/u/edit-profile") Edit Profile
-						li(class="nav-item dropdown")
+								a(class="dropdown-item" href="/p/" + locals.session.userId) My Profile
+								a(class="dropdown-item" href="/p/edit") Edit Profile
+						li(class=(active === "m" ? "nav-item dropdown active" : "nav-item dropdown"))
 							a(class="nav-link dropdown-toggle" data-toggle="dropdown") Media
 							div.dropdown-menu
 								a(class="dropdown-item" href="/m/my") My Media
@@ -57,7 +66,7 @@ html(lang="en")
 						img(src="/images/ads/" + ad1)
 					div(class="ad")
 						img(src="/images/ads/" + ad2)
-				main(class="p-5 col-8")
+				main(class="p-5 col-9")
 					if locals.successMsg.length
 						div(class="alert alert-success alert-dismissable fade show" role="alert")
 							span= locals.successMsg
