@@ -45,11 +45,13 @@ block content
                 label(for="location") Location
                 input(type="text" class="form-control" name="location" id="location" placeholder="Ireland, France, .." value=location)
             div.form-group
-                label(for="profile-pic") Profile Picture
-                if profile_pic
-                    br
-                    span.profile-pic Current: #{profile_pic}
-                input(type="file" class="form-control-file" accept="image/png, image/jpeg" name="profile-pic" id="profile-pic")
+                label(for="avatar") Profile Picture
+                input(type="file" class="form-control-file" accept="image/png, image/jpeg" name="avatar" id="avatar")
+                if avatar
+                    small(class="form-text text-muted") Current: #{avatar}
+                    small(class="form-text text-muted") Recommended size 180x180px.
+                else
+                    small(class="form-text text-muted") Recommended size 180x180px
             div.form-group
                 label(for="interests") Interests
                 input(type="text" class="form-control" name="interests" id="interests" placeholder="Running, football, .." value=interests)

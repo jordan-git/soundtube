@@ -9,7 +9,15 @@ const userHelper = require('../helpers/user');
 let storage = multer.diskStorage({
     destination: './public/images/avatars',
     filename: (req, file, cb) => {
-        cb(null, `${req.session.userId}-${file.originalname}`);
+        cb(
+            null,
+            // Formats file name to "id-username.ext"
+            `${
+                req.session.userId
+            }-${req.session.username.toLowerCase()}${path.extname(
+                file.originalname
+            )}`
+        );
     }
 });
 const upload = multer({
@@ -55,7 +63,7 @@ router.get('/edit-profile', auth.ensureLoggedIn, (req, res) => {
 router.post(
     '/edit-profile',
     auth.ensureLoggedIn,
-    upload.single('profile-pic'),
+    upload.single('avatar'),
     (req, res) => {
         userHelper.handleEditProfile(req, res, db);
     }
