@@ -13,6 +13,8 @@ header nav form.form-inline {
 }
 
 /* Header End */
+/* Main Content CSS */
+/* Header End */
 /* Alerts CSS */
 div.alert span {
   font-size: 1.3em;
@@ -24,10 +26,13 @@ aside.ad-container {
   padding: 20px;
 }
 aside.ad-container div.ad {
-  padding-bottom: 20px;
+  padding: 15px 0;
 }
-aside.ad-container img {
+aside.ad-container div.ad img {
+  margin: 0 5%;
+  min-height: 400px;
   width: 90%;
+  border: 4px solid grey;
 }
 
 /* Ads End */
