@@ -1,12 +1,17 @@
 body {
   padding: 0;
   margin: 0;
-  background: #f0e6ff;
+  background: #dddddd;
+  color: #222222;
   font-size: 18px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Rubik, Helvetica, sans-serif;
 }
 
 /* Header CSS */
+header nav {
+  background: #35424a;
+  border-bottom: 4px solid #e8491d;
+}
 header nav form.form-inline {
   padding-right: 8px;
   border-right: 1px solid grey;
@@ -25,11 +30,9 @@ div.alert span {
 aside.ad-container {
   padding: 20px;
 }
-
 aside.ad-container div.ad {
   padding: 15px 0;
 }
-
 aside.ad-container div.ad img {
   margin: 0 5%;
   min-height: 400px;
@@ -43,7 +46,6 @@ div#form-container {
   width: 50%;
   margin: 0 auto;
 }
-
 div#form-container h1#title {
   text-align: center;
 }
@@ -51,21 +53,17 @@ div#form-container h1#title {
 form.validation-form label.error {
   color: red;
 }
-
-form.validation-form label[for='profile-pic'] {
+form.validation-form label[for=profile-pic] {
   margin-bottom: 0;
 }
-
 form.validation-form span.profile-pic {
   display: inline-block;
   margin-bottom: 0.5rem;
 }
-
 form.validation-form button.submit {
   display: block;
   margin: 0 auto;
 }
-
 form.validation-form input#profile-pic {
   padding-left: 20px;
 }
@@ -76,19 +74,16 @@ section#profile div#header {
   padding-bottom: 10px;
   border-bottom: 2px solid grey;
 }
-
 section#profile div#header div#avatar img {
   border: 4px solid grey;
   border-radius: 50%;
 }
-
 section#profile div#header div#title h1 {
   width: 100%;
   position: absolute;
   bottom: 0;
   text-align: center;
 }
-
 section#profile div#content dl#info {
   padding: 10px;
 }
@@ -98,15 +93,14 @@ section#profile div#content dl#info {
 div.error {
   margin: 0 auto;
 }
-
 div.error span {
   float: left;
 }
-
 div.error a {
   clear: both;
   float: left;
 }
 
 /* 404 Error End */
+
 /*# sourceMappingURL=style.css.map */

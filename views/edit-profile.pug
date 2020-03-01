@@ -48,10 +48,10 @@ block content
                 label(for="avatar") Profile Picture
                 input(type="file" class="form-control-file" accept="image/png, image/jpeg" name="avatar" id="avatar")
                 if avatar
-                    small(class="form-text text-muted") Current: #{avatar}
-                    small(class="form-text text-muted") Recommended size 180x180px.
+                    small(class="form-text") Current: #{avatar}
+                    small(class="form-text") Recommended size 180x180px
                 else
-                    small(class="form-text text-muted") Recommended size 180x180px
+                    small(class="form-text") Recommended size 180x180px
             div.form-group
                 label(for="interests") Interests
                 input(type="text" class="form-control" name="interests" id="interests" placeholder="Running, football, .." value=interests)
