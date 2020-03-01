@@ -7,13 +7,13 @@ const db = require('../models');
 const userHelper = require('../helpers/user');
 
 let storage = multer.diskStorage({
-    destination: './public/images',
+    destination: './public/images/avatars',
     filename: (req, file, cb) => {
         cb(null, `${req.session.userId}-${file.originalname}`);
     }
 });
 const upload = multer({
-    dest: '../public/images',
+    dest: '../public/images/avatars',
     storage: storage
 });
 

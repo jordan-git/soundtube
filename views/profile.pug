@@ -2,17 +2,33 @@ extends layouts/main
 
 block body
     section#profile
-        div#header
-            div#picture
-                if profile_pic
-                    img(src=profile_pic)
+        div(class="row" id="header")
+            div(id="avatar" class="col-2")
+                if avatar
+                    img(class="float-left" src=avatar)
                 else
-                    img(src="/images/avatars/default.jpg" width="180")
-            div#title
+                    img(class="float-left" src="/images/avatars/default.jpg" width="180")
+            div(id="title" class="col-9")
                 if stage_name
                     h1= username
                         span= " (" + stage_name + ")"
                 else
                     h1= username
-    section
-    aside
+        div(class="row" id="content")
+            dl(class="col-4" id="info")
+                dt Location:
+                    if location
+                        dd= location
+                    else
+                        dd N/A
+                dt Interests:
+                    if interests
+                        dd= interests
+                    else
+                        dd N/A
+                dt Favourite Genres:
+                    if favourite_genres
+                        dd=favourite_genres
+                    else
+                        dd N/A
+            div(class="col-8" id="wall")

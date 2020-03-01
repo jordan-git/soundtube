@@ -118,7 +118,7 @@ async function handleEditProfileGet(req, res, db) {
     const [year, month, day] = user.dataValues.date_of_birth.split('-');
     let data = ({
         stage_name,
-        profile_pic,
+        avatar,
         location,
         interests,
         favourite_genres
@@ -148,7 +148,7 @@ async function handleEditProfilePost(req, res, db) {
     data.date_of_birth = date_of_birth;
 
     if (req.file) {
-        data.profile_pic = req.file.filename;
+        data.avatar = req.file.filename;
     }
 
     db.Profile.update(data, {
@@ -189,7 +189,7 @@ async function handleProfile(req, res, db) {
     // Package information
     const data = ({
         stage_name,
-        profile_pic,
+        avatar,
         location,
         interests,
         favourite_genres
