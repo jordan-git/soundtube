@@ -87,7 +87,7 @@ app.use((req, res, next) => {
     } else if (req.originalUrl.includes('/m/')) {
         res.locals.active = 'm';
     } else {
-        const contact_us = ['/contact', '/ad', '/about'];
+        const contact_us = ['/contact-us', '/purchase-ad', '/about'];
         contact_us.forEach(url => {
             if (req.originalUrl === url) {
                 res.locals.active = 'c';
