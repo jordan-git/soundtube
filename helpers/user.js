@@ -166,7 +166,7 @@ async function handleProfile(req, res, db) {
     //     // Possibly display profile with button like edit profile for own profile
     // }
 
-    // Query profile information and username of profile owner
+    // Query profile information
     const profile = await db.Profile.findOne({
         where: {
             id: req.params.id
@@ -179,6 +179,7 @@ async function handleProfile(req, res, db) {
         return;
     }
 
+    // Query user information
     const user = await db.User.findOne({
         where: {
             id: profile.dataValues.user_id
@@ -196,7 +197,7 @@ async function handleProfile(req, res, db) {
     data.title = `${user.dataValues.username}'s Profile`;
     data.username = user.dataValues.username;
 
-    // Passes the object to the web page
+    // Passes the object to the web page and displays it to the viewer
     res.render('profile', data);
 }
 

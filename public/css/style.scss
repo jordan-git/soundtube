@@ -14,6 +14,25 @@ body {
         }
     }
 
+    // Ad blocks
+    aside.ad-container {
+        padding: 20px;
+
+        &#right-side {
+        }
+
+        &#left-side {
+        }
+
+        div.ad {
+            padding-bottom: 20px;
+        }
+
+        img {
+            width: 90%;
+        }
+    }
+
     main {
         // Alerts
         div.alert {
@@ -33,6 +52,8 @@ body {
                 float: left;
             }
         }
+        //
+
         // Validation CSS
         div#form-container {
             width: 50%;
@@ -67,6 +88,7 @@ body {
             }
         }
         //
+
         // Profile
         section#profile {
             div#header {

@@ -9,6 +9,15 @@ body header nav form.form-inline {
   padding-right: 8px;
   border-right: 1px solid grey;
 }
+body aside.ad-container {
+  padding: 20px;
+}
+body aside.ad-container div.ad {
+  padding-bottom: 20px;
+}
+body aside.ad-container img {
+  width: 90%;
+}
 body main div.alert span {
   font-size: 1.3em;
 }

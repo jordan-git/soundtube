@@ -1,4 +1,10 @@
 block variables
+
+-const ad1 = locals.ads[0];
+-const ad2 = locals.ads[1];
+-const ad3 = locals.ads[2];
+-const ad4 = locals.ads[3];
+
 doctype html
 html(lang="en")
 	head
@@ -29,19 +35,31 @@ html(lang="en")
 				else
 					a(class="btn btn-success ml-2" href="/u/login") Log In
 					a(class="btn btn-success ml-2" href="/u/register") Register
-						
-		main(class="p-5")
-			if locals.successMsg.length
-				div(class="alert alert-success alert-dismissable fade show" role="alert")
-					span= locals.successMsg
-					button(type="button" class="close" data-dismiss="alert" aria-label="Close")
-						span(aria-hidden="true") &times;
-			if locals.errorMsg.length
-				div(class="alert alert-danger alert-dismissable fade show" role="alert")
-					span= locals.errorMsg
-					button(type="button" class="close" data-dismiss="alert" aria-label="Close")
-						span(aria-hidden="true") &times;
-			block body
+		div.container-fluid
+			div.row
+				aside(class="ad-container col" id="left-side")
+					div(class="ad")
+						img(src="/images/ads/" + ad1)
+					div(class="ad")
+						img(src="/images/ads/" + ad2)
+				main(class="p-5 col-8")
+					if locals.successMsg.length
+						div(class="alert alert-success alert-dismissable fade show" role="alert")
+							span= locals.successMsg
+							button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+								span(aria-hidden="true") &times;
+					if locals.errorMsg.length
+						div(class="alert alert-danger alert-dismissable fade show" role="alert")
+							span= locals.errorMsg
+							button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+								span(aria-hidden="true") &times;
+					block body
+				aside(class="ad-container col" id="right-side")
+					div(class="ad")
+						img(src="/images/ads/" + ad3)
+					div(class="ad")
+						img(src="/images/ads/" + ad4)
+
 		script(src="/js/jquery-3.4.1.min.js")
 		script(src="/js/bootstrap.min.js")
 		block scripts

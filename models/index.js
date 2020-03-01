@@ -56,7 +56,7 @@ Object.keys(database).forEach(modelName => {
 // Attach our connection to the ORM to our database object that contains the object representing each table
 database.sequelize = sequelize;
 
-// Create a default user if it doesn't exist
+// Create a default user in the database if it doesn't exist
 async function createDefaultUser() {
     const userExists = await database.User.findOne({
         where: {
