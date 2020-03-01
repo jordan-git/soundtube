@@ -23,33 +23,34 @@ html(lang="en")
 					img(width="50" src="/images/logo.png")
 					span.pl-4 SoundTube
 				ul(class="navbar-nav mr-auto")
-					li(class="nav-item")
-							a(class="nav-link") Example One
-					li(class="nav-item")
-							a(class="nav-link") Example Two
+					li(class=(active === "m" ? "nav-item dropdown active" : "nav-item dropdown"))
+						a(class="nav-link dropdown-toggle" data-toggle="dropdown" href="/about") Media
+						div.dropdown-menu
+							a(class="dropdown-item" href="/m/most-viewed") Most Viewed
+							a(class="dropdown-item" href="/m/highest-rated") Highest Rated
+							a(class="dropdown-item" href="/m/newest") Newest
+							if locals.session.loggedIn
+								div.dropdown-divider
+								a(class="dropdown-item" href="/m/my") My Media
+								a(class="dropdown-item" href="/m/upload") Upload Media
 					li(class=(active === "c" ? "nav-item dropdown active" : "nav-item dropdown"))
 						a(class="nav-link dropdown-toggle" data-toggle="dropdown" href="/about") Contact Us
 						div.dropdown-menu
-							a(class="dropdown-item" href="/contact") Send Message
-							a(class="dropdown-item" href="/ad") Purchase Ad
+							a(class="dropdown-item" href="/contact-us") Contact Us
+							a(class="dropdown-item" href="/purchase-ad") Purchase Ad
 							a(class="dropdown-item" href="/about") About Us
 				ul(class="navbar-nav justify-content-end mr-4")
 					if locals.session.loggedIn
 						li(class=(active === "u" ? "nav-item dropdown active" : "nav-item dropdown"))
 							a(class="nav-link dropdown-toggle" data-toggle="dropdown") User
 							div.dropdown-menu
-								a(class="dropdown-item" href="/u/edit") Edit User
 								a(class="dropdown-item" href="/u/premium") Purchase Premium
+								a(class="dropdown-item" href="/u/edit") Edit User
 						li(class=(active === "p" ? "nav-item dropdown active" : "nav-item dropdown"))
 							a(class="nav-link dropdown-toggle" data-toggle="dropdown") Profile
 							div.dropdown-menu
 								a(class="dropdown-item" href="/p/" + locals.session.userId) My Profile
 								a(class="dropdown-item" href="/p/edit") Edit Profile
-						li(class=(active === "m" ? "nav-item dropdown active" : "nav-item dropdown"))
-							a(class="nav-link dropdown-toggle" data-toggle="dropdown") Media
-							div.dropdown-menu
-								a(class="dropdown-item" href="/m/my") My Media
-								a(class="dropdown-item" href="/m/upload") Upload Media
 							
 				form.form-inline
 					input(class="form-control mr-sm-2" type="search" placeholder="Search")

@@ -98,7 +98,19 @@ async function handleRegisterPost(req, res, db) {
     res.redirect('/');
 }
 
+async function handleEditUserPost(req, res, db) {
+    const data = ({ password } = req.body);
+    db.User.update(data, {
+        where: {
+            user_id: req.session.userId
+        }
+    });
+
+    req.flash('success_msg', 'Your password has been updated');
+}
+
 module.exports = {
     handleLogin: handleLoginPost,
-    handleRegister: handleRegisterPost
+    handleRegister: handleRegisterPost,
+    handleEditUser: handleEditUserPost
 };

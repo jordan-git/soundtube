@@ -33,4 +33,14 @@ router.post('/register', auth.ensureLoggedOut, (req, res) => {
     userHelper.handleRegister(req, res, db);
 });
 
+// Show the edit user page
+router.get('/edit', auth.ensureLoggedIn, (req, res) => {
+    res.render('user/edit', { title: 'Edit User' });
+});
+
+// Process submitted information from the edit user page
+router.post('/edit', auth.ensureLoggedIn, (req, res) => {
+    userHelper.handleEditUser(req, res, db);
+});
+
 module.exports = router;

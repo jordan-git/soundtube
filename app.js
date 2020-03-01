@@ -82,10 +82,10 @@ app.use((req, res, next) => {
     // Checks what URL the user is coming from and stores that so it may be highlighted in the nav upon page load
     if (req.originalUrl.includes('/u/')) {
         res.locals.active = 'u';
-    } else if (req.originalUrl.includes('/m/')) {
-        res.locals.active = 'm';
     } else if (req.originalUrl.includes('/p/')) {
         res.locals.active = 'p';
+    } else if (req.originalUrl.includes('/m/')) {
+        res.locals.active = 'm';
     } else {
         const contact_us = ['/contact', '/ad', '/about'];
         contact_us.forEach(url => {
@@ -103,6 +103,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes'));
 app.use('/u', require('./routes/user'));
 app.use('/p', require('./routes/profile'));
+app.use('/m', require('./routes/media'));
 
 // Catch unused routes for 404 (Must be at the end)
 app.use('*', (req, res, next) => {
