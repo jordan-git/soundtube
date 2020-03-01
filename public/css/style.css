@@ -5,81 +5,101 @@ body {
   font-size: 18px;
   font-family: Arial, Helvetica, sans-serif;
 }
-body header nav form.form-inline {
+
+/* Header CSS */
+header nav form.form-inline {
   padding-right: 8px;
   border-right: 1px solid grey;
 }
-body aside.ad-container {
-  padding: 20px;
-}
-body aside.ad-container div.ad {
-  padding-bottom: 20px;
-}
-body aside.ad-container img {
-  width: 90%;
-}
-body main div.alert span {
+
+/* Header End */
+/* Alerts CSS */
+div.alert span {
   font-size: 1.3em;
 }
-body main div.error {
-  margin: 0 auto;
+
+/* Alerts End */
+/* Ads CSS */
+aside.ad-container {
+  padding: 20px;
 }
-body main div.error span {
-  float: left;
+aside.ad-container div.ad {
+  padding-bottom: 20px;
 }
-body main div.error a {
-  clear: both;
-  float: left;
+aside.ad-container img {
+  width: 90%;
 }
-body main div#form-container {
+
+/* Ads End */
+/* Forms CSS */
+div#form-container {
   width: 50%;
   margin: 0 auto;
 }
-body main div#form-container h1#title {
+div#form-container h1#title {
   text-align: center;
 }
-body main form.validation-form label.error {
+
+form.validation-form label.error {
   color: red;
 }
-body main form.validation-form label[for=profile-pic] {
+form.validation-form label[for=profile-pic] {
   margin-bottom: 0;
 }
-body main form.validation-form span.profile-pic {
+form.validation-form span.profile-pic {
   display: inline-block;
   margin-bottom: 0.5rem;
 }
-body main form.validation-form button.submit {
+form.validation-form button.submit {
   display: block;
   margin: 0 auto;
 }
-body main form.validation-form input#profile-pic {
+form.validation-form input#profile-pic {
   padding-left: 20px;
 }
-body main section#profile div#header {
+
+/* Forms End */
+/* Profile CSS */
+section#profile div#header {
   display: flex;
   padding-bottom: 10px;
   border-bottom: 2px solid #cccccc;
 }
-body main section#profile div#header div#picture {
+section#profile div#header div#picture {
   flex: 0 0 18%;
 }
-body main section#profile div#header div#picture img {
+section#profile div#header div#picture img {
   border: 4px solid #593196;
   border-radius: 50%;
 }
-body main section#profile div#header div#title {
+section#profile div#header div#title {
   flex: 1;
   height: 200px;
   position: relative;
 }
-body main section#profile div#header div#title h1 {
+section#profile div#header div#title h1 {
   font-size: 4em;
   position: absolute;
   bottom: 20px;
   left: 0;
 }
-body main section#profile div#header div#title h1 span {
+section#profile div#header div#title h1 span {
   font-size: 0.6em;
 }
+
+/* Profile End */
+/* 404 Error CSS */
+div.error {
+  margin: 0 auto;
+}
+div.error span {
+  float: left;
+}
+div.error a {
+  clear: both;
+  float: left;
+}
+
+/* 404 Error End */
 
 /*# sourceMappingURL=style.css.map */

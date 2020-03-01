@@ -1,0 +1,18 @@
+// SCSS to modify the ads goes here
+aside.ad-container {
+    padding: 20px;
+
+    &#right-side {
+    }
+
+    &#left-side {
+    }
+
+    div.ad {
+        padding-bottom: 20px;
+    }
+
+    img {
+        width: 90%;
+    }
+}

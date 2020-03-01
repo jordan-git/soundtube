@@ -1,5 +1,2 @@
-// Import all modules
-@import "../modules/all";
-
-// Import all other partials in this directory
-@import "_buttons";
+// Import all files in the modules folder (external modules & variables)
+@import 'modules/all';

@@ -1,128 +1,38 @@
+// Modules and Variables
+@import 'partials/base';
+
+// Main CSS
 body {
     padding: 0;
     margin: 0;
     background: #f0e6ff;
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
-
-    header {
-        nav {
-            form.form-inline {
-                padding-right: 8px;
-                border-right: 1px solid grey;
-            }
-        }
-    }
-
-    // Ad blocks
-    aside.ad-container {
-        padding: 20px;
-
-        &#right-side {
-        }
-
-        &#left-side {
-        }
-
-        div.ad {
-            padding-bottom: 20px;
-        }
-
-        img {
-            width: 90%;
-        }
-    }
-
-    main {
-        // Alerts
-        div.alert {
-            span {
-                font-size: 1.3em;
-            }
-        }
-        div.error {
-            margin: 0 auto;
-
-            span {
-                float: left;
-            }
-
-            a {
-                clear: both;
-                float: left;
-            }
-        }
-        //
-
-        // Validation CSS
-        div#form-container {
-            width: 50%;
-            margin: 0 auto;
-
-            h1#title {
-                text-align: center;
-            }
-        }
-
-        form.validation-form {
-            label.error {
-                color: red;
-            }
-
-            label[for='profile-pic'] {
-                margin-bottom: 0;
-            }
-
-            span.profile-pic {
-                display: inline-block;
-                margin-bottom: 0.5rem;
-            }
-
-            button.submit {
-                display: block;
-                margin: 0 auto;
-            }
-
-            input#profile-pic {
-                padding-left: 20px;
-            }
-        }
-        //
-
-        // Profile
-        section#profile {
-            div#header {
-                display: flex;
-                padding-bottom: 10px;
-                border-bottom: 2px solid #cccccc;
-
-                div#picture {
-                    flex: 0 0 18%;
-
-                    img {
-                        border: 4px solid #593196;
-                        border-radius: 50%;
-                    }
-                }
-
-                div#title {
-                    flex: 1;
-                    height: 200px;
-                    position: relative;
-
-                    h1 {
-                        font-size: 4em;
-                        position: absolute;
-                        bottom: 20px;
-                        left: 0;
-
-                        span {
-                            font-size: 0.6em;
-                        }
-                    }
-                }
-            }
-        }
-        //
-    }
 }
+
+// Partials
+// Comments surrounding the import are CSS comments therefore appear in the generated stylesheet
+
+/* Header CSS */
+@import 'partials/header';
+/* Header End */
+
+/* Alerts CSS */
+@import 'partials/alerts';
+/* Alerts End */
+
+/* Ads CSS */
+@import 'partials/ads';
+/* Ads End */
+
+/* Forms CSS */
+@import 'partials/forms';
+/* Forms End */
+
+/* Profile CSS */
+@import 'partials/profile';
+/* Profile End */
+
+/* 404 Error CSS */
+@import 'partials/error';
+/* 404 Error End */
