@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 async function handleEditProfileGet(req, res, db) {
     // Query user
     const user = await db.User.findOne({
@@ -40,6 +42,7 @@ async function handleEditProfilePost(req, res, db) {
         location,
         interests,
         favourite_genres,
+        reset_avatar,
         day,
         month,
         year
@@ -47,8 +50,23 @@ async function handleEditProfilePost(req, res, db) {
     const date_of_birth = new Date(year, month, day);
     data.date_of_birth = date_of_birth;
 
-    if (req.file) {
+    if (req.file && data.reset_avatar != 'Reset') {
         data.avatar = req.file.filename;
+    }
+
+    if (data.reset_avatar == 'Reset') {
+        data.avatar = '';
+
+        const files = fs.readdirSync('./public/images/avatars');
+        const oldAvatarName = `${
+            req.session.userId
+        }-${req.session.username.toLowerCase()}.`;
+        files.forEach(file => {
+            let search = file.search(oldAvatarName);
+            if (search >= 0) {
+                fs.unlink('./public/images/avatars/' + file);
+            }
+        });
     }
 
     db.Profile.update(data, {
