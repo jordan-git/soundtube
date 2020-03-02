@@ -71,6 +71,23 @@ form.validation-form input#profile-pic {
   padding-left: 20px;
 }
 
+form.profile-form button.submit {
+  display: block;
+  margin: 0 auto;
+}
+
+div#wall div#new-post {
+  position: absolute;
+  bottom: 0;
+}
+div#wall form.wall-form button.submit {
+  display: block;
+  margin: 0 auto;
+}
+div#wall form.wall-form textarea {
+  width: 100%;
+}
+
 /* Forms End */
 /* Profile CSS */
 section#profile div#header {
@@ -87,8 +104,24 @@ section#profile div#header div#title h1 {
   bottom: 0;
   text-align: center;
 }
-section#profile div#content dl#info {
-  padding: 10px;
+section#profile div#top-content {
+  border-bottom: 2px solid grey;
+}
+section#profile div#top-content div#post {
+  padding: 20px;
+}
+section#profile div#top-content div#post form.wall-form {
+  margin-top: 3%;
+}
+section#profile div#top-content div#post form.wall-form button.submit {
+  display: block;
+  margin: 0 auto;
+}
+section#profile div#top-content div#post form.wall-form textarea {
+  width: 100%;
+}
+section#profile div#top-content dl#info {
+  padding: 15px;
 }
 
 /* Profile End */

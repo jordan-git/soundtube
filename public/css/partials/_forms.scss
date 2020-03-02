@@ -33,3 +33,26 @@ form.validation-form {
         padding-left: 20px;
     }
 }
+
+form.profile-form {
+    button.submit {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+div#wall {
+    div#new-post {
+        position: absolute;
+        bottom: 0;
+    }
+    form.wall-form {
+        button.submit {
+            display: block;
+            margin: 0 auto;
+        }
+        textarea {
+            width: 100%;
+        }
+    }
+}

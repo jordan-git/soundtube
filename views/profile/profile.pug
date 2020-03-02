@@ -14,7 +14,7 @@ block body
                         span= " (" + stage_name + ")"
                 else
                     h1= username
-        div(class="row" id="content")
+        div(class="row" id="top-content")
             dl(class="col-4" id="info")
                 dt Location:
                     if location
@@ -31,4 +31,13 @@ block body
                         dd=favourite_genres
                     else
                         dd N/A
-            div(class="col-8" id="wall")
+            div(class="col-8" id="post")
+                div.new-post
+                    form(id="wall-form" class="wall-form" method="post" action="/u/wall")
+                        div.form-group
+                            textarea(id="wallText" name="post" cols="50" rows="3")
+                        button(class="submit" type="submit" class="btn btn-success") Submit
+        div(class="row" id="mid-content")
+            div.posts
+                div.post
+                    p Test test test
