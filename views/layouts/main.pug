@@ -52,8 +52,8 @@ html(lang="en")
 								a(class="dropdown-item" href="/p/" + locals.session.userId) My Profile
 								a(class="dropdown-item" href="/p/edit") Edit Profile
 							
-				form.form-inline
-					input(class="form-control mr-sm-2" type="search" placeholder="Search")
+				form(class="form-inline" action="/m/search" method="POST")
+					input(class="form-control mr-sm-2" type="search" name="q" placeholder="Search Media or Users")
 					button(class="btn btn-info my-2 my-sm-0" type="submit") Search
 				if locals.session.loggedIn
 					a(class="btn btn-danger ml-2" href="/u/logout") Log Out
