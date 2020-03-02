@@ -1,4 +1,5 @@
 const fs = require('fs');
+const moment = require('moment');
 
 async function handleEditProfileGet(req, res, db) {
     // Query user
@@ -19,6 +20,7 @@ async function handleEditProfileGet(req, res, db) {
     const email = user.dataValues.email;
     const [year, month, day] = user.dataValues.date_of_birth.split('-');
     let data = ({
+        id,
         stage_name,
         avatar,
         location,
@@ -124,6 +126,18 @@ async function handleProfileGet(req, res, db) {
     res.render('profile/profile', data);
 }
 
+async function handlePost(req, res, db) {
+    const { new_post } = req.body;
+    const data = {
+        comment: new_post,
+        created_at: new moment().format('YYYY-MM-DD'),
+        poster_id: req.session.userId,
+        profile_id: req.params.id
+    };
+    await db.ProfileComments.create(data);
+    res.redirect(`/p/${req.params.id}`);
+}
+
 async function deleteAvatar(req, db, cb) {
     const profile = await db.Profile.findOne({
         where: {
@@ -149,5 +163,6 @@ module.exports = {
         if (req.method == 'GET') handleEditProfileGet(req, res, db);
         else if (req.method == 'POST') handleEditProfilePost(req, res, db);
     },
-    handleProfile: handleProfileGet
+    handleProfile: handleProfileGet,
+    handlePost: handlePost
 };

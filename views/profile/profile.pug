@@ -32,12 +32,25 @@ block body
                     else
                         dd N/A
             div(class="col-8" id="post")
-                div.new-post
-                    form(id="wall-form" class="wall-form" method="post" action="/u/wall")
-                        div.form-group
-                            textarea(id="wallText" name="post" cols="50" rows="3")
-                        button(class="submit" type="submit" class="btn btn-success") Submit
-        div(class="row" id="mid-content")
-            div.posts
-                div.post
-                    p Test test test
+                if locals.session.loggedIn
+                    if locals.session.username != username
+                        div.new-post
+                            form(id="wall-form" class="wall-form" method="post" action=`${id}/post`)
+                                div.form-group
+                                    label(for="new-post") Post a message:
+                                    textarea(id="new-post" name="new_post" cols="50" rows="3")
+                                button(class="submit" type="submit" class="btn btn-success") Submit
+        ul(class="nav nav-tabs nav-justified")
+            li.nav-item
+                a(class="nav-link active" data-toggle="tab" href="#posts") Posts
+            li.nav-item
+                a(class="nav-link" data-toggle="tab" href="#media") Media
+        div.tab-content
+            div(class="tab-pane fade active show" id="posts")
+                p Posts
+            div(class="tab-pane fade" id="media")
+                p Media
+
+block scripts
+    script(src="/js/jquery.validate.min.js")
+    script(src="/js/validation.js")

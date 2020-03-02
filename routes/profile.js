@@ -48,4 +48,8 @@ router.get('/:id', (req, res) => {
     profileHelper.handleProfile(req, res, db);
 });
 
+router.post('/:id/post', auth.ensureLoggedIn, (req, res) => {
+    profileHelper.handlePost(req, res, db);
+});
+
 module.exports = router;

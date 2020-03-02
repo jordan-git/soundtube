@@ -20,6 +20,10 @@ section#profile {
                 position: absolute;
                 bottom: 0;
                 text-align: center;
+
+                span {
+                    font-size: 0.4em;
+                }
             }
         }
     }
@@ -31,7 +35,6 @@ section#profile {
             padding: 20px;
 
             form.wall-form {
-                margin-top: 3%;
                 button.submit {
                     display: block;
                     margin: 0 auto;
@@ -45,6 +48,7 @@ section#profile {
 
         dl#info {
             padding: 15px;
+            font-size: 0.9em;
         }
     }
 }

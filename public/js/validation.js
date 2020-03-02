@@ -7,6 +7,8 @@ const usernameMinWarning = `Username must be at least ${minUsernameLen} characte
 const usernameMaxWarning = `Username must be no more than ${maxUsernameLen} characters`;
 const passwordMinWarning = `Password must be at least ${minPasswordLen} characters`;
 const passwordMaxWarning = `Password must be no more than ${maxPasswordLen} characters`;
+const postMinWarning = `Post must be at least ${minPasswordLen} characters`;
+const postMaxWarning = `Post must be no more than ${maxPasswordLen} characters`;
 const passwordNotMatchingWarning = 'Passwords do not match';
 
 // When page has fully loaded
@@ -122,6 +124,14 @@ $(document).ready(function() {
         },
         messages: {
             email: 'Please enter a valid email address'
+        }
+    });
+    $('#wall-form').validate({
+        rules: {
+            new_post: {
+                required: true,
+                maxlength: 128
+            }
         }
     });
 });
