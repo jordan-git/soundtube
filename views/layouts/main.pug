@@ -73,6 +73,11 @@ html(lang="en")
 							span= locals.successMsg
 							button(type="button" class="close" data-dismiss="alert" aria-label="Close")
 								span(aria-hidden="true") &times;
+					if success
+						div(class="alert alert-success alert-dismissable fade show" role="alert")
+							span= success
+							button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+								span(aria-hidden="true") &times;
 					if locals.errorMsg.length
 						div(class="alert alert-danger alert-dismissable fade show" role="alert")
 							span= locals.errorMsg

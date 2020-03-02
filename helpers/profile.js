@@ -64,19 +64,24 @@ async function handleEditProfilePost(req, res, db) {
         files.forEach(file => {
             let search = file.search(oldAvatarName);
             if (search >= 0) {
-                fs.unlink('./public/images/avatars/' + file);
+                // Async function to delete avatar file and database entry
+                deleteAvatar(req, db, () => {
+                    data.title = 'Edit Profile';
+                    data.success = 'Your avatar has been deleted';
+                    res.render('profile/edit', data);
+                });
             }
         });
+    } else {
+        db.Profile.update(data, {
+            where: {
+                user_id: req.session.userId
+            }
+        });
+
+        data.title = 'Edit Profile';
+        res.render('profile/edit', data);
     }
-
-    db.Profile.update(data, {
-        where: {
-            user_id: req.session.userId
-        }
-    });
-
-    data.title = 'Edit Profile';
-    res.render('profile/edit', data);
 }
 
 async function handleProfileGet(req, res, db) {
@@ -117,6 +122,26 @@ async function handleProfileGet(req, res, db) {
 
     // Passes the object to the web page and displays it to the viewer
     res.render('profile/profile', data);
+}
+
+async function deleteAvatar(req, db, cb) {
+    const profile = await db.Profile.findOne({
+        where: {
+            user_id: req.session.userId
+        }
+    });
+    fs.unlinkSync('./public/images/avatars/' + profile.dataValues.avatar);
+    await db.Profile.update(
+        {
+            avatar: ''
+        },
+        {
+            where: {
+                user_id: req.session.userId
+            }
+        }
+    );
+    cb();
 }
 
 module.exports = {
