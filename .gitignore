@@ -4,3 +4,4 @@ node_modules/
 # Ignore all images but default profile picture
 public/images/avatars/*
 !public/images/avatars/default.jpg
+!public/images/avatars/1-admin.jpg

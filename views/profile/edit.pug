@@ -45,7 +45,7 @@ block content
                 label(for="location") Location
                 input(type="text" class="form-control" name="location" id="location" placeholder="Ireland, France, .." value=location)
             div(class="form-group mb-0")
-                label(for="avatar") Profile Picture
+                label(for="avatar") Avatar
                 input(type="file" class="form-control-file" accept="image/png, image/jpeg" name="avatar" id="avatar")
                 if avatar
                     small(class="form-text") Current: #{avatar}
@@ -54,10 +54,10 @@ block content
                     small(class="form-text") Recommended size: 180x180px
             div.form-group
                 if !avatar
-                    label(for="reset-avatar disabled") Remove Profile Picture
+                    label(for="reset-avatar disabled") Reset Avatar
                     input(type="radio" name="reset_avatar" id="reset-avatar" value="Reset" disabled="disabled")
                 else
-                    label(for="reset-avatar") Remove Profile Picture
+                    label(for="reset-avatar") Reset Avatar
                     input(type="radio" name="reset_avatar" id="reset-avatar" value="Reset")
             div.form-group
                 label(for="interests") Interests
