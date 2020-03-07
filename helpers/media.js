@@ -2,16 +2,16 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 async function handleSearch(req, res, db) {
-    let userResults;
     const patterns = [`%${req.body.q}`, `${req.body.q}%`, `%${req.body.q}%`];
 
-    let users = {};
-    let media = {};
-    for (let i = 0; i < patterns.length; i++) {
+    let users = [];
+    let media = [];
+
+    for (const pattern of patterns) {
         const userResults = await db.User.findAll({
             where: {
                 username: {
-                    [Op.like]: patterns[i]
+                    [Op.like]: pattern
                 }
             }
         });
@@ -21,41 +21,44 @@ async function handleSearch(req, res, db) {
         }
 
         userResults.forEach(user => {
-            users[user.dataValues.username] = user.dataValues;
+            users.push(user.dataValues);
         });
     }
 
     if (users) {
-        const userData = [];
-        for (let user in users) {
-            userData.push({
-                id: user.id,
-                username: user.username
-            });
-        }
-        console.log(userData);
+        let userData = [];
+        users.forEach(user => {
+            userData.push(user);
+        });
+        users = userData;
     }
 
-    // if (media) {
-    //     const mediaData = [];
-    //     Object.keys(media).forEach(m => {
-    //         mediaData.push({
-    //             id: m.id,
-    //             username: m.username
-    //         });
-    //     });
-    //     console.log(mediaData);
-    // }
-}
+    for (const pattern of patterns) {
+        const mediaResults = await db.Media.findAll({
+            where: {
+                title: {
+                    [Op.like]: pattern
+                }
+            }
+        });
 
-// const mediaResults = await db.Media.findAll({
-//     where: {
-//         title: {
-//             [Op.like]: `${req.body.q}`
-//         }
-//     }
-// });
-// console.log(mediaResults);
+        if (!mediaResults) {
+            continue;
+        }
+
+        mediaResults.forEach(m => {
+            media.push(m.dataValues);
+        });
+    }
+
+    if (media) {
+        let mediaData = [];
+        media.forEach(m => {
+            mediaData.push(m);
+        });
+        media = mediaData;
+    }
+}
 
 module.exports = {
     handleSearch: handleSearch

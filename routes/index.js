@@ -13,11 +13,11 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/purchase-ad', (req, res) => {
-    res.render('purchase-ad', { title: 'About' });
+    res.render('purchase-ad', { title: 'Purchase Ad' });
 });
 
 router.get('/contact-us', (req, res) => {
-    res.render('contact-us', { title: 'About' });
+    res.render('contact-us', { title: 'Contact Us' });
 });
 
 module.exports = router;
