@@ -1,6 +1,8 @@
 .vscode/
 node_modules/
 
+.prettierignore
+
 # Ignore all images but default profile picture
 public/images/avatars/*
 !public/images/avatars/default.jpg
