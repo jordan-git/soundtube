@@ -1,6 +1,7 @@
 module.exports = {
     /*
      * Middleware are functions that may be used whenever a route is called, to perform certain tasks
+     * They are called in a router request, right after the variable containing the route (routes/profile.js:32 for example)
      *
      * ensureLoggedIn:
      * If not logged in, it stops the user from proceeding and redirects to the login page,
