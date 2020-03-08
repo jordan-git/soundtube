@@ -1,8 +1,8 @@
 module.exports = sequelize => {
-    const { DataTypes } = require("sequelize");
+    const { DataTypes } = require('sequelize');
 
     const MediaGenres = sequelize.define(
-        "MediaGenres",
+        'MediaGenres',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -17,12 +17,12 @@ module.exports = sequelize => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "media",
-                    key: "id"
+                    model: 'media',
+                    key: 'id'
                 }
             }
         },
-        { timestamps: false, tableName: "media_genres" }
+        { timestamps: false, tableName: 'media_genres' }
     );
 
     return MediaGenres;

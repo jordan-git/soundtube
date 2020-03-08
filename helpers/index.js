@@ -30,7 +30,7 @@ async function handleSearch(req, res, db) {
             continue;
         }
 
-        // For each set of results, add the dictionary of results to the users array
+        // For each set of results, add the object of results to the users array
         userResults.forEach(user => {
             users.push(user.dataValues);
         });
@@ -63,7 +63,7 @@ async function handleSearch(req, res, db) {
             continue;
         }
 
-        // For each set of results, add the dictionary of results to the media array
+        // For each set of results, add the object of results to the media array
         mediaResults.forEach(m => {
             media.push(m.dataValues);
         });

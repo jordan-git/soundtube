@@ -1,4 +1,5 @@
-// Port to host the server on
+// Port to host the server on, stored in the .env file.
+// .env file allows us to have project-specific environment variables
 const port = process.env.PORT || 8000;
 
 // Main imports
@@ -47,8 +48,9 @@ app.set('view engine', 'pug');
 app.locals.pretty = true;
 
 /* Middleware functions
- * These functions are called in between each request and help with misc tasks like
- * storing flash messages and generating ads
+ * These functions help with misc tasks like storing flash messages and generating
+ * ads. They are stored in this file rather than the middleware directory so that they
+ * are called in between every single request made
  */
 
 app.use((req, res, next) => {
@@ -109,7 +111,7 @@ app.use('/u', require('./routes/user'));
 app.use('/p', require('./routes/profile'));
 app.use('/m', require('./routes/media'));
 
-// Catch unused routes for 404 (Must be at the end)
+// Catch unused routes for 404 (Must be at the end of all routes)
 app.use('*', (req, res, next) => {
     res.status(404);
     res.render('error', { title: 'Error: Page Not Found' });

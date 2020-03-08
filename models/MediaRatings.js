@@ -1,8 +1,8 @@
 module.exports = sequelize => {
-    const { DataTypes } = require("sequelize");
+    const { DataTypes } = require('sequelize');
 
     const MediaRatings = sequelize.define(
-        "MediaRatings",
+        'MediaRatings',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -17,20 +17,20 @@ module.exports = sequelize => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "media",
-                    key: "id"
+                    model: 'media',
+                    key: 'id'
                 }
             },
             profile_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "profiles",
-                    key: "id"
+                    model: 'profiles',
+                    key: 'id'
                 }
             }
         },
-        { timestamps: false, tableName: "media_ratings" }
+        { timestamps: false, tableName: 'media_ratings' }
     );
 
     return MediaRatings;
