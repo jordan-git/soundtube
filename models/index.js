@@ -12,7 +12,7 @@ const conn = mysql.createConnection({
     password: 'password'
 });
 
-// // Drop database every restart (for testing only)
+// Drop database every restart (for testing only)
 // conn.query('DROP DATABASE IF EXISTS soundtube;', (err, result) => {
 //     if (err) throw err;
 // });
@@ -30,7 +30,7 @@ const sequelize = new Sequelize('soundtube', 'root', 'password', {
 });
 
 /*  Reads every single file in this directory excluding this one and creates an object
-    of the table described in the file, then adds each object to the dictionary 'database' */
+    of the table described in the file, then adds each object to the object 'database' */
 const basename = path.basename(__filename);
 fs.readdirSync(__dirname)
     .filter(file => {
