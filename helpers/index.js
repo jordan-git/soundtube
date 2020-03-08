@@ -58,6 +58,9 @@ async function handleSearch(req, res, db) {
         });
         media = mediaData;
     }
+
+    console.log(users);
+    console.log(media);
 }
 
 module.exports = {

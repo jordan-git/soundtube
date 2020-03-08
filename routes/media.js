@@ -1,6 +1,5 @@
 const express = require('express');
 
-const mediaHelper = require('../helpers/media');
 const db = require('../models');
 
 // Create a router to store all the routes
@@ -28,10 +27,6 @@ router.get('/upload', (req, res) => {
 
 router.post('/upload', (req, res) => {
     res.redirect('/');
-});
-
-router.post('/search', (req, res) => {
-    mediaHelper.handleSearch(req, res, db);
 });
 
 module.exports = router;
