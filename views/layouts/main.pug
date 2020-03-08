@@ -1,43 +1,95 @@
 block variables
+
+-const ad1 = locals.ads[0];
+-const ad2 = locals.ads[1];
+-const ad3 = locals.ads[2];
+-const ad4 = locals.ads[3];
+
 doctype html
 html(lang="en")
 	head
 		meta(charset="utf-8")
 		meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
 
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik&display=swap")
 		link(rel="stylesheet" href="/css/bootstrap.min.css")
 		link(rel="stylesheet" href="/css/style.css")
 
 		title #{title} | SoundTube
 	body
 		header
-			nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
-				a(class="navbar-brand" href="/") SoundTube
-				ul(class="navbar-nav mr-auto mt-2 mt-lg-0")
-					li.nav-item
-						a(class="nav-link" href="/") Home
-					li.nav-item
-						a(class="nav-link" href="/u/edit-profile") Edit Profile
-				form.form-inline
-					input(class="form-control mr-sm-2" type="search" placeholder="Search")
-					button(class="btn btn-outline-info my-2 my-sm-0" type="submit") Search
+			nav(class="navbar navbar-expand-lg navbar-dark p-2")
+				a(class="navbar-brand" href="/")
+					img(width="50" src="/images/logo.png")
+					span.pl-4 SoundTube
+				ul(class="navbar-nav mr-auto")
+					li(class=(active === "m" ? "nav-item dropdown active" : "nav-item dropdown"))
+						a(class="nav-link dropdown-toggle" data-toggle="dropdown" href="/about") Media
+						div.dropdown-menu
+							a(class="dropdown-item disabled" href="/m/most-viewed") Most Viewed
+							a(class="dropdown-item disabled" href="/m/highest-rated") Highest Rated
+							a(class="dropdown-item disabled" href="/m/newest") Newest
+							if locals.session.loggedIn
+								div.dropdown-divider
+								a(class="dropdown-item disabled" href="/m/my") My Media
+								a(class="dropdown-item disabled" href="/m/upload") Upload Media
+					li(class=(active === "c" ? "nav-item dropdown active" : "nav-item dropdown"))
+						a(class="nav-link dropdown-toggle" data-toggle="dropdown" href="/about") Contact Us
+						div.dropdown-menu
+							a(class="dropdown-item" href="/contact-us") Contact Us
+							a(class="dropdown-item" href="/purchase-ad") Purchase Ad
+							a(class="dropdown-item" href="/about") About Us
+				ul(class="navbar-nav justify-content-end mr-4")
+					if locals.session.loggedIn
+						li(class=(active === "u" ? "nav-item dropdown active" : "nav-item dropdown"))
+							a(class="nav-link dropdown-toggle" data-toggle="dropdown") User
+							div.dropdown-menu
+								a(class="dropdown-item disabled" href="/u/premium") Purchase Premium
+								a(class="dropdown-item" href="/u/edit") Edit User
+						li(class=(active === "p" ? "nav-item dropdown active" : "nav-item dropdown"))
+							a(class="nav-link dropdown-toggle" data-toggle="dropdown") Profile
+							div.dropdown-menu
+								a(class="dropdown-item" href="/p/" + locals.session.userId) My Profile
+								a(class="dropdown-item" href="/p/edit") Edit Profile
+							
+				form(class="form-inline" action="/search" method="POST")
+					input(class="form-control mr-sm-2" type="search" name="q" placeholder="Search Media or Users")
+					button(class="btn btn-info my-2 my-sm-0" type="submit") Search
 				if locals.session.loggedIn
-					a(class="btn btn-outline-danger ml-2" href="/u/logout") Log Out
+					a(class="btn btn-danger ml-2" href="/u/logout") Log Out
 				else
-					a(class="btn btn-outline-info ml-2" href="/u/login") Log In
-					a(class="btn btn-outline-info ml-2" href="/u/register") Register
-						
-		main(class="container p-5")
-			if locals.successMsg.length
-				div(class="alert alert-success alert-dismissable fade show" role="alert")
-					span= locals.successMsg
-					button(type="button" class="close" data-dismiss="alert" aria-label="Close")
-						span(aria-hidden="true") &times;
-			if locals.errorMsg.length
-				div(class="alert alert-danger alert-dismissable fade show" role="alert")
-					span= locals.errorMsg
-					button(type="button" class="close" data-dismiss="alert" aria-label="Close")
-						span(aria-hidden="true") &times;
-			block body
+					a(class="btn btn-success ml-2" href="/u/login") Log In
+					a(class="btn btn-success ml-2" href="/u/register") Register
+		div.container-fluid
+			div.row
+				aside(class="ad-container col" id="left-side")
+					div(class="ad")
+						img(src="/images/ads/" + ad1)
+					div(class="ad")
+						img(src="/images/ads/" + ad2)
+				main(class="p-5 col-9")
+					if locals.successMsg.length
+						div(class="alert alert-success alert-dismissable fade show" role="alert")
+							span= locals.successMsg
+							button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+								span(aria-hidden="true") &times;
+					if success
+						div(class="alert alert-success alert-dismissable fade show" role="alert")
+							span= success
+							button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+								span(aria-hidden="true") &times;
+					if locals.errorMsg.length
+						div(class="alert alert-danger alert-dismissable fade show" role="alert")
+							span= locals.errorMsg
+							button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+								span(aria-hidden="true") &times;
+					block body
+				aside(class="ad-container col" id="right-side")
+					div(class="ad")
+						img(src="/images/ads/" + ad3)
+					div(class="ad")
+						img(src="/images/ads/" + ad4)
+
 		script(src="/js/jquery-3.4.1.min.js")
+		script(src="/js/bootstrap.min.js")
 		block scripts

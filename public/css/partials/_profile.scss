@@ -1,0 +1,54 @@
+// SCSS to modify the profile page goes here
+section#profile {
+    div#header {
+        // display: flex;
+        padding-bottom: 10px;
+        border-bottom: 2px solid grey;
+
+        div#avatar {
+            // flex: 0 0 18%;
+
+            img {
+                border: 4px solid grey;
+                border-radius: 50%;
+            }
+        }
+
+        div#title {
+            h1 {
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                text-align: center;
+
+                span {
+                    font-size: 0.4em;
+                }
+            }
+        }
+    }
+
+    div#top-content {
+        border-bottom: 2px solid grey;
+
+        div#post {
+            padding: 20px;
+
+            form.wall-form {
+                button.submit {
+                    display: block;
+                    margin: 0 auto;
+                }
+
+                textarea {
+                    width: 100%;
+                }
+            }
+        }
+
+        dl#info {
+            padding: 15px;
+            font-size: 0.9em;
+        }
+    }
+}

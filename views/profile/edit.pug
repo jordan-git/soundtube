@@ -1,12 +1,12 @@
-extends layouts/validation
+extends ../layouts/validation
 
 block heading
-    h1#title Edit Your Profile
+    h1#title Edit Profile Information
     hr
 
 block content
     div#profile-info
-        form(id="register-form" class="validation-form" method="post" action="/u/edit-profile" enctype="multipart/form-data")
+        form(id="profile-form" class="profile-form" method="post" action="/p/edit" enctype="multipart/form-data")
             div.form-group
                 label(for="stage-name") Stage Name
                 input(type="text" class="form-control" name="stage_name" id="stage-name" placeholder="Eminem" value=stage_name)
@@ -44,13 +44,25 @@ block content
             div.form-group
                 label(for="location") Location
                 input(type="text" class="form-control" name="location" id="location" placeholder="Ireland, France, .." value=location)
+            div(class="form-group mb-0")
+                label(for="avatar") Avatar
+                input(type="file" class="form-control-file" accept="image/png, image/jpeg" name="avatar" id="avatar")
+                if avatar
+                    small(class="form-text") Current: #{avatar}
+                    small(class="form-text") Recommended size: 180x180px
+                else
+                    small(class="form-text") Recommended size: 180x180px
             div.form-group
-                label(for="profile-pic") Profile Picture
-                input(type="file" class="form-control-file" accept="image/png, image/jpeg" name="profile-pic" id="profile-pic")
+                if !avatar
+                    label(for="reset-avatar disabled") Reset Avatar
+                    input(type="radio" name="reset_avatar" id="reset-avatar" value="Reset" disabled="disabled")
+                else
+                    label(for="reset-avatar") Reset Avatar
+                    input(type="radio" name="reset_avatar" id="reset-avatar" value="Reset")
             div.form-group
                 label(for="interests") Interests
                 input(type="text" class="form-control" name="interests" id="interests" placeholder="Running, football, .." value=interests)
             div.form-group
-                label(for="interests") Favourite Genre(s)
+                label(for="favourite-genres") Favourite Genre(s)
                 input(type="text" class="form-control" name="favourite_genres" id="favourite-genres" placeholder="Rap, Jazz, .." value=favourite_genres)
             button(class="submit" type="submit" class="btn btn-primary") Submit

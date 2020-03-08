@@ -1,0 +1,17 @@
+extends ../layouts/validation
+
+block heading
+    h1#title Edit Account Information
+    hr
+
+block content
+    div#profile-info
+        form(id="user-form" class="user-form" method="post" action="/p/edit" enctype="multipart/form-data")
+            div.form-group
+                label(for="password") Password
+                input(type="password" class="form-control" name="password" id="password" placeholder="Password")
+                small(class="form-text") Your password must be 6-32 characters long.
+            div.form-group
+                label(for="password-retype") Confirm Password
+                input(type="password" class="form-control" name="password-retype" id="password-retype" placeholder="Password")
+            button(class="submit" type="submit" class="btn btn-primary") Submit

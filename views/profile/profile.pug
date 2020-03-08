@@ -1,0 +1,56 @@
+extends ../layouts/main
+
+block body
+    section#profile
+        div(class="row" id="header")
+            div(id="avatar" class="col-2")
+                if avatar
+                    img(class="float-left" src="/images/avatars/" + avatar width="180" height="180")
+                else
+                    img(class="float-left" src="/images/avatars/default.jpg" width="180")
+            div(id="title" class="col-9")
+                if stage_name
+                    h1= username
+                        span= " (" + stage_name + ")"
+                else
+                    h1= username
+        div(class="row" id="top-content")
+            dl(class="col-4" id="info")
+                dt Location:
+                    if location
+                        dd= location
+                    else
+                        dd N/A
+                dt Interests:
+                    if interests
+                        dd= interests
+                    else
+                        dd N/A
+                dt Favourite Genres:
+                    if favourite_genres
+                        dd=favourite_genres
+                    else
+                        dd N/A
+            div(class="col-8" id="post")
+                if locals.session.loggedIn
+                    if locals.session.username != username
+                        div.new-post
+                            form(id="wall-form" class="wall-form" method="post" action=`${id}/post`)
+                                div.form-group
+                                    label(for="new-post") Post a message:
+                                    textarea(id="new-post" name="new_post" cols="50" rows="3")
+                                button(class="submit" type="submit" class="btn btn-success") Submit
+        ul(class="nav nav-tabs nav-justified")
+            li.nav-item
+                a(class="nav-link active" data-toggle="tab" href="#posts") Posts
+            li.nav-item
+                a(class="nav-link" data-toggle="tab" href="#media") Media
+        div.tab-content
+            div(class="tab-pane fade active show" id="posts")
+                p Posts
+            div(class="tab-pane fade" id="media")
+                p Media
+
+block scripts
+    script(src="/js/jquery.validate.min.js")
+    script(src="/js/validation.js")

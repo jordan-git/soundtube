@@ -1,0 +1,13 @@
+// SCSS to modify the 404 error page goes here
+div.error {
+    margin: 0 auto;
+
+    span {
+        float: left;
+    }
+
+    a {
+        clear: both;
+        float: left;
+    }
+}

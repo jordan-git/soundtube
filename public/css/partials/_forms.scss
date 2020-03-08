@@ -1,0 +1,42 @@
+// SCSS to modify the forms goes here
+div#form-container {
+    width: 50%;
+    margin: 0 auto;
+
+    h1#title {
+        text-align: center;
+    }
+}
+
+form {
+    label.error {
+        color: red;
+    }
+}
+
+form.validation-form {
+    label[for='profile-pic'] {
+        margin-bottom: 0;
+    }
+
+    span.profile-pic {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+
+    button.submit {
+        display: block;
+        margin: 0 auto;
+    }
+
+    input#profile-pic {
+        padding-left: 20px;
+    }
+}
+
+form.profile-form {
+    button.submit {
+        display: block;
+        margin: 0 auto;
+    }
+}

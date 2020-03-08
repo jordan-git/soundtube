@@ -1,0 +1,12 @@
+// SCSS to modify the header goes here
+header {
+    nav {
+        background: $bg-header;
+        border-bottom: 4px solid #e8491d;
+
+        form.form-inline {
+            padding-right: 8px;
+            border-right: 1px solid grey;
+        }
+    }
+}
