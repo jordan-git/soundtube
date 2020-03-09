@@ -75,7 +75,7 @@ class ProfileHelper {
         ).format('YYYY-MM-DD');
         const email = req.body.email;
 
-        // Update info stored in the user table
+        // Update info stored in the user table (email + dob)
         await db.User.update(
             {
                 date_of_birth,
@@ -87,7 +87,6 @@ class ProfileHelper {
                 }
             }
         );
-        req.body.date_of_birth = date_of_birth;
 
         // If a file was uploaded with the request
         if (req.file && req.body.reset_avatar != 'Reset') {
@@ -98,10 +97,12 @@ class ProfileHelper {
         if (req.body.reset_avatar == 'Reset') {
             req.body.avatar = '';
 
+            // Get array of all files in avatar directory
             const files = fs.readdirSync('./public/images/avatars');
             const oldAvatarName = `${
                 req.session.userId
             }-${req.session.username.toLowerCase()}.`;
+
             files.forEach(file => {
                 let search = file.search(oldAvatarName);
                 if (search >= 0) {
