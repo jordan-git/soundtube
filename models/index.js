@@ -76,6 +76,7 @@ async function createDefaultUser() {
     await database.Profile.create({
         user_id: user.dataValues.id,
         stage_name: 'Stage Name',
+        avatar: '1-admin.jpg',
         location: 'Dublin, Ireland',
         interests: 'Music',
         favourite_genres: 'Rap, Jazz'

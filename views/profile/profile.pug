@@ -34,11 +34,11 @@ block body
             div(class="col-8" id="post")
                 if locals.session.loggedIn
                     if locals.session.username != username
-                        div.new-post
+                        div.new-comment
                             form(id="wall-form" class="wall-form" method="post" action=`${id}/post`)
                                 div.form-group
-                                    label(for="new-post") Post a message:
-                                    textarea(id="new-post" name="new_post" cols="50" rows="3")
+                                    label(for="new-comment") Post a message:
+                                    textarea(id="new-comment" name="content" cols="50" rows="3")
                                 button(class="submit" type="submit" class="btn btn-success") Submit
         ul(class="nav nav-tabs nav-justified")
             li.nav-item

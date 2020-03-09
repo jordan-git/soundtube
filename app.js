@@ -12,7 +12,6 @@ const flash = require('connect-flash');
 const path = require('path');
 const fs = require('fs');
 
-// const database = require("./database/db");
 const database = require('./models');
 
 // Syncs tables (for testing only - { force: true })

@@ -1,168 +1,176 @@
 const fs = require('fs');
 const moment = require('moment');
+const db = require('../models');
 
-async function handleEditProfileGet(req, res, db) {
-    // Query user
-    const user = await db.User.findOne({
-        where: {
-            id: req.session.userId
-        }
-    });
-
-    // Query profile
-    const profile = await db.Profile.findOne({
-        where: {
-            id: user.dataValues.id
-        }
-    });
-
-    // Store collected information in variables
-    const email = user.dataValues.email;
-    const [year, month, day] = user.dataValues.date_of_birth.split('-');
-    let data = ({
-        id,
-        stage_name,
-        avatar,
-        location,
-        interests,
-        favourite_genres
-    } = profile.dataValues);
-    data.email = email;
-    data.year = year;
-    data.month = month;
-    data.day = day;
-    data.title = 'Edit Profile';
-
-    // Passes the object to the web page
-    res.render('profile/edit', data);
-}
-
-async function handleEditProfilePost(req, res, db) {
-    const data = ({
-        stage_name,
-        email,
-        location,
-        interests,
-        favourite_genres,
-        reset_avatar,
-        day,
-        month,
-        year
-    } = req.body);
-    const date_of_birth = new Date(year, month, day);
-    data.date_of_birth = date_of_birth;
-
-    if (req.file && data.reset_avatar != 'Reset') {
-        data.avatar = req.file.filename;
+class ProfileHelper {
+    handleProfile(req, res) {
+        if (req.method == 'GET') this.handleProfileGet(req, res);
+        else if (req.method == 'POST') this.handleProfilePost(req, res);
     }
 
-    if (data.reset_avatar == 'Reset') {
-        data.avatar = '';
+    handleEditProfile(req, res) {
+        if (req.method == 'GET') this.handleEditProfileGet(req, res);
+        else if (req.method == 'POST') this.handleEditProfilePost(req, res);
+    }
 
-        const files = fs.readdirSync('./public/images/avatars');
-        const oldAvatarName = `${
-            req.session.userId
-        }-${req.session.username.toLowerCase()}.`;
-        files.forEach(file => {
-            let search = file.search(oldAvatarName);
-            if (search >= 0) {
-                // Async function to delete avatar file and database entry
-                deleteAvatar(req, db, () => {
-                    data.title = 'Edit Profile';
-                    data.success = 'Your avatar has been deleted';
-                    res.render('profile/edit', data);
-                });
+    async handleProfileGet(req, res) {
+        // Query profile information
+        let profile = await this.getProfile(req.params.id);
+
+        // If profile doesn't exist show 404 error
+        if (!profile) {
+            res.redirect('/error');
+            return;
+        }
+
+        // Query user information
+        let user = await this.getUser(profile.user_id);
+
+        // Package information
+        profile.title = `${user.username}'s Profile`;
+        profile.username = user.username;
+
+        // Passes the object to the web page and displays it to the viewer
+        res.render('profile/profile', profile);
+    }
+
+    async handleProfilePost(req, res) {
+        const { content } = req.body;
+        const comment = {
+            created_at: new moment().format('YYYY-MM-DD'),
+            comment: content,
+            poster_id: req.session.userId,
+            profile_id: parseInt(req.params.id)
+        };
+        await db.ProfileComments.create(comment);
+        res.redirect(`/p/${req.params.id}`);
+    }
+
+    async handleEditProfileGet(req, res) {
+        // Query user
+        const user = await this.getUser(req.session.userId);
+
+        // Query profile
+        const profile = await this.getProfile(user.id);
+
+        // Store collected information in variables
+        const email = user.email;
+        const [year, month, day] = user.date_of_birth.split('-');
+
+        profile.email = email;
+        profile.year = year;
+        profile.month = month;
+        profile.day = day;
+        profile.title = 'Edit Profile';
+
+        // Passes the object to the web page
+        res.render('profile/edit', profile);
+    }
+
+    async handleEditProfilePost(req, res) {
+        // Format date for database
+        const date_of_birth = new moment(
+            `${req.body.year}-${req.body.month}-${req.body.day}`,
+            'YYYY-MM-DD'
+        ).format('YYYY-MM-DD');
+        const email = req.body.email;
+
+        // Update info stored in the user table
+        await db.User.update(
+            {
+                date_of_birth,
+                email
+            },
+            {
+                where: {
+                    id: req.session.userId
+                }
+            }
+        );
+        req.body.date_of_birth = date_of_birth;
+
+        // If a file was uploaded with the request
+        if (req.file && req.body.reset_avatar != 'Reset') {
+            req.body.avatar = req.file.filename;
+        }
+
+        // If "reset avatar" box was ticked delete avatar
+        if (req.body.reset_avatar == 'Reset') {
+            req.body.avatar = '';
+
+            const files = fs.readdirSync('./public/images/avatars');
+            const oldAvatarName = `${
+                req.session.userId
+            }-${req.session.username.toLowerCase()}.`;
+            files.forEach(file => {
+                let search = file.search(oldAvatarName);
+                if (search >= 0) {
+                    // Async function to delete avatar file and database entry
+                    this.deleteAvatar(req, () => {
+                        db.Profile.update(req.body, {
+                            where: {
+                                user_id: req.session.userId
+                            }
+                        });
+
+                        req.body.title = 'Edit Profile';
+                        req.body.success = 'Your avatar has been deleted';
+                        res.render('profile/edit', req.body);
+                    });
+                }
+            });
+        } else {
+            await db.Profile.update(req.body, {
+                where: {
+                    user_id: req.session.userId
+                }
+            });
+
+            req.body.title = 'Edit Profile';
+            res.render('profile/edit', req.body);
+        }
+    }
+
+    async deleteAvatar(req, cb) {
+        // Delete image
+        const profile = await this.getProfile(req.session.userId);
+        fs.unlinkSync('./public/images/avatars/' + profile.avatar);
+
+        // Set avatar value in database to null
+        await db.Profile.update(
+            {
+                avatar: null
+            },
+            {
+                where: {
+                    user_id: req.session.userId
+                }
+            }
+        );
+        cb();
+    }
+
+    // Return user from database
+    async getUser(id) {
+        const user = await db.User.findOne({
+            where: {
+                id: id
             }
         });
-    } else {
-        db.Profile.update(data, {
+
+        if (user) return user.dataValues;
+    }
+
+    // Return profile from database
+    async getProfile(id) {
+        const profile = await db.Profile.findOne({
             where: {
-                user_id: req.session.userId
+                id: id
             }
         });
 
-        data.title = 'Edit Profile';
-        res.render('profile/edit', data);
+        if (profile) return profile.dataValues;
     }
 }
 
-async function handleProfileGet(req, res, db) {
-    // if (req.params.id == req.session.userId) {
-    //     // Possibly display profile with button like edit profile for own profile
-    // }
-
-    // Query profile information
-    const profile = await db.Profile.findOne({
-        where: {
-            id: req.params.id
-        }
-    });
-
-    // If profile doesn't exist show 404 error
-    if (!profile) {
-        res.redirect('/error');
-        return;
-    }
-
-    // Query user information
-    const user = await db.User.findOne({
-        where: {
-            id: profile.dataValues.user_id
-        }
-    });
-
-    // Package information
-    const data = ({
-        stage_name,
-        avatar,
-        location,
-        interests,
-        favourite_genres
-    } = profile.dataValues);
-    data.title = `${user.dataValues.username}'s Profile`;
-    data.username = user.dataValues.username;
-
-    // Passes the object to the web page and displays it to the viewer
-    res.render('profile/profile', data);
-}
-
-async function handlePost(req, res, db) {
-    const { new_post } = req.body;
-    const data = {
-        comment: new_post,
-        created_at: new moment().format('YYYY-MM-DD'),
-        poster_id: req.session.userId,
-        profile_id: req.params.id
-    };
-    await db.ProfileComments.create(data);
-    res.redirect(`/p/${req.params.id}`);
-}
-
-async function deleteAvatar(req, db, cb) {
-    const profile = await db.Profile.findOne({
-        where: {
-            user_id: req.session.userId
-        }
-    });
-    fs.unlinkSync('./public/images/avatars/' + profile.dataValues.avatar);
-    await db.Profile.update(
-        {
-            avatar: ''
-        },
-        {
-            where: {
-                user_id: req.session.userId
-            }
-        }
-    );
-    cb();
-}
-
-module.exports = {
-    handleEditProfile: (req, res, db) => {
-        if (req.method == 'GET') handleEditProfileGet(req, res, db);
-        else if (req.method == 'POST') handleEditProfilePost(req, res, db);
-    },
-    handleProfile: handleProfileGet,
-    handlePost: handlePost
-};
+module.exports = ProfileHelper;

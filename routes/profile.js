@@ -2,9 +2,11 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 
-const auth = require('../middleware/auth');
 const db = require('../models');
-const profileHelper = require('../helpers/profile');
+const auth = require('../middleware/auth');
+
+const ProfileHelper = require('../helpers/profile');
+const profileHelper = new ProfileHelper();
 
 let storage = multer.diskStorage({
     destination: './public/images/avatars',
@@ -49,7 +51,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/:id/post', auth.ensureLoggedIn, (req, res) => {
-    profileHelper.handlePost(req, res, db);
+    profileHelper.handleProfile(req, res, db);
 });
 
 module.exports = router;
