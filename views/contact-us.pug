@@ -2,5 +2,13 @@ extends layouts/main
 
 block body
     div
-        h2 Contact Us
+        h2 Contact us
         p If you would like to contact us then send us an email at support@soundcloud.ie
+    
+    
+    <div class="content-form">
+    <form id ="contact-form" method="post" action="">
+        <input name="Name" type="text" class="form-control" placeholder="Your name" required>
+         <input name="Email" type="text" class="form-control" placeholder="Your email" required>
+         <textarea name ="message", class="form-control" placeholder="Message" rows="4")>
+        button(class="submit" type="submit" class="btn btn-success") Submit
