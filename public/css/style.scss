@@ -11,7 +11,15 @@ body {
     font-family: Rubik, Helvetica, sans-serif;
     //font-family: Arial, Helvetica, sans-serif;
 }
-
+footer{
+    width: 100%;
+    height:auto;
+    background-color: #333;
+    color: blue;
+    font-size: 23px;
+    text-align: center;
+    line-height: 50px;
+}
 // Partials (CSS components are organized into separate files)
 // Comments surrounding the import are CSS comments therefore appear in the generated stylesheet
 
@@ -47,4 +55,4 @@ body {
 
 @import 'partials/contact';
 
-@import 'partials/purchase-ad'
+@import 'partials/purchase-ad';

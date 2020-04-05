@@ -6,9 +6,14 @@ block body
         p If you would like to contact us then send us an email at support@soundcloud.ie
     
     
-    <div class="content-form">
-    <form id ="contact-form" method="post" action="">
-        <input name="Name" type="text" class="form-control" placeholder="Your name" required>
-         <input name="Email" type="text" class="form-control" placeholder="Your email" required>
-         <textarea name ="message", class="form-control" placeholder="Message" rows="4")>
+    form(id="login-form" class="validation-form" method="post" action="/u/login")
+        div.form-group
+            label(for="Your name") Your name
+            input(type="text" class="form-control" name="YourName" id="YourName" placeholder="YourName")
+        div.form-group
+            label(for="Your email") Email address
+            input(type="text" class="form-control" name="email" id="email" placeholder="email")
+        div.form-group
+            label(for="Text box") Message
+            input(type="text" class="form-control" name="Message" id="Message" placeholder="Message") 
         button(class="submit" type="submit" class="btn btn-success") Submit

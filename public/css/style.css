@@ -7,6 +7,16 @@ body {
   font-family: Rubik, Helvetica, sans-serif;
 }
 
+footer {
+  width: 100%;
+  height: auto;
+  background-color: #333;
+  color: blue;
+  font-size: 23px;
+  text-align: center;
+  line-height: 50px;
+}
+
 /* Header CSS */
 header nav {
   background: #35424a;
@@ -127,5 +137,43 @@ div.error a {
 }
 
 /* 404 Error End */
+div.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+div.about {
+  width: 100%;
+  height: 600px;
+  background-image: url(images/banner.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.text {
+  font-size: 30px;
+  color: aliceblue;
+  font-family: sans-serif;
+  text-shadow: 0px 15px 12px #000;
+}
+
+.line {
+  width: 200px;
+  height: 8px;
+  background-color: aquamarine;
+  font-size: 20px;
+  font-family: serif;
+  color: blue;
+  line-height: 30px;
+  text-align: center;
+}
 
 /*# sourceMappingURL=style.css.map */

@@ -4,3 +4,17 @@ block body
     div
         h2 Purchase Ad
         p Text about purchasing an ad
+         form(id="login-form" class="validation-form" method="post" action="/u/login")
+        div.form-group
+            label(for="username") Your full name
+            input(type="text" class="form-control" name="Full name" id="Full name" placeholder="Full name")
+        div.form-group
+            label(for="Company") Company
+            input(type="text" class="form-control" name="Company" id="Company" placeholder="Company")
+        div.form-group
+            label(for="Email") Email
+            input(type="text" class="form-control" name="Email" id="Email" placeholder="Email")
+        div.form-group
+            label(for="Advertisement description") Advertisement description
+            input(type="text" class="form-control" name="Advertisement description" id="Advertisement description" placeholder="Advertisement description")
+        button(class="submit" type="submit" class="btn btn-success") Submit
