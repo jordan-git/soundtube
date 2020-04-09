@@ -26,13 +26,13 @@ html(lang="en")
 					li(class=(active === "m" ? "nav-item dropdown active" : "nav-item dropdown"))
 						a(class="nav-link dropdown-toggle" data-toggle="dropdown" href="/about") Media
 						div.dropdown-menu
-							a(class="dropdown-item disabled" href="/m/most-viewed") Most Viewed
-							a(class="dropdown-item disabled" href="/m/highest-rated") Highest Rated
-							a(class="dropdown-item disabled" href="/m/newest") Newest
+							a(class="dropdown-item" href="/m/most-viewed") Most Viewed
+							a(class="dropdown-item" href="/m/highest-rated") Highest Rated
+							a(class="dropdown-item" href="/m/newest") Newest
 							if locals.session.loggedIn
 								div.dropdown-divider
-								a(class="dropdown-item disabled" href="/m/my") My Media
-								a(class="dropdown-item disabled" href="/m/upload") Upload Media
+								a(class="dropdown-item" href="/m/my") My Media
+								a(class="dropdown-item" href="/m/upload") Upload Media
 					li(class=(active === "c" ? "nav-item dropdown active" : "nav-item dropdown"))
 						a(class="nav-link dropdown-toggle" data-toggle="dropdown" href="/about") Contact Us
 						div.dropdown-menu
@@ -91,7 +91,7 @@ html(lang="en")
 						img(src="/images/ads/" + ad4)
 
 		footer
-			Copyright &copy SoundTube
+			Copyright &copy SoundTube 2020
 
 		script(src="/js/jquery-3.4.1.min.js")
 		script(src="/js/bootstrap.min.js")
