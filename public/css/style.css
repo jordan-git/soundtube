@@ -143,6 +143,7 @@ div.staff {
 div.staff img {
   order: 0;
   flex-grow: 1;
+  max-width: 210px;
 }
 div.staff span {
   order: 1;
