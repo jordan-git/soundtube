@@ -65,6 +65,10 @@ div#form-container h1#title {
 form label.error {
   color: red;
 }
+form button.submit {
+  display: block;
+  margin: 0 auto;
+}
 
 form.validation-form label[for=profile-pic] {
   margin-bottom: 0;
@@ -79,11 +83,6 @@ form.validation-form button.submit {
 }
 form.validation-form input#profile-pic {
   padding-left: 20px;
-}
-
-form.profile-form button.submit {
-  display: block;
-  margin: 0 auto;
 }
 
 /* Forms End */

@@ -1,19 +1,19 @@
-extends layouts/main
+extends layouts/validation
 
-block body
+block heading
     div
         h2 Contact us
-        p If you would like to contact us then send us an email at support@soundtube.ie
+        p If you would like to contact us then fill out this form or send us an email at support@soundtube.ie. We will try to get back to you within two working days.
     
     
-    form(id="login-form" class="validation-form" method="post" action="/u/login")
+    form(id="contact-form" method="post" action="/u/login")
         div.form-group
-            label(for="Your name") Your name
-            input(type="text" class="form-control" name="YourName" id="YourName" placeholder="YourName")
+            label(for="name") Name
+            input(type="text" class="form-control" name="name" id="name" placeholder="Name")
         div.form-group
-            label(for="Your email") Email address
-            input(type="text" class="form-control" name="email" id="email" placeholder="email")
+            label(for="email") Email
+            input(type="text" class="form-control" name="email" id="email" placeholder="Email")
         div.form-group
-            label(for="Text box") Message
-            input(type="text" class="form-control" name="Message" id="Message" placeholder="Message") 
-        button(class="submit" type="submit" class="btn btn-success") Submit
+            label(for="message") Message
+            input(type="text" class="form-control" name="message" id="message" placeholder="Message") 
+        button(class="submit" type="submit" class="submit btn btn-primary") Submit

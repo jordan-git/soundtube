@@ -1,20 +1,22 @@
-extends layouts/main
+extends layouts/validation
 
-block body
+block heading
     div
         h2 Purchase Ad
-        p Please fill in our advertisment form and we will get bavk to you in 1-2 working days
-        form(id="login-form" class="validation-form" method="post" action="/u/login")
-            div.form-group
-                label(for="username") Your full name
-                input(type="text" class="form-control" name="Full name" id="Full name" placeholder="Full name")
-            div.form-group
-                label(for="Company") Company
-                input(type="text" class="form-control" name="Company" id="Company" placeholder="Company")
-            div.form-group
-                label(for="Email") Email
-                input(type="text" class="form-control" name="Email" id="Email" placeholder="Email")
-            div.form-group
-                label(for="Advertisement description") Advertisement description
-                input(type="text" class="form-control" name="Advertisement description" id="Advertisement description" placeholder="Advertisement description")
-            button(class="submit" type="submit" class="btn btn-success") Submit
+        p Please fill in our advertisment form and we will get back to you within two working days
+
+block content
+    form(id="ad-form" method="post" action="/purchase-ad")
+        div.form-group
+            label(for="username") Full Name
+            input(type="text" class="form-control" name="name" id="name" placeholder="Full Name")
+        div.form-group
+            label(for="Company") Company
+            input(type="text" class="form-control" name="company" id="company" placeholder="Company")
+        div.form-group
+            label(for="Email") Email
+            input(type="text" class="form-control" name="email" id="email" placeholder="Email")
+        div.form-group
+            label(for="description") Advertisement Description
+            input(type="text" class="form-control" name="description" id="description" placeholder="Advertisement Description")
+        button(class="submit" type="submit" class="btn btn-primary") Submit

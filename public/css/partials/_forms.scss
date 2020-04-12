@@ -12,6 +12,11 @@ form {
     label.error {
         color: red;
     }
+
+    button.submit {
+        display: block;
+        margin: 0 auto;
+    }
 }
 
 form.validation-form {
@@ -31,12 +36,5 @@ form.validation-form {
 
     input#profile-pic {
         padding-left: 20px;
-    }
-}
-
-form.profile-form {
-    button.submit {
-        display: block;
-        margin: 0 auto;
     }
 }
