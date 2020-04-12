@@ -26,9 +26,12 @@ class ProfileHelper {
         // Query user information
         let user = await this.getUser(profile.user_id);
 
+        let comments = await this.getComments(profile.user_id);
+
         // Package information
         profile.title = `${user.username}'s Profile`;
         profile.username = user.username;
+        profile.comments = comments;
 
         // Passes the object to the web page and displays it to the viewer
         res.render('profile/profile', profile);
@@ -40,7 +43,7 @@ class ProfileHelper {
             created_at: new moment().format('YYYY-MM-DD'),
             comment: content,
             poster_id: req.session.userId,
-            profile_id: parseInt(req.params.id)
+            profile_id: parseInt(req.params.id),
         };
         await db.ProfileComments.create(comment);
         res.redirect(`/p/${req.params.id}`);
@@ -79,12 +82,12 @@ class ProfileHelper {
         await db.User.update(
             {
                 date_of_birth,
-                email
+                email,
             },
             {
                 where: {
-                    id: req.session.userId
-                }
+                    id: req.session.userId,
+                },
             }
         );
 
@@ -103,15 +106,15 @@ class ProfileHelper {
                 req.session.userId
             }-${req.session.username.toLowerCase()}.`;
 
-            files.forEach(file => {
+            files.forEach((file) => {
                 let search = file.search(oldAvatarName);
                 if (search >= 0) {
                     // Async function to delete avatar file and database entry
                     this.deleteAvatar(req, () => {
                         db.Profile.update(req.body, {
                             where: {
-                                user_id: req.session.userId
-                            }
+                                user_id: req.session.userId,
+                            },
                         });
 
                         req.body.title = 'Edit Profile';
@@ -123,8 +126,8 @@ class ProfileHelper {
         } else {
             await db.Profile.update(req.body, {
                 where: {
-                    user_id: req.session.userId
-                }
+                    user_id: req.session.userId,
+                },
             });
 
             req.body.title = 'Edit Profile';
@@ -140,12 +143,12 @@ class ProfileHelper {
         // Set avatar value in database to null
         await db.Profile.update(
             {
-                avatar: null
+                avatar: null,
             },
             {
                 where: {
-                    user_id: req.session.userId
-                }
+                    user_id: req.session.userId,
+                },
             }
         );
         cb();
@@ -155,8 +158,8 @@ class ProfileHelper {
     async getUser(id) {
         const user = await db.User.findOne({
             where: {
-                id: id
-            }
+                id: id,
+            },
         });
 
         if (user) return user.dataValues;
@@ -166,11 +169,37 @@ class ProfileHelper {
     async getProfile(id) {
         const profile = await db.Profile.findOne({
             where: {
-                id: id
-            }
+                id: id,
+            },
         });
 
         if (profile) return profile.dataValues;
+    }
+
+    async getComments(id) {
+        const comments = await db.ProfileComments.findAll({
+            where: {
+                profile_id: id,
+            },
+        });
+
+        if (comments) {
+            let allComments = await Promise.all(
+                comments.map(async (comment) => {
+                    const poster = await db.User.findOne({
+                        where: {
+                            id: comment.dataValues.poster_id,
+                        },
+                    });
+                    comment.dataValues.poster = poster.dataValues.username;
+                    comment.dataValues.created_at = moment(
+                        comment.dataValues.created_at
+                    ).format('MMMM Do YYYY');
+                    return comment.dataValues;
+                })
+            );
+            return allComments;
+        }
     }
 }
 

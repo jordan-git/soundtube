@@ -31,7 +31,7 @@ section#profile {
     div#top-content {
         border-bottom: 2px solid grey;
 
-        div#post {
+        div#create-comment {
             padding: 20px;
 
             form.wall-form {
@@ -49,6 +49,24 @@ section#profile {
         dl#info {
             padding: 15px;
             font-size: 0.9em;
+        }
+    }
+}
+
+div#comments {
+    div.comment {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        background: #636d72;
+
+        span.poster {
+            font-weight: bold;
+        }
+
+        span.date {
+            float: right;
+            font-size: 0.8em;
         }
     }
 }

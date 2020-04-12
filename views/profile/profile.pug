@@ -31,23 +31,29 @@ block body
                         dd=favourite_genres
                     else
                         dd N/A
-            div(class="col-8" id="post")
+            div(class="col-8" id="create-comment")
                 if locals.session.loggedIn
                     if locals.session.username != username
                         div.new-comment
                             form(id="wall-form" class="wall-form" method="post" action=`${id}/post`)
                                 div.form-group
-                                    label(for="new-comment") Post a message:
+                                    label(for="new-comment") Post a comment:
                                     textarea(id="new-comment" name="content" cols="50" rows="3")
                                 button(class="submit" type="submit" class="btn btn-success") Submit
         ul(class="nav nav-tabs nav-justified")
             li.nav-item
-                a(class="nav-link active" data-toggle="tab" href="#posts") Posts
+                a(class="nav-link active" data-toggle="tab" href="#comments") Comments
             li.nav-item
                 a(class="nav-link" data-toggle="tab" href="#media") Media
         div.tab-content
-            div(class="tab-pane fade active show" id="posts")
-                p Posts
+            div(class="tab-pane fade active show" id="comments")
+                each comment in comments
+                    div.comment
+                        span.poster= comment.poster + ": "
+                        span.comment= comment.comment
+                        span.date= comment.created_at
+                else
+                    p No comments
             div(class="tab-pane fade" id="media")
                 p Media
 
