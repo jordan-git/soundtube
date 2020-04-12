@@ -193,7 +193,8 @@ class ProfileHelper {
                     });
                     comment.dataValues.poster = poster.dataValues.username;
                     comment.dataValues.created_at = moment(
-                        comment.dataValues.created_at
+                        comment.dataValues.created_at,
+                        'YYYY-MM-DD'
                     ).format('MMMM Do YYYY');
                     return comment.dataValues;
                 })
