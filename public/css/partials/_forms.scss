@@ -8,6 +8,12 @@ div#form-container {
     }
 }
 
+div#heading {
+    p {
+        text-align: center;
+    }
+}
+
 form {
     label.error {
         color: red;

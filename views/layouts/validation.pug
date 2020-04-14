@@ -2,8 +2,10 @@ extends main
 
 block body
     div(id="form-container")
-        block heading
-        block content
+        div(id="heading")
+            block heading
+        div(id="content")
+            block content
 
 block scripts
     script(src="/js/jquery.validate.min.js")

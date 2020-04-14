@@ -20,11 +20,11 @@ let storage = multer.diskStorage({
                 file.originalname
             )}`
         );
-    }
+    },
 });
 const upload = multer({
     dest: '../public/images/avatars',
-    storage: storage
+    storage: storage,
 });
 
 // Create a router to store all the routes
@@ -32,7 +32,7 @@ const router = express.Router();
 
 // Show the edit profile page
 router.get('/edit', auth.ensureLoggedIn, (req, res) => {
-    profileHelper.handleEditProfile(req, res, db);
+    profileHelper.handleEditProfile(req, res);
 });
 
 // Process submitted information for the edit profile page
@@ -41,17 +41,17 @@ router.post(
     auth.ensureLoggedIn,
     upload.single('avatar'),
     (req, res) => {
-        profileHelper.handleEditProfile(req, res, db);
+        profileHelper.handleEditProfile(req, res);
     }
 );
 
 // Show the profile corresponding to the ID in the URL
 router.get('/:id', (req, res) => {
-    profileHelper.handleProfile(req, res, db);
+    profileHelper.handleProfile(req, res);
 });
 
 router.post('/:id/post', auth.ensureLoggedIn, (req, res) => {
-    profileHelper.handleProfile(req, res, db);
+    profileHelper.handleProfile(req, res);
 });
 
 module.exports = router;

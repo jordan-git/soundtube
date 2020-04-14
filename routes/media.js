@@ -4,6 +4,9 @@ const multer = require('multer');
 const db = require('../models');
 const auth = require('../middleware/auth');
 
+const MediaHelper = require('../helpers/media');
+const mediaHelper = new MediaHelper();
+
 let storage = multer.diskStorage({
     destination: './public/media',
     filename: (req, file, cb) => {
@@ -25,32 +28,32 @@ const upload = multer({
 const router = express.Router();
 
 router.get('/most-viewed', (req, res) => {
-    res.redirect('/');
+    mediaHelper.handleMostViewed(req, res);
 });
 
 router.get('/highest-rated', (req, res) => {
-    res.redirect('/');
+    mediaHelper.handleHighestRated(req, res);
 });
 
 router.get('/newest', (req, res) => {
-    res.redirect('/');
+    mediaHelper.handleNewest(req, res);
 });
 
 router.get('/my', auth.ensureLoggedIn, (req, res) => {
-    res.redirect('/');
+    mediaHelper.handleMyMedia(req, res);
 });
 
-router.get(
+router.get('/upload', auth.ensureLoggedIn, (req, res) => {
+    mediaHelper.handleUpload(req, res);
+});
+
+router.post(
     '/upload',
     auth.ensureLoggedIn,
     upload.single('media'),
     (req, res) => {
-        res.redirect('/');
+        mediaHelper.handleUpload(req, res);
     }
 );
-
-router.post('/upload', auth.ensureLoggedIn, (req, res) => {
-    res.redirect('/');
-});
 
 module.exports = router;

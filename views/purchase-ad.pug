@@ -1,9 +1,8 @@
 extends layouts/validation
 
 block heading
-    div
-        h2 Purchase Ad
-        p Please fill in our advertisment form and we will get back to you within two working days
+    h1#title Purchase Ad
+    p Please fill in our advertisment form and we will get back to you within two working days
 
 block content
     form(id="ad-form" method="post" action="/purchase-ad")

@@ -11,9 +11,9 @@ body {
     font-family: Rubik, Helvetica, sans-serif;
     //font-family: Arial, Helvetica, sans-serif;
 }
-footer{
+footer {
     width: 100%;
-    height:auto;
+    height: auto;
     background-color: #333;
     color: blue;
     font-size: 23px;
@@ -51,8 +51,18 @@ footer{
 @import 'partials/error';
 /* 404 Error End */
 
+/* About CSS */
 @import 'partials/about';
+/* About End */
 
-@import 'partials/contact';
+/* Contact Us CSS */
+@import 'partials/contact-us';
+/* Contact Us End */
 
+/* Purchase Ad CSS */
 @import 'partials/purchase-ad';
+/* Purchase Ad End */
+
+/* Upload Media CSS */
+@import 'partials/upload-media';
+/* Upload Media End */
