@@ -1,0 +1,18 @@
+extends ../layouts/validation
+
+block heading
+    h1#title Upload Media
+    p Supported formats: mp3
+
+block content
+    form(id="upload-media-form" class="upload-media-form" method="post" action="/m/upload" enctype="multipart/form-data")
+        div.form-group
+            label(for="title") Title
+            input(type="text" class="form-control" name="title" id="title" placeholder="Title")
+        div.form-group
+            label(for="description") Description
+            input(type="text" class="form-control" name="description" id="description" placeholder="Description")
+        div.form-group
+            label(for="title") Media File
+            input(type="file" class="form-control-file" accept="audio/mp3" name="media" id="media")
+        button(class="submit" type="submit" class="btn btn-primary") Submit
