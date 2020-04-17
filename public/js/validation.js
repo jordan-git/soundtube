@@ -12,7 +12,7 @@ const postMaxWarning = `Post must be no more than ${maxPasswordLen} characters`;
 const passwordNotMatchingWarning = 'Passwords do not match';
 
 // When page has fully loaded
-$(document).ready(function() {
+$(document).ready(function () {
     // When user tries to submit the login form
     $('#login-form').validate({
         // Rules to apply
@@ -20,26 +20,26 @@ $(document).ready(function() {
             username: {
                 required: true,
                 minlength: minUsernameLen,
-                maxlength: maxUsernameLen
+                maxlength: maxUsernameLen,
             },
             password: {
                 required: true,
                 minlength: minPasswordLen,
-                maxlength: maxPasswordLen
-            }
+                maxlength: maxPasswordLen,
+            },
         },
 
         // Message to display if rule is broken
         messages: {
             username: {
                 minlength: usernameMinWarning,
-                maxlength: usernameMaxWarning
+                maxlength: usernameMaxWarning,
             },
             password: {
                 minlength: passwordMinWarning,
-                maxlength: passwordMaxWarning
-            }
-        }
+                maxlength: passwordMaxWarning,
+            },
+        },
     });
 
     $('#register-form').validate({
@@ -48,90 +48,134 @@ $(document).ready(function() {
             username: {
                 required: true,
                 minlength: minUsernameLen,
-                maxlength: maxUsernameLen
+                maxlength: maxUsernameLen,
             },
             email: {
                 required: true,
-                email: true
+                email: true,
             },
             password: {
                 required: true,
                 minlength: minPasswordLen,
-                maxlength: maxPasswordLen
+                maxlength: maxPasswordLen,
             },
             'password-retype': {
                 required: true,
                 equalTo: '#password',
                 minlength: minPasswordLen,
-                maxlength: maxPasswordLen
-            }
+                maxlength: maxPasswordLen,
+            },
         },
 
         // Message to display if rule is broken
         messages: {
             username: {
                 minlength: usernameMinWarning,
-                maxlength: usernameMaxWarning
+                maxlength: usernameMaxWarning,
             },
             email: 'Please enter a valid email address',
             password: {
                 minlength: passwordMinWarning,
-                maxlength: passwordMaxWarning
+                maxlength: passwordMaxWarning,
             },
             'password-retype': {
-                equalTo: passwordNotMatchingWarning
-            }
-        }
+                equalTo: passwordNotMatchingWarning,
+            },
+        },
     });
     $('#user-form').validate({
         rules: {
             password: {
                 required: true,
                 minlength: minPasswordLen,
-                maxlength: maxPasswordLen
+                maxlength: maxPasswordLen,
             },
             'password-retype': {
                 required: true,
                 equalTo: '#password',
                 minlength: minPasswordLen,
-                maxlength: maxPasswordLen
-            }
+                maxlength: maxPasswordLen,
+            },
         },
         messages: {
             'password-retype': {
-                equalTo: passwordNotMatchingWarning
-            }
-        }
+                equalTo: passwordNotMatchingWarning,
+            },
+        },
     });
     $('#profile-form').validate({
         rules: {
             stage_name: {
-                maxlength: 32
+                maxlength: 32,
             },
             email: {
                 required: true,
-                email: true
+                email: true,
             },
             location: {
-                maxlength: 48
+                maxlength: 48,
             },
             interests: {
-                maxlength: 64
+                maxlength: 64,
             },
             favourite_genres: {
-                maxlength: 64
-            }
+                maxlength: 64,
+            },
         },
         messages: {
-            email: 'Please enter a valid email address'
-        }
+            email: 'Please enter a valid email address',
+        },
     });
     $('#wall-form').validate({
         rules: {
             new_post: {
                 required: true,
-                maxlength: 128
-            }
-        }
+                maxlength: 128,
+            },
+        },
+    });
+    $('#contact-form').validate({
+        rules: {
+            name: {
+                required: true,
+                maxlength: 32,
+            },
+            email: {
+                required: true,
+                maxlength: 48,
+                email: true,
+            },
+            message: {
+                required: true,
+                maxlength: 128,
+            },
+        },
+        messages: {
+            email: 'Please enter a valid email address',
+        },
+    });
+    $('#ad-form').validate({
+        rules: {
+            name: {
+                required: true,
+                maxlength: 48,
+            },
+            company: {
+                required: true,
+                maxlength: 48,
+            },
+            email: {
+                required: true,
+                maxlength: 48,
+                email: true,
+            },
+            description: {
+                required: true,
+                maxlength: 128,
+            },
+        },
+        messages: {
+            email: 'Please enter a valid email address',
+        },
     });
 });

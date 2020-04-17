@@ -12,19 +12,27 @@ router.get('/', (req, res) => {
 });
 
 router.post('/search', (req, res) => {
-    indexHelper.handleSearch(req, res, db);
+    indexHelper.handleSearch(req, res);
 });
 
 router.get('/about', (req, res) => {
-    res.render('about', { title: 'About' });
+    indexHelper.handleAbout(req, res);
 });
 
 router.get('/purchase-ad', (req, res) => {
-    res.render('purchase-ad', { title: 'Purchase Ad' });
+    indexHelper.handlePurchaseAd(req, res);
+});
+
+router.post('/purchase-ad', (req, res) => {
+    indexHelper.handlePurchaseAd(req, res);
 });
 
 router.get('/contact-us', (req, res) => {
-    res.render('contact-us', { title: 'Contact Us' });
+    indexHelper.handleContactUs(req, res);
+});
+
+router.post('/contact-us', (req, res) => {
+    indexHelper.handleContactUs(req, res);
 });
 
 module.exports = router;

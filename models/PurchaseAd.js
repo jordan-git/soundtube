@@ -9,12 +9,12 @@ module.exports = (sequelize) => {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            fullName: { type: DataTypes.STRING(48) },
+            name: { type: DataTypes.STRING(48) },
             company: { type: DataTypes.STRING(48) },
             email: { type: DataTypes.STRING(48) },
-            adDescription: { type: DataTypes.STRING(128) },
+            description: { type: DataTypes.STRING(128) },
         },
-        { timestamps: false, tableName: 'purchasead', underscored: true }
+        { timestamps: false, tableName: 'purchase_ad', underscored: true }
     );
 
     return PurchaseAd;

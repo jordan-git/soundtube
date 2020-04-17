@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
             email: { type: DataTypes.STRING(48) },
             message: { type: DataTypes.STRING(128) },
         },
-        { timestamps: false, tableName: 'contactus', underscored: true }
+        { timestamps: false, tableName: 'contact_us', underscored: true }
     );
 
     return ContactUs;
