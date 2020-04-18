@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const path = require('path');
 
 const db = require('../models');
 const auth = require('../middleware/auth');
@@ -13,9 +14,7 @@ let storage = multer.diskStorage({
         cb(
             null,
             // Formats file name to "id-username.ext"
-            `${req.session.userId}-${file.originalname}${path.extname(
-                file.originalname
-            )}`
+            `${req.session.userId}-${file.originalname}`
         );
     },
 });
@@ -55,5 +54,13 @@ router.post(
         mediaHelper.handleUpload(req, res);
     }
 );
+
+router.get('/:id', (req, res) => {
+    mediaHelper.handleMedia(req, res);
+});
+
+router.post('/:id/post', (req, res) => {
+    mediaHelper.handleMedia(req, res);
+});
 
 module.exports = router;

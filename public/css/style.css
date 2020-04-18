@@ -211,6 +211,16 @@ div.staff:not(:first-child) {
 /* Contact Us End */
 /* Purchase Ad CSS */
 /* Purchase Ad End */
+/* My Media CSS */
+table#media-container {
+  width: 100%;
+}
+
+table#media-container tr {
+  width: 100%;
+}
+
+/* My Media End */
 /* Upload Media CSS */
 /* Upload Media End */
 /*# sourceMappingURL=style.css.map */

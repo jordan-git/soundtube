@@ -3,6 +3,11 @@ const moment = require('moment');
 const db = require('../models');
 
 class MediaHelper {
+    handleMedia(req, res) {
+        if (req.method == 'GET') this.handleMediaGet(req, res);
+        else if (req.method == 'POST') this.handleMediaPost(req, res);
+    }
+
     handleMostViewed(req, res) {
         if (req.method == 'GET') this.handleMostViewedGet(req, res);
     }
@@ -24,6 +29,10 @@ class MediaHelper {
         else if (req.method == 'POST') this.handleUploadPost(req, res);
     }
 
+    async handleMediaGet(req, res) {}
+
+    async handleMediaPost(req, res) {}
+
     async handleMostViewedGet(req, res) {}
 
     async handleHighestRatedGet(req, res) {}
@@ -31,14 +40,57 @@ class MediaHelper {
     async handleNewestGet(req, res) {}
 
     async handleMyMediaGet(req, res) {
-        res.render('media/my-media', { title: 'My Media' });
+        const profileEntry = await db.Profile.findOne({
+            where: {
+                user_id: req.session.userId,
+            },
+        });
+
+        const media = await this.getMedia(profileEntry.dataValues.id);
+
+        res.render('media/my-media', { title: 'My Media', media: media });
     }
 
     async handleUploadGet(req, res) {
         res.render('media/upload', { title: 'Upload' });
     }
 
-    async handleUploadPost(req, res) {}
+    async handleUploadPost(req, res) {
+        req.body.filename = req.file.filename;
+        req.body.views = 0;
+        req.body.created_at = new moment().format('YYYY-MM-DD');
+
+        const profileEntry = await db.Profile.findOne({
+            where: {
+                id: req.session.userId,
+            },
+        });
+
+        req.body.profile_id = profileEntry.dataValues.id;
+
+        const mediaEntry = await db.Media.create(req.body);
+
+        req.flash('success_msg', `Your media has been successfully uploaded`);
+        res.redirect('/');
+    }
+
+    async getMedia(id) {
+        const media = await db.Media.findAll({
+            where: {
+                profile_id: id,
+            },
+        });
+
+        const allMedia = media.map((media) => {
+            media.dataValues.created_at = moment(
+                media.dataValues.created_at,
+                'YYYY-MM-DD'
+            ).format('MMMM Do YYYY');
+            return media.dataValues;
+        });
+
+        return allMedia;
+    }
 }
 
 module.exports = MediaHelper;
