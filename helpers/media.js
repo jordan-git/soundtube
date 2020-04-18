@@ -33,11 +33,17 @@ class MediaHelper {
 
     async handleMediaPost(req, res) {}
 
-    async handleMostViewedGet(req, res) {}
+    async handleMostViewedGet(req, res) {
+        const media = await this.getMostViewedMedia();
+        res.render('media/sorted', { title: 'Most Viewed', media: media });
+    }
 
     async handleHighestRatedGet(req, res) {}
 
-    async handleNewestGet(req, res) {}
+    async handleNewestGet(req, res) {
+        const media = await this.getNewestMedia();
+        res.render('media/sorted', { title: 'Newest', media: media });
+    }
 
     async handleMyMediaGet(req, res) {
         const profileEntry = await db.Profile.findOne({
@@ -46,7 +52,7 @@ class MediaHelper {
             },
         });
 
-        const media = await this.getMedia(profileEntry.dataValues.id);
+        const media = await this.getMyMedia(profileEntry.dataValues.id);
 
         res.render('media/my-media', { title: 'My Media', media: media });
     }
@@ -74,7 +80,39 @@ class MediaHelper {
         res.redirect('/');
     }
 
-    async getMedia(id) {
+    async getMostViewedMedia() {
+        const media = await db.Media.findAll({
+            order: [['views', 'DESC']],
+        });
+
+        const allMedia = media.map((media) => {
+            media.dataValues.created_at = moment(
+                media.dataValues.created_at,
+                'YYYY-MM-DD'
+            ).format('MMMM Do YYYY');
+            return media.dataValues;
+        });
+
+        return allMedia;
+    }
+
+    async getNewestMedia() {
+        const media = await db.Media.findAll({
+            order: [['id', 'DESC']],
+        });
+
+        const allMedia = media.map((media) => {
+            media.dataValues.created_at = moment(
+                media.dataValues.created_at,
+                'YYYY-MM-DD'
+            ).format('MMMM Do YYYY');
+            return media.dataValues;
+        });
+
+        return allMedia;
+    }
+
+    async getMyMedia(id) {
         const media = await db.Media.findAll({
             where: {
                 profile_id: id,

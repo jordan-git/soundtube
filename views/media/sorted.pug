@@ -1,3 +1,17 @@
-extends layouts/main
+extends ../layouts/main
 
 block body
+    h1= title
+    table#media-container
+        tr
+            th Title
+            th Description
+            th Upload Date
+            th Views
+        each m in media
+            tr
+                td.title
+                    a(href="http://localhost:8000/m/" + m.id)= m.title
+                td.description= m.description
+                td.created-at= m.created_at
+                td.views= m.views
