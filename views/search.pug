@@ -1,0 +1,28 @@
+extends layouts/main
+
+block body
+    h1= title
+    if users.length > 0
+        h3.search-title Users
+        table#user-search-container
+            tr
+                th Username
+            each u in users
+                tr
+                    td.user
+                        a(href="http://localhost:8000/p/" + u.profile_id)= u.username
+    if media.length > 0
+        h3.search-title Media
+        table#media-search-container
+            tr
+                th Title
+                th Description
+                th Upload Date
+                th Views
+            each m in media
+                tr
+                    td.title
+                        a(href="http://localhost:8000/m/" + m.id)= m.title
+                    td.description= m.description
+                    td.created-at= m.created_at
+                    td.views= m.views

@@ -29,7 +29,7 @@ app.use(
     session({
         secret: 'mysecretkeygoeshere',
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
     })
 );
 
@@ -93,7 +93,7 @@ app.use((req, res, next) => {
         res.locals.active = 'm';
     } else {
         const contact_us = ['/contact-us', '/purchase-ad', '/about'];
-        contact_us.forEach(url => {
+        contact_us.forEach((url) => {
             if (req.originalUrl === url) {
                 res.locals.active = 'c';
             }

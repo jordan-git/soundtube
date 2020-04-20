@@ -80,8 +80,26 @@ async function handleSearch(req, res) {
         media = mediaData;
     }
 
+    function removeDuplicates(array, key) {
+        let lookup = new Set();
+        return array.filter(
+            (obj) => !lookup.has(obj[key]) && lookup.add(obj[key])
+        );
+    }
+
+    users = removeDuplicates(users, 'id');
+    media = removeDuplicates(media, 'id');
+
     console.log(users);
     console.log(media);
+
+    const data = {
+        title: 'Search Results',
+        users: users,
+        media: media,
+    };
+
+    res.render('search', data);
 }
 
 async function handleAboutGet(req, res) {

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const moment = require('moment');
 const db = require('../models');
 const { Howl, Howler } = require('howler');
@@ -57,10 +58,15 @@ class MediaHelper {
                 },
             }
         );
-
+        console.log('/public/media/' + media.filename);
         let sound = new Howl({
-            src: ['/public/media/' + media.filename],
+            src: [
+                'media/1-the-entertainer-by-kevin-macleod-from-filmmusic-io.mp3',
+            ],
             autoplay: true,
+            onloaderror: function () {
+                console.log('Error!');
+            },
         });
         sound.play();
 

@@ -225,4 +225,20 @@ table#media-container tr {
 /* My Media End */
 /* Upload Media CSS */
 /* Upload Media End */
+/* Search CSS */
+h3.search-title {
+  text-align: center;
+}
+
+table#media-search-container,
+table#user-search-container {
+  width: 100%;
+}
+
+table#media-search-container tr,
+table#user-search-container tr {
+  width: 100%;
+}
+
+/* Search End */
 /*# sourceMappingURL=style.css.map */
