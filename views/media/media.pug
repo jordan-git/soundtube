@@ -1,3 +1,28 @@
 extends ../layouts/main
 
 block body
+    section#media
+        div(id="header")
+            div#title
+                h1= title
+                p= description
+        div#player
+            br
+            br
+            br
+        div#create-comment
+            if locals.session.loggedIn
+                div.new-comment
+                    form(id="wall-form" class="wall-form" method="post" action=`${id}/post`)
+                        div.form-group
+                            label(for="new-comment") Post a comment:
+                            textarea(id="new-comment" name="content" cols="50" rows="3")
+                        button(class="submit" type="submit" class="btn btn-success") Submit
+        div#comments
+            each comment in comments
+                div.comment
+                    span.poster= comment.poster + ": "
+                    span.comment= comment.comment
+                    span.date= comment.created_at
+            else
+                h3 No comments

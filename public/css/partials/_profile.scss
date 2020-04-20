@@ -51,22 +51,22 @@ section#profile {
             font-size: 0.9em;
         }
     }
-}
 
-div#comments {
-    div.comment {
-        margin: 10px 0;
-        padding: 10px;
-        border-radius: 5px;
-        background: #636d72;
+    div#comments {
+        div.comment {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #636d72;
 
-        span.poster {
-            font-weight: bold;
-        }
+            span.poster {
+                font-weight: bold;
+            }
 
-        span.date {
-            float: right;
-            font-size: 0.8em;
+            span.date {
+                float: right;
+                font-size: 0.8em;
+            }
         }
     }
 }

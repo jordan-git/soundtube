@@ -43,7 +43,6 @@ class MediaHelper {
         let comments = await this.getComments(req.params.id);
 
         // Package information
-        media.title = media.title;
         media.comments = comments;
 
         // Increase total views
@@ -58,17 +57,17 @@ class MediaHelper {
                 },
             }
         );
-        console.log('/public/media/' + media.filename);
-        let sound = new Howl({
-            src: [
-                'media/1-the-entertainer-by-kevin-macleod-from-filmmusic-io.mp3',
-            ],
-            autoplay: true,
-            onloaderror: function () {
-                console.log('Error!');
-            },
-        });
-        sound.play();
+        // console.log('/public/media/' + media.filename);
+        // let sound = new Howl({
+        //     src: [
+        //         'media/1-the-entertainer-by-kevin-macleod-from-filmmusic-io.mp3',
+        //     ],
+        //     autoplay: true,
+        //     onloaderror: function () {
+        //         console.log('Error!');
+        //     },
+        // });
+        // sound.play();
 
         // Passes the object to the web page and displays it to the viewer
         res.render('media/media', media);

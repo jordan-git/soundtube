@@ -143,18 +143,18 @@ section#profile div#top-content dl#info {
   font-size: 0.9em;
 }
 
-div#comments div.comment {
+section#profile div#comments div.comment {
   margin: 10px 0;
   padding: 10px;
   border-radius: 5px;
   background: #636d72;
 }
 
-div#comments div.comment span.poster {
+section#profile div#comments div.comment span.poster {
   font-weight: bold;
 }
 
-div#comments div.comment span.date {
+section#profile div#comments div.comment span.date {
   float: right;
   font-size: 0.8em;
 }
@@ -212,6 +212,53 @@ div.staff:not(:first-child) {
 /* Purchase Ad CSS */
 /* Purchase Ad End */
 /* Media CSS */
+section#media div#header {
+  text-align: center;
+  border-bottom: 2px solid grey;
+}
+
+section#media div#player {
+  border-bottom: 2px solid grey;
+}
+
+section#media div#create-comment {
+  padding-bottom: 20px;
+  border-bottom: 2px solid grey;
+}
+
+section#media div#create-comment form.wall-form button.submit {
+  display: block;
+  margin: 0 auto;
+}
+
+section#media div#create-comment form.wall-form textarea {
+  width: 100%;
+}
+
+section#media div#comments {
+  padding-top: 20px;
+}
+
+section#media div#comments h3 {
+  text-align: center;
+}
+
+section#media div#comments div.comment {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background: #636d72;
+}
+
+section#media div#comments div.comment span.poster {
+  font-weight: bold;
+}
+
+section#media div#comments div.comment span.date {
+  float: right;
+  font-size: 0.8em;
+}
+
 /* Media End */
 /* My Media CSS */
 table#media-container {

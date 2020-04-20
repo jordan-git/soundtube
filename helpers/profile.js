@@ -27,11 +27,15 @@ class ProfileHelper {
         let user = await this.getUser(profile.user_id);
 
         let comments = await this.getComments(profile.user_id);
+        let media = await this.getMedia(profile.user_id);
 
         // Package information
         profile.title = `${user.username}'s Profile`;
         profile.username = user.username;
         profile.comments = comments;
+        profile.media = media;
+
+        console.log(profile);
 
         // Passes the object to the web page and displays it to the viewer
         res.render('profile/profile', profile);
@@ -174,6 +178,20 @@ class ProfileHelper {
         });
 
         if (profile) return profile.dataValues;
+    }
+
+    async getMedia(id) {
+        const media = await db.Media.findAll({
+            where: {
+                profile_id: id,
+            },
+        });
+
+        let allMedia = media.map((m) => {
+            return m.dataValues;
+        });
+
+        if (allMedia) return allMedia;
     }
 
     async getComments(id) {

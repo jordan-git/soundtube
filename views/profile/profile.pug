@@ -55,7 +55,21 @@ block body
                 else
                     p No comments
             div(class="tab-pane fade" id="media")
-                p Media
+                each m in media
+                    table#media-container
+                        tr
+                            th Title
+                            th Description
+                            th Upload Date
+                            th Views
+                        tr
+                            td.title
+                                a(href="http://localhost:8000/m/" + m.id)= m.title
+                            td.description= m.description
+                            td.created-at= m.created_at
+                            td.views= m.views
+                else
+                    p No comments
 
 block scripts
     script(src="/js/jquery.validate.min.js")
