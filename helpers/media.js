@@ -1,6 +1,7 @@
 const fs = require('fs');
 const moment = require('moment');
 const db = require('../models');
+const { Howl, Howler } = require('howler');
 
 class MediaHelper {
     handleMedia(req, res) {
@@ -29,9 +30,56 @@ class MediaHelper {
         else if (req.method == 'POST') this.handleUploadPost(req, res);
     }
 
-    async handleMediaGet(req, res) {}
+    async handleMediaGet(req, res) {
+        let media = await this.getMedia(req.params.id);
 
-    async handleMediaPost(req, res) {}
+        // If media doesn't exist show 404 error
+        if (!media) {
+            res.redirect('/error');
+            return;
+        }
+
+        let comments = await this.getComments(req.params.id);
+
+        // Package information
+        media.title = media.title;
+        media.comments = comments;
+
+        // Increase total views
+        media.views = media.views + 1;
+        const updatedViews = await db.Media.update(
+            {
+                views: media.views,
+            },
+            {
+                where: {
+                    id: media.id,
+                },
+            }
+        );
+
+        let sound = new Howl({
+            src: ['/public/media/' + media.filename],
+            autoplay: true,
+        });
+        sound.play();
+
+        // Passes the object to the web page and displays it to the viewer
+        res.render('media/media', media);
+    }
+
+    async handleMediaPost(req, res) {
+        const { content } = req.body;
+        const comment = {
+            created_at: new moment().format('YYYY-MM-DD'),
+            comment: content,
+            sender_id: req.session.userId,
+            media_id: parseInt(req.params.id),
+        };
+
+        await db.MediaComments.create(comment);
+        res.redirect(`/m/${req.params.id}`);
+    }
 
     async handleMostViewedGet(req, res) {
         const media = await this.getMostViewedMedia();
@@ -78,6 +126,43 @@ class MediaHelper {
 
         req.flash('success_msg', `Your media has been successfully uploaded`);
         res.redirect('/');
+    }
+
+    async getMedia(id) {
+        const media = await db.Media.findOne({
+            where: {
+                id: id,
+            },
+        });
+
+        if (media) return media.dataValues;
+    }
+
+    async getComments(id) {
+        const comments = await db.MediaComments.findAll({
+            where: {
+                media_id: id,
+            },
+        });
+
+        if (comments) {
+            let allComments = await Promise.all(
+                comments.map(async (comment) => {
+                    const poster = await db.User.findOne({
+                        where: {
+                            id: comment.dataValues.sender_id,
+                        },
+                    });
+                    comment.dataValues.poster = poster.dataValues.username;
+                    comment.dataValues.created_at = moment(
+                        comment.dataValues.created_at,
+                        'YYYY-MM-DD'
+                    ).format('MMMM Do YYYY');
+                    return comment.dataValues;
+                })
+            );
+            return allComments;
+        }
     }
 
     async getMostViewedMedia() {
