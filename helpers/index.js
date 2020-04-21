@@ -90,9 +90,6 @@ async function handleSearch(req, res) {
     users = removeDuplicates(users, 'id');
     media = removeDuplicates(media, 'id');
 
-    console.log(users);
-    console.log(media);
-
     const data = {
         title: 'Search Results',
         users: users,

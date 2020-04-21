@@ -221,6 +221,10 @@ section#media div#player {
   border-bottom: 2px solid grey;
 }
 
+section#media div#player h6 {
+  text-align: center;
+}
+
 section#media div#create-comment {
   padding-bottom: 20px;
   border-bottom: 2px solid grey;
@@ -257,6 +261,11 @@ section#media div#comments div.comment span.poster {
 section#media div#comments div.comment span.date {
   float: right;
   font-size: 0.8em;
+}
+
+table#media-container th,
+table#media-container td {
+  width: 25%;
 }
 
 /* Media End */

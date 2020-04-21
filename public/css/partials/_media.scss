@@ -6,6 +6,10 @@ section#media {
 
     div#player {
         border-bottom: 2px solid grey;
+
+        h6 {
+            text-align: center;
+        }
     }
 
     div#create-comment {
@@ -46,5 +50,12 @@ section#media {
                 font-size: 0.8em;
             }
         }
+    }
+}
+
+table#media-container {
+    th,
+    td {
+        width: 25%;
     }
 }
