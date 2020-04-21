@@ -30,6 +30,16 @@ header nav form.form-inline {
 
 /* Header End */
 /* Main Content CSS */
+div#home-banner {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+div#crop {
+  max-height: 69%;
+  overflow: hidden;
+}
+
 /* Main Content End */
 /* Alerts CSS */
 div.alert span {

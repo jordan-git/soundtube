@@ -1,4 +1,10 @@
 extends layouts/main
 
 block body
-	img(style="width:100%"  src="images/banner.jpg" )
+	div#home-banner
+		h1 Welcome to SoundTube!
+		p SoundTube is an application that takes aspects of social media and music sharing and combines them together!
+		if !locals.session.loggedIn
+			p You must <a href="/u/login">log in</a> or <a href="/u/register">register</a> to access most of our features
+	div#crop
+		img(style="width:100%"  src="images/banner.jpg" )
